@@ -114,7 +114,7 @@ class LabManagement {
                         name: cleanName,
                         formula: '',
                         quantity: quantity,
-                        unit: itemLower.includes('solution') ? 'ml' : 'g',
+                        unit: '',
                         location: fullLocation,
                         expiry: '',
                         hazard: hazard,
