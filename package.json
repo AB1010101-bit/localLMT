@@ -1,0 +1,15 @@
+{
+  "name": "lmt",
+  "version": "1.0.0",
+  "description": "A modern, responsive web application for managing laboratory chemicals and apparatus inventory.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Management Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lab Management Tool</h1>
+            <div id="statsBar" class="stats-bar"></div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search chemicals and apparatus...">
+                <button id="searchBtn">Search</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'chemicals')">Chemicals</button>
+                <button class="tab-button" onclick="openTab(event, 'apparatus')">Apparatus</button>
+            </div>
+
+            <div id="chemicals" class="tab-content active">
+                <h2>Chemicals Inventory</h2>
+                <div class="bulk-actions-container">
+                    <div class="bulk-actions-row">
+                        <button onclick="labSystem.addBulkChemicals()" class="bulk-action-btn oxidizer-upper">
+                            📋 Ox1↑
+                        </button>
+                        <button onclick="labSystem.addBulkChemicalsLower()" class="bulk-action-btn oxidizer-lower">
+                            📋 Ox1↓
+                        </button>
+                        <button onclick="labSystem.addBulkChemicalsOrganic()" class="bulk-action-btn organic-21">
+                            🧪 2.1
+                        </button>
+                        <button onclick="labSystem.addBulkChemicalsOrganic22()" class="bulk-action-btn organic-22">
+                            🧪 2.2
+                        </button>
+                        <button onclick="labSystem.addBulkChemicalsOrganic23()" class="bulk-action-btn organic-23">
+                            🧪 2.3
+                        </button>
+                        <button onclick="labSystem.addBulkChemicalsOrganic24()" class="bulk-action-btn organic-24">
+                            🧪 2.4
+                        </button>
+                    </div>
+                    <div class="bulk-actions-row">
+                        <button onclick="labSystem.updateChemicalDescriptions(); alert('Chemical descriptions updated! Check your inventory for detailed information about each chemical.')" class="bulk-action-btn btn-update-descriptions">
+                            📚 Update Descriptions
+                        </button>
+                    </div>
+                    <div class="bulk-actions-legend">
+                        Ox1 = Oxidizers 1 | 2.1-2.4 = Oxidizers 2 Organic Sections | 📚 = Add chemical descriptions and usage information
+                    </div>
+                </div>
+                <div class="add-item-section">
+                    <h3>Add New Chemical</h3>
+                    <form id="chemicalForm">
+                        <input type="text" id="chemicalName" placeholder="Chemical Name" required>
+                        <input type="text" id="chemicalFormula" placeholder="Formula (e.g., H2SO4)">
+                        <input type="number" id="chemicalQuantity" placeholder="Quantity" required>
+                        <input type="text" id="chemicalUnit" placeholder="Unit (e.g., ml, g)">
+                        <input type="text" id="chemicalLocation" placeholder="Storage Location">
+                        <input type="date" id="chemicalExpiry" placeholder="Expiry Date">
+                        <select id="chemicalHazard">
+                            <option value="">Select Hazard Level</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="extreme">Extreme</option>
+                        </select>
+                        <textarea id="chemicalNotes" placeholder="Additional Notes (optional)"></textarea>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit">Add Chemical</button>
+                            <button type="button" onclick="labSystem.cancelEdit()" style="background: #666; padding: 12px 30px; color: #e0e0e0; border: 1px solid #777; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="items-list" id="chemicalsList">
+                    <!-- Chemical items will be displayed here -->
+                </div>
+            </div>
+
+            <div id="apparatus" class="tab-content">
+                <h2>Apparatus Inventory</h2>
+                <div class="add-item-section">
+                    <h3>Add New Apparatus</h3>
+                    <form id="apparatusForm">
+                        <input type="text" id="apparatusName" placeholder="Apparatus Name" required>
+                        <input type="text" id="apparatusType" placeholder="Type (e.g., Glassware, Electronic)">
+                        <input type="number" id="apparatusQuantity" placeholder="Quantity Available" required>
+                        <input type="text" id="apparatusLocation" placeholder="Storage Location">
+                        <input type="text" id="apparatusCondition" placeholder="Condition">
+                        <input type="date" id="apparatusLastMaintenance" placeholder="Last Maintenance">
+                        <textarea id="apparatusNotes" placeholder="Additional Notes"></textarea>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit">Add Apparatus</button>
+                            <button type="button" onclick="labSystem.cancelEdit()" style="background: #666; padding: 12px 30px; color: #e0e0e0; border: 1px solid #777; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="items-list" id="apparatusList">
+                    <!-- Apparatus items will be displayed here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
