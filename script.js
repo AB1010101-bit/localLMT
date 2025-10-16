@@ -4,9 +4,9 @@ class LabManagement {
     constructor() {
         // Check if we should reload from Excel data
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '3.4') {
+        if (dataVersion !== '4.0') {
             localStorage.clear();
-            localStorage.setItem('dataVersion', '3.4');
+            localStorage.setItem('dataVersion', '4.0');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -14,6 +14,7 @@ class LabManagement {
         this.currentTab = 'chemicals';
         this.editingChemicalId = null;
         this.editingApparatusId = null;
+        this.userModificationsEnabled = false; // Disable user modifications by default
         this.init();
     }
 
@@ -34,16 +35,17 @@ class LabManagement {
             this.searchItems(searchValue);
         });
 
-        // Form submissions
-        document.getElementById('chemicalForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.addChemical();
-        });
+        // Form submissions - disabled by default for security
+        // Use enableUserForms() method to re-enable if needed
+        // document.getElementById('chemicalForm').addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     this.addChemical();
+        // });
 
-        document.getElementById('apparatusForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.addApparatus();
-        });
+        // document.getElementById('apparatusForm').addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     this.addApparatus();
+        // });
 
         // Tab switching
         window.openTab = (evt, tabName) => {
@@ -611,6 +613,208 @@ class LabManagement {
         }
         
         return updated;
+    }
+
+    addEssentialChemicals() {
+        // Add essential chemicals that every lab should have
+        const essentialChemicals = [
+            {
+                name: 'Sodium Chloride',
+                formula: 'NaCl',
+                quantity: 500,
+                unit: 'g',
+                location: 'Essential Chemicals',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Common table salt for solution preparation and osmosis experiments.'
+            },
+            {
+                name: 'Hydrochloric Acid',
+                formula: 'HCl',
+                quantity: 1,
+                unit: 'L',
+                location: 'Essential Chemicals - Acids',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Strong acid for titrations and pH adjustment.'
+            },
+            {
+                name: 'Sodium Hydroxide',
+                formula: 'NaOH',
+                quantity: 250,
+                unit: 'g',
+                location: 'Essential Chemicals - Bases',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Strong base for titrations and soap making.'
+            },
+            {
+                name: 'Phenolphthalein',
+                formula: 'C₂₀H₁₄O₄',
+                quantity: 50,
+                unit: 'ml',
+                location: 'Essential Chemicals - Indicators',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'pH indicator for acid-base titrations.'
+            },
+            {
+                name: 'Universal Indicator',
+                formula: 'Mixed indicators',
+                quantity: 100,
+                unit: 'ml',
+                location: 'Essential Chemicals - Indicators',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Multi-range pH indicator showing colors across pH 1-14.'
+            },
+            {
+                name: 'Copper Sulphate',
+                formula: 'CuSO₄·5H₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Essential Chemicals - Salts',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Blue crystalline salt for crystal growing and redox reactions.'
+            },
+            {
+                name: 'Sodium Bicarbonate',
+                formula: 'NaHCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Essential Chemicals',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Baking soda for neutralization and CO₂ generation experiments.'
+            },
+            {
+                name: 'Ethanol',
+                formula: 'C₂H₅OH',
+                quantity: 1,
+                unit: 'L',
+                location: 'Essential Chemicals - Solvents',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Alcohol for cleaning, extraction, and organic synthesis.'
+            }
+        ];
+
+        let added = 0;
+        let nextId = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+
+        essentialChemicals.forEach(chemical => {
+            // Check if chemical already exists
+            const exists = this.chemicals.some(c => 
+                c.name.toLowerCase() === chemical.name.toLowerCase() && 
+                c.location.includes('Essential Chemicals')
+            );
+
+            if (!exists) {
+                this.chemicals.push({
+                    id: nextId++,
+                    ...chemical
+                });
+                added++;
+            }
+        });
+
+        if (added > 0) {
+            this.saveData();
+            this.renderItems();
+            alert(`Added ${added} essential chemicals to the inventory!`);
+        } else {
+            alert('All essential chemicals are already in the inventory.');
+        }
+
+        return added;
+    }
+
+    // Admin functions for form control - only accessible through code
+    enableUserForms() {
+        // Show the forms
+        document.getElementById('chemicalFormSection').style.display = 'block';
+        document.getElementById('apparatusFormSection').style.display = 'block';
+        
+        // Enable user modifications
+        this.userModificationsEnabled = true;
+        
+        // Add event listeners for form submissions
+        document.getElementById('chemicalForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.addChemical();
+        });
+
+        document.getElementById('apparatusForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.addApparatus();
+        });
+        
+        console.log('User forms enabled - users can now add, edit, and delete chemicals and apparatus');
+        
+        // Re-render items to show/hide edit/delete buttons
+        this.renderItems();
+    }
+
+    disableUserForms() {
+        // Hide the forms
+        document.getElementById('chemicalFormSection').style.display = 'none';
+        document.getElementById('apparatusFormSection').style.display = 'none';
+        
+        // Disable user modifications
+        this.userModificationsEnabled = false;
+        
+        console.log('User forms disabled - only programmatic additions allowed');
+        
+        // Re-render items to show/hide edit/delete buttons
+        this.renderItems();
+    }
+
+    // Programmatic chemical addition (always available)
+    addChemicalProgrammatically(chemicalData) {
+        const nextId = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+        
+        const chemical = {
+            id: nextId,
+            name: chemicalData.name || '',
+            formula: chemicalData.formula || '',
+            quantity: chemicalData.quantity || 0,
+            unit: chemicalData.unit || '',
+            location: chemicalData.location || '',
+            expiry: chemicalData.expiry || '',
+            hazard: chemicalData.hazard || 'low',
+            notes: chemicalData.notes || ''
+        };
+
+        this.chemicals.push(chemical);
+        this.saveData();
+        this.renderItems();
+        
+        console.log(`Added chemical programmatically: ${chemical.name}`);
+        return chemical;
+    }
+
+    // Programmatic apparatus addition (always available)
+    addApparatusProgrammatically(apparatusData) {
+        const nextId = Math.max(...this.apparatus.map(a => a.id), 0) + 1;
+        
+        const apparatus = {
+            id: nextId,
+            name: apparatusData.name || '',
+            type: apparatusData.type || '',
+            quantity: apparatusData.quantity || 0,
+            location: apparatusData.location || '',
+            condition: apparatusData.condition || '',
+            lastMaintenance: apparatusData.lastMaintenance || '',
+            notes: apparatusData.notes || ''
+        };
+
+        this.apparatus.push(apparatus);
+        this.saveData();
+        this.renderItems();
+        
+        console.log(`Added apparatus programmatically: ${apparatus.name}`);
+        return apparatus;
     }
 
     loadDefaultSamples() {
@@ -2187,7 +2391,7 @@ class LabManagement {
                     hazard: 'low',
                     notes: ''
                 }
-               ,{
+                ,{
                     id: 144,
                     name: 'Barium Chloride',
                     formula: 'BaCl₂',
@@ -2197,6 +2401,172 @@ class LabManagement {
                     expiry: '',
                     hazard: 'high',
                     notes: ''
+                },
+                // Essential Common Laboratory Chemicals
+                {
+                    id: 145,
+                    name: 'Sodium Chloride',
+                    formula: 'NaCl',
+                    quantity: 500,
+                    unit: 'g',
+                    location: 'Essential Chemicals',
+                    expiry: '',
+                    hazard: 'low',
+                    notes: 'Common table salt for solution preparation and osmosis experiments.'
+                },
+                {
+                    id: 146,
+                    name: 'Hydrochloric Acid',
+                    formula: 'HCl',
+                    quantity: 1,
+                    unit: 'L',
+                    location: 'Essential Chemicals - Acids',
+                    expiry: '',
+                    hazard: 'high',
+                    notes: 'Strong acid for titrations and pH adjustment.'
+                },
+                {
+                    id: 147,
+                    name: 'Sodium Hydroxide',
+                    formula: 'NaOH',
+                    quantity: 250,
+                    unit: 'g',
+                    location: 'Essential Chemicals - Bases',
+                    expiry: '',
+                    hazard: 'high',
+                    notes: 'Strong base for titrations and soap making.'
+                },
+                {
+                    id: 148,
+                    name: 'Phenolphthalein',
+                    formula: 'C₂₀H₁₄O₄',
+                    quantity: 50,
+                    unit: 'ml',
+                    location: 'Essential Chemicals - Indicators',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'pH indicator for acid-base titrations.'
+                },
+                {
+                    id: 149,
+                    name: 'Methyl Orange',
+                    formula: 'C₁₄H₁₄N₃NaO₃S',
+                    quantity: 25,
+                    unit: 'g',
+                    location: 'Essential Chemicals - Indicators',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'pH indicator for strong acid-weak base titrations.'
+                },
+                {
+                    id: 150,
+                    name: 'Copper Sulphate',
+                    formula: 'CuSO₄·5H₂O',
+                    quantity: 250,
+                    unit: 'g',
+                    location: 'Essential Chemicals - Salts',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'Blue crystalline salt for crystal growing and redox reactions.'
+                },
+                {
+                    id: 151,
+                    name: 'Sodium Bicarbonate',
+                    formula: 'NaHCO₃',
+                    quantity: 500,
+                    unit: 'g',
+                    location: 'Essential Chemicals',
+                    expiry: '',
+                    hazard: 'low',
+                    notes: 'Baking soda for neutralization and CO₂ generation experiments.'
+                },
+                {
+                    id: 152,
+                    name: 'Acetic Acid',
+                    formula: 'CH₃COOH',
+                    quantity: 500,
+                    unit: 'ml',
+                    location: 'Essential Chemicals - Acids',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'Weak acid for buffer preparation and esterification reactions.'
+                },
+                {
+                    id: 153,
+                    name: 'Calcium Carbonate',
+                    formula: 'CaCO₃',
+                    quantity: 250,
+                    unit: 'g',
+                    location: 'Essential Chemicals',
+                    expiry: '',
+                    hazard: 'low',
+                    notes: 'Chalk powder for acid-base reactions and CO₂ production.'
+                },
+                {
+                    id: 154,
+                    name: 'Potassium Permanganate',
+                    formula: 'KMnO₄',
+                    quantity: 100,
+                    unit: 'g',
+                    location: 'Essential Chemicals - Oxidizers',
+                    expiry: '',
+                    hazard: 'high',
+                    notes: 'Purple oxidizing agent for redox titrations and water treatment.'
+                },
+                {
+                    id: 155,
+                    name: 'Magnesium Sulphate',
+                    formula: 'MgSO₄·7H₂O',
+                    quantity: 250,
+                    unit: 'g',
+                    location: 'Essential Chemicals',
+                    expiry: '',
+                    hazard: 'low',
+                    notes: 'Epsom salt for crystallization experiments and buffer solutions.'
+                },
+                {
+                    id: 156,
+                    name: 'Universal Indicator',
+                    formula: 'Mixed indicators',
+                    quantity: 100,
+                    unit: 'ml',
+                    location: 'Essential Chemicals - Indicators',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'Multi-range pH indicator showing colors across pH 1-14.'
+                },
+                {
+                    id: 157,
+                    name: 'Ethanol',
+                    formula: 'C₂H₅OH',
+                    quantity: 1,
+                    unit: 'L',
+                    location: 'Essential Chemicals - Solvents',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'Alcohol for cleaning, extraction, and organic synthesis.'
+                },
+                {
+                    id: 158,
+                    name: 'Methylene Blue',
+                    formula: 'C₁₆H₁₈ClN₃S',
+                    quantity: 25,
+                    unit: 'g',
+                    location: 'Essential Chemicals - Indicators',
+                    expiry: '',
+                    hazard: 'medium',
+                    notes: 'Biological stain and redox indicator for microscopy.'
+                },
+                {
+                    id: 159,
+                    name: 'Ammonium Chloride',
+                    formula: 'NH₄Cl',
+                    quantity: 250,
+                    unit: 'g',
+                    location: 'Essential Chemicals',
+                    expiry: '',
+                    hazard: 'low',
+                    notes: 'Salt for buffer solutions and demonstrations.'
                 }
         ];
 
@@ -3309,6 +3679,11 @@ class LabManagement {
     }
 
     deleteChemical(id) {
+        if (!this.userModificationsEnabled) {
+            alert('Chemical modification is disabled. Contact administrator for changes.');
+            return;
+        }
+        
         if (confirm('Are you sure you want to delete this chemical?')) {
             this.chemicals = this.chemicals.filter(chemical => chemical.id !== id);
             this.saveData();
@@ -3318,6 +3693,11 @@ class LabManagement {
     }
 
     deleteApparatus(id) {
+        if (!this.userModificationsEnabled) {
+            alert('Apparatus modification is disabled. Contact administrator for changes.');
+            return;
+        }
+        
         if (confirm('Are you sure you want to delete this apparatus?')) {
             this.apparatus = this.apparatus.filter(apparatus => apparatus.id !== id);
             this.saveData();
@@ -3327,6 +3707,11 @@ class LabManagement {
     }
 
     editChemical(id) {
+        if (!this.userModificationsEnabled) {
+            alert('Chemical modification is disabled. Contact administrator for changes.');
+            return;
+        }
+        
         const chemical = this.chemicals.find(c => c.id === id);
         if (chemical) {
             // Store the ID for editing
@@ -3357,6 +3742,11 @@ class LabManagement {
     }
 
     editApparatus(id) {
+        if (!this.userModificationsEnabled) {
+            alert('Apparatus modifications are currently disabled. Contact the administrator for changes.');
+            return;
+        }
+        
         const apparatus = this.apparatus.find(a => a.id === id);
         if (apparatus) {
             // Store the ID for editing
@@ -3442,7 +3832,12 @@ class LabManagement {
             return;
         }
 
-        const itemsHtml = items.map(item => {
+        // Sort filtered items alphabetically by name
+        const sortedItems = [...items].sort((a, b) => 
+            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        );
+
+        const itemsHtml = sortedItems.map(item => {
             return this.currentTab === 'chemicals' ? 
                 this.renderChemicalCard(item, searchTerm) : 
                 this.renderApparatusCard(item, searchTerm);
@@ -3492,7 +3887,12 @@ class LabManagement {
             return;
         }
 
-        const chemicalsHtml = this.chemicals.map(chemical => this.renderChemicalCard(chemical)).join('');
+        // Sort chemicals alphabetically by name
+        const sortedChemicals = [...this.chemicals].sort((a, b) => 
+            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        );
+
+        const chemicalsHtml = sortedChemicals.map(chemical => this.renderChemicalCard(chemical)).join('');
         container.innerHTML = chemicalsHtml;
         this.attachEventListeners();
     }
@@ -3521,7 +3921,12 @@ class LabManagement {
             return;
         }
 
-        const apparatusHtml = this.apparatus.map(apparatus => this.renderApparatusCard(apparatus)).join('');
+        // Sort apparatus alphabetically by name
+        const sortedApparatus = [...this.apparatus].sort((a, b) => 
+            a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+        );
+
+        const apparatusHtml = sortedApparatus.map(apparatus => this.renderApparatusCard(apparatus)).join('');
         container.innerHTML = apparatusHtml;
         this.attachEventListeners();
     }

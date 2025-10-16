@@ -315,6 +315,18 @@ button[type="button"]:hover, .btn-secondary:hover {
     border-color: #117a8b;
 }
 
+.bulk-action-btn.btn-add-essentials {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border-color: #20c997;
+    min-width: 150px;
+    font-weight: 700;
+}
+
+.bulk-action-btn.btn-add-essentials:hover {
+    background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+    border-color: #17a2b8;
+}
+
 .bulk-actions-legend {
     font-size: 11px;
     color: #999;

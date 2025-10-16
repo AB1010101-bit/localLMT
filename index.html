@@ -27,35 +27,18 @@
                 <h2>Chemicals Inventory</h2>
                 <div class="bulk-actions-container">
                     <div class="bulk-actions-row">
-                        <button onclick="labSystem.addBulkChemicals()" class="bulk-action-btn oxidizer-upper">
-                            📋 Ox1↑
-                        </button>
-                        <button onclick="labSystem.addBulkChemicalsLower()" class="bulk-action-btn oxidizer-lower">
-                            📋 Ox1↓
-                        </button>
-                        <button onclick="labSystem.addBulkChemicalsOrganic()" class="bulk-action-btn organic-21">
-                            🧪 2.1
-                        </button>
-                        <button onclick="labSystem.addBulkChemicalsOrganic22()" class="bulk-action-btn organic-22">
-                            🧪 2.2
-                        </button>
-                        <button onclick="labSystem.addBulkChemicalsOrganic23()" class="bulk-action-btn organic-23">
-                            🧪 2.3
-                        </button>
-                        <button onclick="labSystem.addBulkChemicalsOrganic24()" class="bulk-action-btn organic-24">
-                            🧪 2.4
-                        </button>
-                    </div>
-                    <div class="bulk-actions-row">
                         <button onclick="labSystem.updateChemicalDescriptions(); alert('Chemical descriptions updated! Check your inventory for detailed information about each chemical.')" class="bulk-action-btn btn-update-descriptions">
                             📚 Update Descriptions
                         </button>
+                        <button onclick="labSystem.addEssentialChemicals()" class="bulk-action-btn btn-add-essentials">
+                            ⭐ Add Essentials
+                        </button>
                     </div>
                     <div class="bulk-actions-legend">
-                        Ox1 = Oxidizers 1 | 2.1-2.4 = Oxidizers 2 Organic Sections | 📚 = Add chemical descriptions and usage information
+                        📚 = Add chemical descriptions | ⭐ = Add essential chemicals
                     </div>
                 </div>
-                <div class="add-item-section">
+                <div class="add-item-section" style="display: none;" id="chemicalFormSection">
                     <h3>Add New Chemical</h3>
                     <form id="chemicalForm">
                         <input type="text" id="chemicalName" placeholder="Chemical Name" required>
@@ -85,7 +68,7 @@
 
             <div id="apparatus" class="tab-content">
                 <h2>Apparatus Inventory</h2>
-                <div class="add-item-section">
+                <div class="add-item-section" style="display: none;" id="apparatusFormSection">
                     <h3>Add New Apparatus</h3>
                     <form id="apparatusForm">
                         <input type="text" id="apparatusName" placeholder="Apparatus Name" required>
