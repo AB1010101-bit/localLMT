@@ -4,9 +4,9 @@ class LabManagement {
     constructor() {
         // Check if we should reload from Excel data
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '4.0') {
+        if (dataVersion !== '5.0') {
             localStorage.clear();
-            localStorage.setItem('dataVersion', '4.0');
+            localStorage.setItem('dataVersion', '5.0');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -899,8 +899,624 @@ class LabManagement {
     }
 
     loadDefaultSamples() {
-        // Chemicals from General Storage 8 (Top)
+        // Oxidizer Cabinet Chemicals
         this.chemicals = [
+            // Oxidizers 1 - Upper Section
+            {
+                id: 1,
+                name: 'Ethanoic Acid',
+                formula: 'CH₃COOH',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Acetic acid - common organic acid'
+            },
+            {
+                id: 2,
+                name: 'Hydrochloric Acid',
+                formula: 'HCl',
+                quantity: 5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Large container - strong mineral acid'
+            },
+            {
+                id: 3,
+                name: 'Hydrochloric Acid',
+                formula: 'HCl',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Medium container - strong mineral acid'
+            },
+            {
+                id: 4,
+                name: 'Sulphuric Acid',
+                formula: 'H₂SO₄',
+                quantity: 1,
+                unit: 'L',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Concentrated sulfuric acid'
+            },
+            {
+                id: 5,
+                name: 'Metaphosphoric Acid Powder',
+                formula: 'HPO₃',
+                quantity: 1,
+                unit: 'container',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Powder form - dehydrating agent'
+            },
+            {
+                id: 6,
+                name: 'Phosphorus Pentaoxide',
+                formula: 'P₂O₅',
+                quantity: 2,
+                unit: 'containers',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Highly reactive - strong dehydrating agent'
+            },
+            {
+                id: 7,
+                name: 'Phosphorus Pentachloride',
+                formula: 'PCl₅',
+                quantity: 4,
+                unit: 'bottles',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Chlorinating agent - moisture sensitive'
+            },
+            {
+                id: 8,
+                name: 'Unidentified Chemical',
+                formula: 'Unknown',
+                quantity: 3,
+                unit: 'bottles',
+                location: 'Oxidizers 1 - Upper',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Requires identification and classification'
+            },
+
+            // Oxidizers 1 - Lower Section
+            {
+                id: 9,
+                name: 'Sulphuric Acid',
+                formula: 'H₂SO₄',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Concentrated sulfuric acid - medium container'
+            },
+            {
+                id: 10,
+                name: 'Nitric Acid',
+                formula: 'HNO₃',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Bottle 1 of 4 - strong oxidizing acid'
+            },
+            {
+                id: 11,
+                name: 'Nitric Acid',
+                formula: 'HNO₃',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Bottle 2 of 4 - strong oxidizing acid'
+            },
+            {
+                id: 12,
+                name: 'Nitric Acid',
+                formula: 'HNO₃',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Bottle 3 of 4 - strong oxidizing acid'
+            },
+            {
+                id: 13,
+                name: 'Nitric Acid',
+                formula: 'HNO₃',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Bottle 4 of 4 - strong oxidizing acid'
+            },
+            {
+                id: 14,
+                name: 'Phosphoric Acid',
+                formula: 'H₃PO₄',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Standard phosphoric acid'
+            },
+            {
+                id: 15,
+                name: 'Orthophosphoric Acid',
+                formula: 'H₃PO₄',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 1 - Lower',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Same as phosphoric acid'
+            },
+
+            // Oxidizers 2 - Organic Section 2.1
+            {
+                id: 16,
+                name: 'n-Amyl Alcohol (Pentanol)',
+                formula: 'C₅H₁₂O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Primary alcohol, 5-carbon chain'
+            },
+            {
+                id: 17,
+                name: 'Pentan-1-ol',
+                formula: 'C₅H₁₂O',
+                quantity: 6,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.1',
+                expiry: '',
+                hazard: 'medium',
+                notes: '6 bottles available'
+            },
+            {
+                id: 18,
+                name: 'tert-Butanol',
+                formula: 'C₄H₁₀O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Tertiary alcohol - less reactive'
+            },
+            {
+                id: 19,
+                name: 'n-Butylamine',
+                formula: 'C₄H₁₁N',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Primary amine - flammable and corrosive'
+            },
+            {
+                id: 20,
+                name: 'Cyclohexanone',
+                formula: 'C₆H₁₀O',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.1',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2 bottles available'
+            },
+            {
+                id: 21,
+                name: 'Cyclohexane',
+                formula: 'C₆H₁₂',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.1',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2 bottles available'
+            },
+
+            // Oxidizers 2 - Organic Section 2.2
+            {
+                id: 22,
+                name: 'Glycerol',
+                formula: 'C₃H₈O₃',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Glycerin - viscous, hygroscopic'
+            },
+            {
+                id: 23,
+                name: 'Propane-1,2-diol (Propylene Glycol)',
+                formula: 'C₃H₈O₂',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Safer than ethylene glycol'
+            },
+            {
+                id: 24,
+                name: 'Ethanol',
+                formula: 'C₂H₆O',
+                quantity: 100,
+                unit: 'ml',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Small volume - common solvent'
+            },
+            {
+                id: 25,
+                name: 'Butan-1-ol',
+                formula: 'C₄H₁₀O',
+                quantity: 10,
+                unit: 'L',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '4 bottles x 2.5L - primary alcohol'
+            },
+            {
+                id: 26,
+                name: 'Butan-2-ol',
+                formula: 'C₄H₁₀O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Secondary alcohol'
+            },
+            {
+                id: 27,
+                name: '2-Methylpropan-2-ol',
+                formula: 'C₄H₁₀O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'tert-Butanol - tertiary alcohol'
+            },
+            {
+                id: 28,
+                name: 'n-Pentane',
+                formula: 'C₅H₁₂',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Highly flammable alkane'
+            },
+            {
+                id: 29,
+                name: 'n-Heptane',
+                formula: 'C₇H₁₆',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Highly flammable alkane'
+            },
+            {
+                id: 30,
+                name: 'Bromoethane',
+                formula: 'C₂H₅Br',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Alkyl halide - suspected carcinogen'
+            },
+            {
+                id: 31,
+                name: '1-Iodobutane',
+                formula: 'C₄H₉I',
+                quantity: 75,
+                unit: 'ml',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '3 bottles x 25ml - alkyl iodide'
+            },
+            {
+                id: 32,
+                name: '1-Chlorobutane',
+                formula: 'C₄H₉Cl',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Alkyl chloride'
+            },
+            {
+                id: 33,
+                name: '2-Bromobutane',
+                formula: 'C₄H₉Br',
+                quantity: 5,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '5 bottles - secondary alkyl bromide'
+            },
+            {
+                id: 34,
+                name: 'Butanone',
+                formula: 'C₄H₈O',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Methyl ethyl ketone'
+            },
+            {
+                id: 35,
+                name: 'Nitrobenzene',
+                formula: 'C₆H₅NO₂',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic aromatic nitro compound'
+            },
+
+            // Oxidizers 2 - Organic Section 2.3 (HIGH HAZARD SECTION)
+            {
+                id: 36,
+                name: 'Aniline',
+                formula: 'C₆H₇N',
+                quantity: 1000,
+                unit: 'ml',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: '4 bottles total - CARCINOGENIC aromatic amine'
+            },
+            {
+                id: 37,
+                name: 'Methanol',
+                formula: 'CH₄O',
+                quantity: 6,
+                unit: 'L',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: '3 bottles total - HIGHLY TOXIC can cause blindness'
+            },
+            {
+                id: 38,
+                name: 'Propan-1-ol',
+                formula: 'C₃H₈O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Primary alcohol'
+            },
+            {
+                id: 39,
+                name: 'Propan-2-ol (Isopropanol)',
+                formula: 'C₃H₈O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Secondary alcohol - common disinfectant'
+            },
+            {
+                id: 40,
+                name: 'Cyclohexanol',
+                formula: 'C₆H₁₂O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Cyclic alcohol'
+            },
+            {
+                id: 41,
+                name: 'Methylated Spirit (Industrial)',
+                formula: 'C₂H₆O + additives',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Denatured ethanol'
+            },
+            {
+                id: 42,
+                name: '1-Iodobutane',
+                formula: 'C₄H₉I',
+                quantity: 175,
+                unit: 'ml',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: '7 bottles x 25ml - alkyl iodide'
+            },
+            {
+                id: 43,
+                name: '2-Chloro-2-methylpropane (tert-Butyl Chloride)',
+                formula: 'C₄H₉Cl',
+                quantity: 9,
+                unit: 'bottles',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: '9 bottles - tertiary chloride'
+            },
+            {
+                id: 44,
+                name: 'Bromoethane',
+                formula: 'C₂H₅Br',
+                quantity: 50,
+                unit: 'ml',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'high',
+                notes: '2 bottles x 25ml - suspected carcinogen'
+            },
+            {
+                id: 45,
+                name: 'Methyl Benzoate',
+                formula: 'C₈H₈O₂',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Aromatic ester'
+            },
+
+            // Oxidizers 2 - Organic Section 2.4 (SPECIALIZED HIGH-HAZARD)
+            {
+                id: 46,
+                name: 'Acetic Anhydride',
+                formula: 'C₄H₆O₃',
+                quantity: 5,
+                unit: 'L',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: '2 bottles x 2.5L - corrosive anhydride - EXTREMELY REACTIVE'
+            },
+            {
+                id: 47,
+                name: 'Dichloromethane',
+                formula: 'CH₂Cl₂',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Methylene chloride - suspected carcinogen'
+            },
+            {
+                id: 48,
+                name: 'Methanoic Acid (Formic Acid)',
+                formula: 'HCOOH',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Simplest carboxylic acid - corrosive'
+            },
+            {
+                id: 49,
+                name: 'Ethanediol (Ethylene Glycol)',
+                formula: 'C₂H₆O₂',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Toxic diol - antifreeze component - can cause death'
+            },
+            {
+                id: 50,
+                name: 'Amyl Alcohol',
+                formula: 'C₅H₁₂O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Pentanol - primary alcohol'
+            },
+            {
+                id: 51,
+                name: '3-Methylbutan-1-ol',
+                formula: 'C₅H₁₂O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Branched primary alcohol'
+            },
+            {
+                id: 52,
+                name: 'Propanoic Acid',
+                formula: 'C₃H₆O₂',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Propionic acid - preservative'
+            },
+            {
+                id: 53,
+                name: 'Di-n-butyl Phthalate',
+                formula: 'C₁₆H₂₂O₄',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 - Organic 2.4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Plasticizer compound - environmental concern'
+            },
+
+            // Original General Storage chemicals (keeping some for continuity)
+            {
+                id: 54,
+                name: 'Naphthalene Marbles',
+                formula: 'C₁₀H₈',
+                quantity: 1,
+                unit: 'container',
+                location: 'General Storage 8 - Top',
+                expiry: '',
+                hazard: 'medium'
+            },
+            {
+                id: 55,
+                name: 'High Vacuum Grease',
+                formula: '',
+                quantity: 1,
+                unit: 'tube',
+                location: 'General Storage 8 - Top',
+                expiry: '',
+                hazard: 'low'
+            },
             {
                 id: 1,
                 name: 'Naphthalene Marbles',
@@ -2648,7 +3264,18 @@ class LabManagement {
                     expiry: '',
                     hazard: 'low',
                     notes: 'Salt for buffer solutions and demonstrations.'
-                }
+                },
+            {
+                id: 56,
+                name: 'Mercury Collector',
+                formula: 'Hg',
+                quantity: 1,
+                unit: 'unit',
+                location: 'General Storage 8 - Top',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Mercury spill cleanup device'
+            }
         ];
 
         // Apparatus from General Storage 8 (Top)
