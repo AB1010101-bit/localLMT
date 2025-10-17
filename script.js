@@ -15,6 +15,8 @@ class LabManagement {
         this.editingChemicalId = null;
         this.editingApparatusId = null;
         this.userModificationsEnabled = false; // Disable user modifications by default
+        this.isAdminLoggedIn = false; // Admin authentication state
+        this.adminPassword = 'admin123'; // Change this to your desired password
         this.init();
     }
 
@@ -35,8 +37,16 @@ class LabManagement {
             this.searchItems(searchValue);
         });
 
-        // Form submissions - disabled by default for security
-        // Use enableUserForms() method to re-enable if needed
+        // Admin authentication
+        document.getElementById('adminLoginBtn').addEventListener('click', () => {
+            this.showAdminLoginPrompt();
+        });
+
+        document.getElementById('adminLogoutBtn').addEventListener('click', () => {
+            this.adminLogout();
+        });
+
+        // Form submissions - will be enabled when admin logs in
         // document.getElementById('chemicalForm').addEventListener('submit', (e) => {
         //     e.preventDefault();
         //     this.addChemical();
@@ -573,6 +583,11 @@ class LabManagement {
     }
 
     updateChemicalDescriptions() {
+        if (!this.isAdminLoggedIn) {
+            alert('Admin access required for this operation');
+            return;
+        }
+        
         // Update all existing chemicals with proper descriptions from the database
         let updated = 0;
         
@@ -616,6 +631,11 @@ class LabManagement {
     }
 
     addEssentialChemicals() {
+        if (!this.isAdminLoggedIn) {
+            alert('Admin access required for this operation');
+            return;
+        }
+        
         // Add essential chemicals that every lab should have
         const essentialChemicals = [
             {
@@ -768,6 +788,67 @@ class LabManagement {
         
         // Re-render items to show/hide edit/delete buttons
         this.renderItems();
+    }
+
+    // Admin Authentication Methods
+    showAdminLoginPrompt() {
+        const password = prompt('Enter admin password:');
+        if (password === this.adminPassword) {
+            this.adminLogin();
+        } else if (password !== null) { // User didn't cancel
+            alert('Incorrect password. Access denied.');
+        }
+    }
+
+    adminLogin() {
+        this.isAdminLoggedIn = true;
+        this.userModificationsEnabled = true;
+        
+        // Show admin controls
+        document.getElementById('adminLoginSection').style.display = 'none';
+        document.getElementById('adminLoggedSection').style.display = 'flex';
+        document.getElementById('adminControlsChemicals').style.display = 'block';
+        document.getElementById('adminControlsApparatus').style.display = 'block';
+        
+        // Enable forms
+        this.enableUserForms();
+        
+        console.log('Admin logged in - full access enabled');
+    }
+
+    adminLogout() {
+        this.isAdminLoggedIn = false;
+        this.userModificationsEnabled = false;
+        
+        // Hide admin controls
+        document.getElementById('adminLoginSection').style.display = 'block';
+        document.getElementById('adminLoggedSection').style.display = 'none';
+        document.getElementById('adminControlsChemicals').style.display = 'none';
+        document.getElementById('adminControlsApparatus').style.display = 'none';
+        
+        // Disable forms
+        this.disableUserForms();
+        
+        console.log('Admin logged out - access restricted');
+    }
+
+    // Form visibility methods
+    showAddChemicalForm() {
+        if (!this.isAdminLoggedIn) {
+            alert('Admin access required');
+            return;
+        }
+        document.getElementById('chemicalFormSection').style.display = 'block';
+        document.getElementById('chemicalName').focus();
+    }
+
+    showAddApparatusForm() {
+        if (!this.isAdminLoggedIn) {
+            alert('Admin access required');
+            return;
+        }
+        document.getElementById('apparatusFormSection').style.display = 'block';
+        document.getElementById('apparatusName').focus();
     }
 
     // Programmatic chemical addition (always available)
@@ -3937,7 +4018,7 @@ class LabManagement {
                 <div class="item-header">
                     <h3 class="item-name">${this.highlightSearchTerm(apparatus.name, searchTerm)}</h3>
                     <div class="item-quantity">${this.highlightSearchTerm(apparatus.quantity, searchTerm)}</div>
-                    ${apparatus.type ? `<span style="font-size: 0.9rem; color: #6c757d;">${this.highlightSearchTerm(apparatus.type, searchTerm)}</span>` : ''}
+                    ${apparatus.type ? `<span style="font-size: 0.9rem; color: #bbb;">${this.highlightSearchTerm(apparatus.type, searchTerm)}</span>` : ''}
                 </div>
             </div>
         `;
@@ -4017,14 +4098,14 @@ class LabManagement {
                 ` : ''}
                 ${disposalInfo ? `
                 <div class="chemical-usage-info" style="background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); border-left-color: #dc3545;">
-                    <div class="usage-label">🚮 Safe Disposal Instructions:</div>
-                    <div class="usage-text" style="font-weight: 500;">${disposalInfo}</div>
+                    <div class="usage-label" style="color: #721c24;">🚮 Safe Disposal Instructions:</div>
+                    <div class="usage-text" style="font-weight: 500; color: #721c24;">${disposalInfo}</div>
                 </div>
                 ` : ''}
                 ${customNotes ? `
                 <div class="chemical-usage-info" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); border-left-color: #f39c12;">
-                    <div class="usage-label">📝 Additional Notes:</div>
-                    <div class="usage-text">${customNotes}</div>
+                    <div class="usage-label" style="color: #856404;">📝 Additional Notes:</div>
+                    <div class="usage-text" style="color: #856404;">${customNotes}</div>
                 </div>
                 ` : ''}
                 <div class="overlay-details">
@@ -4039,14 +4120,16 @@ class LabManagement {
                     ${chemical.expiry ? `
                     <div class="detail-item">
                         <span class="detail-label">Expiry Date</span>
-                        <span class="detail-value" style="color: ${isExpiringSoon ? '#dc3545' : '#333'}">${chemical.expiry} ${isExpiringSoon ? '⚠️ Expiring soon!' : ''}</span>
+                        <span class="detail-value" style="color: ${isExpiringSoon ? '#dc3545' : '#e0e0e0'}">${chemical.expiry} ${isExpiringSoon ? '⚠️ Expiring soon!' : ''}</span>
                     </div>
                     ` : ''}
                 </div>
+                ${this.isAdminLoggedIn ? `
                 <div class="overlay-actions">
                     <button class="btn-edit" onclick="labSystem.editChemical(${chemical.id}); labSystem.closeOverlay();">Edit</button>
                     <button class="btn-delete" onclick="labSystem.deleteChemical(${chemical.id}); labSystem.closeOverlay();">Delete</button>
                 </div>
+                ` : ''}
             </div>
         `;
     }
@@ -4083,10 +4166,12 @@ class LabManagement {
                     </div>
                     ` : ''}
                 </div>
+                ${this.isAdminLoggedIn ? `
                 <div class="overlay-actions">
                     <button class="btn-edit" onclick="labSystem.editApparatus(${apparatus.id}); labSystem.closeOverlay();">Edit</button>
                     <button class="btn-delete" onclick="labSystem.deleteApparatus(${apparatus.id}); labSystem.closeOverlay();">Delete</button>
                 </div>
+                ` : ''}
             </div>
         `;
     }

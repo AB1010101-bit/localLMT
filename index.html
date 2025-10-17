@@ -3,17 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Management Tool</title>
+    <title>LabTool</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Lab Management Tool</h1>
+            <h1>LabTool</h1>
             <div id="statsBar" class="stats-bar"></div>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search chemicals and apparatus...">
-                <button id="searchBtn">Search</button>
+            <div class="header-controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search chemicals and apparatus...">
+                    <button id="searchBtn">Search</button>
+                </div>
+                <div class="admin-section">
+                    <div id="adminLoginSection">
+                        <button id="adminLoginBtn" class="admin-btn">Admin Login</button>
+                    </div>
+                    <div id="adminLoggedSection" style="display: none;">
+                        <span class="admin-status">Admin Mode</span>
+                        <button id="adminLogoutBtn" class="admin-btn logout">Logout</button>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -25,18 +36,17 @@
 
             <div id="chemicals" class="tab-content active">
                 <h2>Chemicals Inventory</h2>
-                <div class="bulk-actions-container">
-                    <div class="bulk-actions-row">
-                        <button onclick="updateChemicalDescriptions()" class="bulk-action-btn btn-update-descriptions">
+                <div id="adminControlsChemicals" class="admin-controls" style="display: none;">
+                    <div class="admin-actions">
+                        <button onclick="labSystem.showAddChemicalForm()" class="admin-action-btn btn-add">
+                            ➕ Add Chemical
+                        </button>
+                        <button onclick="updateChemicalDescriptions()" class="admin-action-btn btn-update-descriptions">
                             📚 Update Descriptions
                         </button>
-                        <button onclick="addEssentialChemicals()" class="bulk-action-btn btn-add-essentials">
+                        <button onclick="addEssentialChemicals()" class="admin-action-btn btn-add-essentials">
                             ⭐ Add Essentials
-                        </button>
-                    </div>
-                    <div class="bulk-actions-legend">
-                        📚 = Add chemical descriptions | ⭐ = Add essential chemicals
-                    </div>
+                        </button>                    </div>
                 </div>
                 <div class="add-item-section" style="display: none;" id="chemicalFormSection">
                     <h3>Add New Chemical</h3>
@@ -68,6 +78,13 @@
 
             <div id="apparatus" class="tab-content">
                 <h2>Apparatus Inventory</h2>
+                <div id="adminControlsApparatus" class="admin-controls" style="display: none;">
+                    <div class="admin-actions">
+                        <button onclick="labSystem.showAddApparatusForm()" class="admin-action-btn btn-add">
+                            ➕ Add Apparatus
+                        </button>
+                    </div>
+                </div>
                 <div class="add-item-section" style="display: none;" id="apparatusFormSection">
                     <h3>Add New Apparatus</h3>
                     <form id="apparatusForm">
