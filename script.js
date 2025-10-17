@@ -3804,7 +3804,185 @@ class LabManagement {
         // Add all oxidizer chemicals to the main array
         let idCounter = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
         
-        [...oxidizers1Upper, ...oxidizers1Lower].forEach(chemical => {
+        // Add organic oxidizer chemicals from sections 2.1-2.4
+        const organicOxidizers21 = [
+            {
+                name: 'n-Amyl Alcohol (Pentanol)',
+                formula: 'C5H12O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.1',
+                hazard: 'medium',
+                notes: 'n-amyl alcohol from oxidizers 2 organic section 2.1'
+            },
+            {
+                name: 'Pentan-1-ol',
+                formula: 'C5H12O',
+                quantity: 6,
+                unit: 'bottles',
+                location: 'Oxidizers 2 (Organic) - 2.1',
+                hazard: 'medium',
+                notes: '6 bottles available from oxidizers 2 organic section 2.1'
+            },
+            {
+                name: 'n-Butylamine',
+                formula: 'C4H11N',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.1',
+                hazard: 'medium',
+                notes: 'Flammable and corrosive amine from oxidizers 2 organic section 2.1'
+            },
+            {
+                name: 'Cyclohexanone',
+                formula: 'C6H10O',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 (Organic) - 2.1',
+                hazard: 'medium',
+                notes: '2 bottles available from oxidizers 2 organic section 2.1'
+            },
+            {
+                name: 'Cyclohexane',
+                formula: 'C6H12',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 (Organic) - 2.1',
+                hazard: 'medium',
+                notes: '2 bottles available from oxidizers 2 organic section 2.1'
+            },
+            {
+                name: 'tert-Butanol',
+                formula: 'C4H10O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.1',
+                hazard: 'low',
+                notes: 'Tertiary alcohol from oxidizers 2 organic section 2.1'
+            }
+        ];
+
+        const organicOxidizers22 = [
+            {
+                name: 'Glycerol',
+                formula: 'C3H8O3',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'low',
+                notes: '2.5L container from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'n-Pentane',
+                formula: 'C5H12',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: 'Highly flammable alkane from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Ethanol',
+                formula: 'C2H6O',
+                quantity: 100,
+                unit: 'ml',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: '100ml bottle from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Bromoethane',
+                formula: 'C2H5Br',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'high',
+                notes: 'Halogenated compound from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: '1-Iodobutane',
+                formula: 'C4H9I',
+                quantity: 3,
+                unit: 'bottles (25ml each)',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: '3 bottles of 25ml each from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: '1-Chlorobutane',
+                formula: 'C4H9Cl',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: 'Halogenated compound from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: '2-Bromobutane',
+                formula: 'C4H9Br',
+                quantity: 5,
+                unit: 'bottles',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: '5 bottles available from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Butanone',
+                formula: 'C4H8O',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: '2 bottles available from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Butan-1-ol',
+                formula: 'C4H10O',
+                quantity: 4,
+                unit: 'bottles (2.5L each)',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: '4 bottles of 2.5L each from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Butan-2-ol',
+                formula: 'C4H10O',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: 'Secondary alcohol from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'n-Heptane',
+                formula: 'C7H16',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'medium',
+                notes: 'Highly flammable alkane from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Propane-1,2-diol (Propylene Glycol)',
+                formula: 'C3H8O2',
+                quantity: 2,
+                unit: 'bottles',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'low',
+                notes: '2 bottles available from oxidizers 2 organic section 2.2'
+            },
+            {
+                name: 'Nitrobenzene',
+                formula: 'C6H5NO2',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 2 (Organic) - 2.2',
+                hazard: 'high',
+                notes: 'Toxic aromatic nitro compound from oxidizers 2 organic section 2.2'
+            }
+        ];
+
+        [...oxidizers1Upper, ...oxidizers1Lower, ...organicOxidizers21, ...organicOxidizers22].forEach(chemical => {
             this.chemicals.push({
                 id: idCounter++,
                 ...chemical
