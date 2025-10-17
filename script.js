@@ -2,11 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Check if we should reload from Excel data
+        // Force a complete data restoration if needed
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.0') {
+        if (dataVersion !== '6.1') {
+            // Clear and force reload to restore all data
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.0');
+            localStorage.setItem('dataVersion', '6.1');
+            console.log('Data version updated - will restore complete inventory');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -64,18 +66,12 @@ class LabManagement {
     }
 
     async loadSampleData() {
-        // Always check if we need to add oxidizer chemicals
-        const hasOxidizerChemicals = this.chemicals.some(chem => 
-            chem.location && chem.location.toLowerCase().includes('oxidizer'));
+        // Check if we need to restore data (if we accidentally cleared everything)
+        const needsRestoration = this.chemicals.length === 0 && this.apparatus.length === 0;
         
-        if (!hasOxidizerChemicals) {
-            console.log('Loading oxidizer chemical inventory...');
-            this.loadOxidizerChemicals();
-        }
-
-        // Load sample chemicals if none exist
-        if (this.chemicals.length === 0 && this.apparatus.length === 0) {
-            // Try to load from Excel data
+        if (needsRestoration) {
+            console.log('Restoring complete inventory data...');
+            // First load Excel data
             try {
                 const response = await fetch('./data.json');
                 const excelData = await response.json();
@@ -84,6 +80,16 @@ class LabManagement {
                 console.log('Could not load Excel data, using default samples');
                 this.loadDefaultSamples();
             }
+        }
+
+        // Always check if we need to add oxidizer chemicals
+        const hasOxidizerChemicals = this.chemicals.some(chem => 
+            chem.location && chem.location.toLowerCase().includes('oxidizer'));
+        
+        if (!hasOxidizerChemicals) {
+            console.log('Adding oxidizer chemical inventory...');
+            this.loadOxidizerChemicals();
+            localStorage.setItem('hasOxidizers', 'true');
         }
 
         this.saveData();
