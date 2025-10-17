@@ -5038,3 +5038,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     window.labSystem = new LabManagement();
 });
+
+// Fallback initialization for immediate access
+if (typeof window !== 'undefined') {
+    window.labSystem = window.labSystem || null;
+}
+
+// Global function wrappers to ensure they work on Vercel
+window.addEssentialChemicals = function() {
+    if (window.labSystem) {
+        return window.labSystem.addEssentialChemicals();
+    } else {
+        setTimeout(() => {
+            if (window.labSystem) {
+                window.labSystem.addEssentialChemicals();
+            } else {
+                alert('System is still loading. Please try again in a moment.');
+            }
+        }, 1000);
+    }
+};
+
+window.updateChemicalDescriptions = function() {
+    if (window.labSystem) {
+        window.labSystem.updateChemicalDescriptions();
+        alert('Chemical descriptions updated! Check your inventory for detailed information about each chemical.');
+    } else {
+        setTimeout(() => {
+            if (window.labSystem) {
+                window.labSystem.updateChemicalDescriptions();
+                alert('Chemical descriptions updated! Check your inventory for detailed information about each chemical.');
+            } else {
+                alert('System is still loading. Please try again in a moment.');
+            }
+        }, 1000);
+    }
+};
