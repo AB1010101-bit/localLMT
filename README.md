@@ -26,6 +26,7 @@ A modern, responsive web application for managing laboratory chemicals and appar
 - Search by name, formula, location, type, or any field
 - Highlighted search results for easy identification
 - Search works across both chemicals and apparatus tabs
+- **Alphabetical sorting** - All items are automatically displayed in alphabetical order by name
 
 ### 💾 Data Persistence
 - All data saved locally in browser storage
@@ -77,6 +78,7 @@ lab-management-system/
 - **CSS3**: Modern styling with flexbox/grid layouts
 - **Vanilla JavaScript**: ES6+ features for functionality
 - **LocalStorage API**: Client-side data persistence
+- **Sorting Algorithm**: Case-insensitive alphabetical sorting using `localeCompare()`
 
 ### Browser Compatibility
 - Chrome 60+
@@ -90,6 +92,12 @@ lab-management-system/
 - Touch-friendly controls
 
 ## Features Overview
+
+### Sorting & Organization
+- **Alphabetical Ordering**: All chemicals and apparatus are automatically sorted alphabetically by name
+- **Case-Insensitive**: Sorting handles mixed case names correctly (e.g., "ethanol" and "Ethanol")
+- **Special Characters**: Properly sorts items with numbers, hyphens, and special characters
+- **Search Results**: Filtered search results are also displayed in alphabetical order
 
 ### Chemical Tracking
 - **Name & Formula**: Chemical identification
