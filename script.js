@@ -3652,6 +3652,164 @@ class LabManagement {
                 notes: 'Storage drawers containing molecular modeling kits for teaching chemical structures and bonding'
             }
         ];
+
+        // Load oxidizer chemicals automatically
+        this.loadOxidizerChemicals();
+    }
+
+    loadOxidizerChemicals() {
+        // Add Oxidizers 1 - Upper chemicals
+        const oxidizers1Upper = [
+            {
+                name: 'Ethanoic Acid',
+                formula: 'CH3COOH',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'medium',
+                notes: 'From oxidizers 1 upper section'
+            },
+            {
+                name: 'Hydrochloric Acid',
+                formula: 'HCl',
+                quantity: 5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'high',
+                notes: '5L container from oxidizers 1 upper section'
+            },
+            {
+                name: 'Hydrochloric Acid',
+                formula: 'HCl',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'high',
+                notes: '2.5L container from oxidizers 1 upper section'
+            },
+            {
+                name: 'Sulphuric Acid',
+                formula: 'H2SO4',
+                quantity: 1,
+                unit: 'L',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'high',
+                notes: '1L container from oxidizers 1 upper section'
+            },
+            {
+                name: 'Metaphosphoric Acid Powder',
+                formula: 'HPO3',
+                quantity: 1,
+                unit: 'container',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'medium',
+                notes: 'Powder form from oxidizers 1 upper section'
+            },
+            {
+                name: 'Phosphorus Pentaoxide',
+                formula: 'P2O5',
+                quantity: 2,
+                unit: 'containers',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'extreme',
+                notes: '2 containers from oxidizers 1 upper section'
+            },
+            {
+                name: 'Phosphorus Pentachloride',
+                formula: 'PCl5',
+                quantity: 4,
+                unit: 'bottles',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'extreme',
+                notes: '4 bottles from oxidizers 1 upper section'
+            },
+            {
+                name: 'Unidentified Chemical',
+                formula: 'Unknown',
+                quantity: 3,
+                unit: 'bottles',
+                location: 'Oxidizers 1 - Upper',
+                hazard: 'high',
+                notes: '3 unidentified bottles from oxidizers 1 upper section - requires identification'
+            }
+        ];
+
+        // Add Oxidizers 1 - Lower chemicals
+        const oxidizers1Lower = [
+            {
+                name: 'Sulphuric Acid',
+                formula: 'H2SO4',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'high',
+                notes: '2.5L container from oxidizers 1 lower section'
+            },
+            {
+                name: 'Nitric Acid',
+                formula: 'HNO3',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'high',
+                notes: '4 bottles of 2.5L each from oxidizers 1 lower section - bottle 1'
+            },
+            {
+                name: 'Nitric Acid',
+                formula: 'HNO3',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'high',
+                notes: '4 bottles of 2.5L each from oxidizers 1 lower section - bottle 2'
+            },
+            {
+                name: 'Nitric Acid',
+                formula: 'HNO3',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'high',
+                notes: '4 bottles of 2.5L each from oxidizers 1 lower section - bottle 3'
+            },
+            {
+                name: 'Nitric Acid',
+                formula: 'HNO3',
+                quantity: 2.5,
+                unit: 'L',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'high',
+                notes: '4 bottles of 2.5L each from oxidizers 1 lower section - bottle 4'
+            },
+            {
+                name: 'Phosphoric Acid',
+                formula: 'H3PO4',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'medium',
+                notes: 'From oxidizers 1 lower section'
+            },
+            {
+                name: 'Orthophosphoric Acid',
+                formula: 'H3PO4',
+                quantity: 1,
+                unit: 'bottle',
+                location: 'Oxidizers 1 - Lower',
+                hazard: 'medium',
+                notes: 'From oxidizers 1 lower section (same as phosphoric acid)'
+            }
+        ];
+
+        // Add all oxidizer chemicals to the main array
+        let idCounter = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+        
+        [...oxidizers1Upper, ...oxidizers1Lower].forEach(chemical => {
+            this.chemicals.push({
+                id: idCounter++,
+                ...chemical
+            });
+        });
     }
 
     addChemical() {
