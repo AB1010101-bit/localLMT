@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "local-lmt",
   "public": true,
   "routes": [
     {

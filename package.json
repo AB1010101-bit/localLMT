@@ -4,12 +4,15 @@
   "description": "A modern, responsive web application for managing laboratory chemicals and apparatus inventory.",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "vercel --prod",
+    "deploy-preview": "vercel"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "vercel": "^48.4.0",
     "xlsx": "^0.18.5"
   }
 }
