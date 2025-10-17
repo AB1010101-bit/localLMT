@@ -4,9 +4,9 @@ class LabManagement {
     constructor() {
         // Check if we should reload from Excel data
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '5.0') {
+        if (dataVersion !== '6.0') {
             localStorage.clear();
-            localStorage.setItem('dataVersion', '5.0');
+            localStorage.setItem('dataVersion', '6.0');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -64,6 +64,15 @@ class LabManagement {
     }
 
     async loadSampleData() {
+        // Always check if we need to add oxidizer chemicals
+        const hasOxidizerChemicals = this.chemicals.some(chem => 
+            chem.location && chem.location.toLowerCase().includes('oxidizer'));
+        
+        if (!hasOxidizerChemicals) {
+            console.log('Loading oxidizer chemical inventory...');
+            this.loadOxidizerChemicals();
+        }
+
         // Load sample chemicals if none exist
         if (this.chemicals.length === 0 && this.apparatus.length === 0) {
             // Try to load from Excel data
@@ -78,6 +87,126 @@ class LabManagement {
         }
 
         this.saveData();
+    }
+
+    loadOxidizerChemicals() {
+        console.log('Adding oxidizer chemicals to inventory...');
+        let idCounter = this.getNextId();
+        
+        // Oxidizers 1 - Upper Section
+        const oxidizers1Upper = [
+            { name: 'Orthophosphoric acid', formula: 'H₃PO₄', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
+            { name: 'Hydrochloric acid', formula: 'HCl', quantity: 7.5, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
+            { name: 'Sulphuric acid', formula: 'H₂SO₄', quantity: 1, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
+            { name: 'Phosphorus pentaoxide', formula: 'P₂O₅', quantity: 2, unit: 'containers', location: 'Oxidizers 1 - Upper', hazard: 'extreme' },
+            { name: 'Phosphorus pentachloride', formula: 'PCl₅', quantity: 4, unit: 'bottles', location: 'Oxidizers 1 - Upper', hazard: 'extreme' },
+            { name: 'Orthophosphoric acid dilute', formula: 'H₃PO₄ (dil)', quantity: 1, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'medium' },
+            { name: 'Hydrochloric acid bench', formula: 'HCl', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Upper', hazard: 'medium' },
+            { name: 'Sulphuric acid bench', formula: 'H₂SO₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Upper', hazard: 'medium' }
+        ];
+
+        // Oxidizers 1 - Lower Section  
+        const oxidizers1Lower = [
+            { name: 'Nitric acid', formula: 'HNO₃', quantity: 10, unit: 'L', location: 'Oxidizers 1 - Lower', hazard: 'high' },
+            { name: 'Sulphuric acid', formula: 'H₂SO₄', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Lower', hazard: 'high' },
+            { name: 'Hydrochloric acid', formula: 'HCl', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Lower', hazard: 'high' },
+            { name: 'Ethanoic acid', formula: 'CH₃COOH', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Lower', hazard: 'high' },
+            { name: 'Ethanoic acid glacial', formula: 'CH₃COOH', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Lower', hazard: 'high' },
+            { name: 'Nitric acid bench', formula: 'HNO₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Lower', hazard: 'medium' },
+            { name: 'Ethanoic acid bench', formula: 'CH₃COOH', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Lower', hazard: 'medium' }
+        ];
+
+        // Oxidizers 2 - Organic Section 2.1
+        const oxidizers2Organic21 = [
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 6, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'low' },
+            { name: 'Propan-1-ol', formula: 'C₃H₈O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Propan-2-ol', formula: 'C₃H₈O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Butan-2-ol', formula: 'C₄H₁₀O', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Ethanol absolute', formula: 'C₂H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Ethanol IMS', formula: 'C₂H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Butanone', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Diethyl ether', formula: 'C₄H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Ethyl ethanoate', formula: 'C₄H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Petrol 40-60', formula: 'C₅-C₆', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Cyclohexane', formula: 'C₆H₁₂', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Benzene', formula: 'C₆H₆', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Toluene', formula: 'C₇H₈', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' }
+        ];
+
+        // Oxidizers 2 - Organic Section 2.2
+        const oxidizers2Organic22 = [
+            { name: 'Butan-1-ol', formula: 'C₄H₁₀O', quantity: 10, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Glycerol', formula: 'C₃H₈O₃', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'low' },
+            { name: 'Hexane', formula: 'C₆H₁₄', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Ethoxyethane', formula: 'C₄H₁₀O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Bromoethane', formula: 'C₂H₅Br', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.2', hazard: 'high' },
+            { name: 'Chloroform', formula: 'CHCl₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Carbon tetrachloride', formula: 'CCl₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Nitrobenzene', formula: 'C₆H₅NO₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'high' },
+            { name: 'Phenol', formula: 'C₆H₅OH', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Ethanal', formula: 'CH₃CHO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Methanal 40%', formula: 'CH₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' }
+        ];
+
+        // Oxidizers 2 - Organic Section 2.3
+        const oxidizers2Organic23 = [
+            { name: 'Methanol', formula: 'CH₃OH', quantity: 6, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Aniline', formula: 'C₆H₅NH₂', quantity: 1000, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Propanone', formula: 'C₃H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Phenylamine', formula: 'C₆H₅NH₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Bromoethane', formula: 'C₂H₅Br', quantity: 50, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Tetrachloromethane', formula: 'CCl₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Trichloroethene', formula: 'C₂HCl₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Xylene', formula: 'C₈H₁₀', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Styrene', formula: 'C₈H₈', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Octanol', formula: 'C₈H₁₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'low' },
+            { name: 'Cyclohexanol', formula: 'C₆H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Benzyl alcohol', formula: 'C₇H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Phenylethanol', formula: 'C₈H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Benzoic acid', formula: 'C₇H₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Salicylic acid', formula: 'C₇H₆O₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' }
+        ];
+
+        // Oxidizers 2 - Organic Section 2.4
+        const oxidizers2Organic24 = [
+            { name: 'Acetic anhydride', formula: '(CH₃CO)₂O', quantity: 5, unit: 'L', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Dichloromethane', formula: 'CH₂Cl₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Ethylene glycol', formula: 'C₂H₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Propylene glycol', formula: 'C₃H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Dimethyl sulfoxide', formula: 'C₂H₆OS', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'N-Methylformamide', formula: 'C₂H₅NO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Dimethylformamide', formula: 'C₃H₇NO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Tetrahydrofuran', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Dioxane', formula: 'C₄H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Pyridine', formula: 'C₅H₅N', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Quinoline', formula: 'C₉H₇N', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Morpholine', formula: 'C₄H₉NO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' }
+        ];
+
+        // Add all chemicals
+        [...oxidizers1Upper, ...oxidizers1Lower, ...oxidizers2Organic21, ...oxidizers2Organic22, ...oxidizers2Organic23, ...oxidizers2Organic24].forEach(chem => {
+            this.chemicals.push({
+                id: idCounter++,
+                name: chem.name,
+                formula: chem.formula,
+                quantity: chem.quantity,
+                unit: chem.unit,
+                location: chem.location,
+                expiry: '',
+                hazard: chem.hazard,
+                notes: ''
+            });
+        });
+        
+        const totalChemicals = oxidizers1Upper.length + oxidizers1Lower.length + oxidizers2Organic21.length + 
+                              oxidizers2Organic22.length + oxidizers2Organic23.length + oxidizers2Organic24.length;
+        console.log(`Added ${totalChemicals} oxidizer chemicals to inventory`);
+    }
+
+    getNextId() {
+        const maxChemId = this.chemicals.length > 0 ? Math.max(...this.chemicals.map(c => c.id)) : 0;
+        const maxAppId = this.apparatus.length > 0 ? Math.max(...this.apparatus.map(a => a.id)) : 0;
+        return Math.max(maxChemId, maxAppId) + 1;
     }
 
     loadExcelData(data) {
