@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration if needed
+        // Force a complete data restoration with all oxidizer chemicals
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.1') {
-            // Clear and force reload to restore all data
+        if (dataVersion !== '6.2') {
+            // Clear and force reload to restore all data with complete oxidizer inventory
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.1');
-            console.log('Data version updated - will restore complete inventory');
+            localStorage.setItem('dataVersion', '6.2');
+            console.log('Data version updated to 6.2 - will restore complete inventory with all oxidizer chemicals');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -139,38 +139,90 @@ class LabManagement {
             { name: 'Toluene', formula: 'C₇H₈', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' }
         ];
 
-        // Oxidizers 2 - Organic Section 2.2
+        // Oxidizers 2 - Organic Section 2.2 (COMPLETE LIST - 25 chemicals)
         const oxidizers2Organic22 = [
-            { name: 'Butan-1-ol', formula: 'C₄H₁₀O', quantity: 10, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            // Glycols & Diols
             { name: 'Glycerol', formula: 'C₃H₈O₃', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'low' },
-            { name: 'Hexane', formula: 'C₆H₁₄', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
-            { name: 'Ethoxyethane', formula: 'C₄H₁₀O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
-            { name: 'Bromoethane', formula: 'C₂H₅Br', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.2', hazard: 'high' },
-            { name: 'Chloroform', formula: 'CHCl₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
-            { name: 'Carbon tetrachloride', formula: 'CCl₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
-            { name: 'Nitrobenzene', formula: 'C₆H₅NO₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'high' },
-            { name: 'Phenol', formula: 'C₆H₅OH', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
-            { name: 'Ethanal', formula: 'CH₃CHO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
-            { name: 'Methanal 40%', formula: 'CH₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' }
+            { name: 'Propane-1,2-diol (Propylene Glycol)', formula: 'C₃H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'low' },
+            { name: 'Propane-1,2-diol (Propylene Glycol)', formula: 'C₃H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'low' },
+            
+            // Simple Alcohols  
+            { name: 'Ethanol', formula: 'C₂H₆O', quantity: 100, unit: 'ml', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Butan-1-ol', formula: 'C₄H₁₀O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Butan-1-ol', formula: 'C₄H₁₀O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Butan-1-ol', formula: 'C₄H₁₀O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Butan-1-ol', formula: 'C₄H₁₀O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Butan-2-ol', formula: 'C₄H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '2-Methylpropan-2-ol', formula: 'C₄H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'low' },
+            
+            // Alkanes
+            { name: 'n-Pentane', formula: 'C₅H₁₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'n-Heptane', formula: 'C₇H₁₆', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            
+            // Halogenated Compounds
+            { name: 'Bromoethane', formula: 'C₂H₅Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'high' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '1-Chlorobutane', formula: 'C₄H₉Cl', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            
+            // Ketones
+            { name: 'Butanone', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            { name: 'Butanone', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'medium' },
+            
+            // Aromatic Compounds
+            { name: 'Nitrobenzene', formula: 'C₆H₅NO₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.2', hazard: 'high' }
         ];
 
-        // Oxidizers 2 - Organic Section 2.3
+        // Oxidizers 2 - Organic Section 2.3 (COMPLETE LIST - 29 chemicals)
         const oxidizers2Organic23 = [
-            { name: 'Methanol', formula: 'CH₃OH', quantity: 6, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
-            { name: 'Aniline', formula: 'C₆H₅NH₂', quantity: 1000, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
-            { name: 'Propanone', formula: 'C₃H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Phenylamine', formula: 'C₆H₅NH₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
-            { name: 'Bromoethane', formula: 'C₂H₅Br', quantity: 50, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
-            { name: 'Tetrachloromethane', formula: 'CCl₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Trichloroethene', formula: 'C₂HCl₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Xylene', formula: 'C₈H₁₀', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Styrene', formula: 'C₈H₈', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: '1-Octanol', formula: 'C₈H₁₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'low' },
+            // High-Hazard Aromatic Amines
+            { name: 'Aniline', formula: 'C₆H₇N', quantity: 500, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Aniline', formula: 'C₆H₇N', quantity: 100, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Aniline', formula: 'C₆H₇N', quantity: 250, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Aniline', formula: 'C₆H₇N', quantity: 250, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            
+            // High-Hazard Alcohols  
+            { name: 'Methanol', formula: 'CH₄O', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Methanol', formula: 'CH₄O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            { name: 'Methanol', formula: 'CH₄O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            
+            // Regular Alcohols & Solvents
+            { name: 'Propan-1-ol', formula: 'C₃H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Propan-2-ol (Isopropanol)', formula: 'C₃H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
             { name: 'Cyclohexanol', formula: 'C₆H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Benzyl alcohol', formula: 'C₇H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Phenylethanol', formula: 'C₈H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Benzoic acid', formula: 'C₇H₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
-            { name: 'Salicylic acid', formula: 'C₇H₆O₃', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' }
+            { name: 'Methylated Spirit (Industrial)', formula: 'C₂H₆O + additives', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            
+            // Alkanes
+            { name: 'n-Pentane', formula: 'C₅H₁₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            
+            // Iodoalkanes (7 bottles)
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Iodobutane', formula: 'C₄H₉I', quantity: 25, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            
+            // Additional Halogenated Compounds
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '2-Bromobutane', formula: 'C₄H₉Br', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Chlorobutane', formula: 'C₄H₉Cl', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Chlorobutane', formula: 'C₄H₉Cl', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: '1-Chlorobutane', formula: 'C₄H₉Cl', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Bromoethane', formula: 'C₂H₅Br', quantity: 50, unit: 'ml', location: 'Oxidizers 2 - Organic 2.3', hazard: 'high' },
+            
+            // Ketones & Other Organics
+            { name: 'Propanone', formula: 'C₃H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.3', hazard: 'medium' },
+            { name: 'Octanoic acid', formula: 'C₈H₁₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'low' }
         ];
 
         // Oxidizers 2 - Organic Section 2.4
@@ -206,7 +258,7 @@ class LabManagement {
         
         const totalChemicals = oxidizers1Upper.length + oxidizers1Lower.length + oxidizers2Organic21.length + 
                               oxidizers2Organic22.length + oxidizers2Organic23.length + oxidizers2Organic24.length;
-        console.log(`Added ${totalChemicals} oxidizer chemicals to inventory`);
+        console.log(`Added ${totalChemicals} oxidizer chemicals to inventory (Complete inventory with all documented chemicals)`);
     }
 
     getNextId() {
