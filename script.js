@@ -563,39 +563,48 @@ class LabManagement {
             },
             'ammonium chloride': {
                 uses: 'Used in dry cell batteries, as fertilizer, flux for soldering, and cough medicine. Laboratory uses include buffer solutions and demonstrations.',
-                formula: 'NH₄Cl'
+                formula: 'NH₄Cl',
+                disposal: 'Generally safe for drain disposal when dissolved in water. Large amounts should be diluted before disposal. Can be used as fertilizer if pure. Avoid disposal in areas with sensitive vegetation.'
             },
             'barium chloride': {
                 uses: 'Used for testing sulfate ions, in manufacturing pigments, and in fireworks. Forms white precipitate with sulfates in qualitative analysis.',
-                formula: 'BaCl₂'
+                formula: 'BaCl₂',
+                disposal: 'TOXIC - never pour down drain or into environment. Precipitate with sulfate solution, filter, and send solid to hazardous waste disposal. Contains heavy metal - requires special handling.'
             },
             'cobalt chloride': {
                 uses: 'Used as humidity indicator (blue when dry, pink when wet), catalyst, and in invisible ink. Laboratory uses include testing for water and desiccant.',
-                formula: 'CoCl₂'
+                formula: 'CoCl₂',
+                disposal: 'TOXIC HEAVY METAL - collect for hazardous waste disposal. Never pour down drain. Can cause cancer and respiratory sensitization. Neutralize solutions and collect precipitate for proper disposal.'
             },
             'nickel chloride': {
                 uses: 'Used in electroplating nickel, as catalyst, and in nickel-cadmium batteries. Laboratory uses include analytical chemistry and synthesis.',
-                formula: 'NiCl₂'
+                formula: 'NiCl₂',
+                disposal: 'CARCINOGENIC HEAVY METAL - never pour down drain. Collect all solutions for hazardous waste disposal. Potential skin sensitizer - avoid contact. Requires special handling as toxic metal waste.'
             },
             'potassium chromate': {
                 uses: 'Yellow compound used as indicator in silver chloride titrations, in dyeing, and leather tanning. Used in analytical chemistry.',
-                formula: 'K₂CrO₄'
+                formula: 'K₂CrO₄',
+                disposal: 'CARCINOGENIC CHROMIUM(VI) - extremely hazardous. Never pour down drain. Reduce to Cr(III) with sodium bisulfite before disposal. Collect all waste for licensed hazardous waste contractor. Avoid dust and skin contact.'
             },
             'ammonium dichromate': {
                 uses: 'Orange oxidizing agent used in "volcano" demonstrations, photography, and lithography. Shows dramatic decomposition reaction when heated.',
-                formula: '(NH₄)₂Cr₂O₇'
+                formula: '(NH₄)₂Cr₂O₇',
+                disposal: 'EXTREMELY HAZARDOUS - carcinogenic Cr(VI). Reduce to Cr(III) with sodium bisulfite, neutralize, then dispose through hazardous waste contractor. Never pour down drain. Oxidizer - keep away from organics.'
             },
             'lead acetate': {
                 uses: 'Used for detecting hydrogen sulfide (forms black precipitate), in hair dyes, and historical paint pigment. Toxic compound used carefully in labs.',
-                formula: 'Pb(CH₃COO)₂'
+                formula: 'Pb(CH₃COO)₂',
+                disposal: 'TOXIC HEAVY METAL - never pour down drain or into environment. Precipitate with carbonate, filter, and send to hazardous waste disposal. Causes neurological damage - handle with extreme care.'
             },
             'iron oxide': {
                 uses: 'Rust, used as pigment (red, yellow, brown), in thermite reactions, and as polishing compound. Laboratory uses include redox reactions.',
-                formula: 'Fe₂O₃'
+                formula: 'Fe₂O₃',
+                disposal: 'Generally safe - can be disposed in regular trash if dry. Large amounts can be dissolved in acid, neutralized, and flushed down drain. Iron is not toxic and can be disposed with minimal environmental concerns.'
             },
             'calcium carbide': {
                 uses: 'Produces acetylene gas when reacted with water. Used in welding, carbide lamps, and synthesis of organic compounds. Demonstrates gas production and exothermic reactions.',
-                formula: 'CaC₂'
+                formula: 'CaC₂',
+                disposal: 'React slowly with water in well-ventilated area to produce acetylene (flammable gas) and calcium hydroxide. Allow complete reaction, neutralize resulting calcium hydroxide, then flush down drain. Never dispose dry - fire hazard.'
             },
             'potassium': {
                 uses: 'Highly reactive alkali metal stored in mineral oil. Used to demonstrate reactivity of Group 1 metals, reacts violently with water producing hydrogen and heat. EXTREME CAUTION required in handling.',
@@ -720,6 +729,88 @@ class LabManagement {
                 uses: 'Hygroscopic salt used for de-icing roads, desiccant, dust control, and food additive. Releases heat when dissolved in water. Used in concrete acceleration and brine refrigeration.',
                 formula: 'CaCl₂',
                 disposal: 'Generally safe for disposal down drain when dissolved in large amount of water. Concentrated solutions should be diluted first. Solid can go in trash unless contaminated.'
+            },
+            
+            // Additional organic compounds
+            'glycerol': {
+                uses: 'Glycerin, a viscous sweet liquid used in cosmetics, pharmaceuticals, food preservatives, and antifreeze. Laboratory uses include mounting media for microscopy, density gradient centrifugation, and as humectant. Non-toxic and biodegradable.',
+                formula: 'C₃H₈O₃',
+                disposal: 'Environmentally safe - biodegradable. Can be diluted and flushed down drain. Large amounts should be collected for biological waste disposal or composting. Food grade can go to organic waste.'
+            },
+            'butan-1-ol': {
+                uses: 'Primary alcohol (butanol) used as solvent for resins, oils, and dyes. Used in paint thinners, hydraulic fluids, and as extractant in liquid-liquid extractions. Shows primary alcohol reactions.',
+                formula: 'C₄H₁₀O',
+                disposal: 'Flammable organic solvent - collect for hazardous waste disposal. Do not pour down drain. Small amounts may be evaporated in fume hood with adequate ventilation. Dispose through organic waste program.'
+            },
+            'butan-2-ol': {
+                uses: 'Secondary alcohol (sec-butanol) used as solvent and in organic synthesis. Different reactivity than primary alcohols - used to demonstrate alcohol classification. Industrial solvent for lacquers and enamels.',
+                formula: 'C₄H₁₀O',
+                disposal: 'Flammable alcohol - collect for hazardous waste disposal. Do not pour down drain. Can be evaporated in small amounts in fume hood. Dispose through organic solvent waste program.'
+            },
+            '2-methylpropan-2-ol': {
+                uses: 'Tertiary alcohol (tert-butanol) with unique properties - solid at room temperature. Used as octane booster in gasoline, solvent for perfumes, and in organic synthesis. Demonstrates tertiary alcohol behavior.',
+                formula: 'C₄H₁₀O',
+                disposal: 'Flammable but less toxic than other butanols. Small amounts can be diluted and flushed. Larger amounts should be collected for organic waste disposal due to flammability.'
+            },
+            'propane-1,2-diol': {
+                uses: 'Propylene glycol used as antifreeze, food additive (E1520), cosmetic ingredient, and pharmaceutical solvent. Less toxic than ethylene glycol. Used in fog machines and e-cigarettes.',
+                formula: 'C₃H₈O₂',
+                disposal: 'Generally safe - biodegradable and low toxicity. Can be diluted and flushed down drain in small amounts. Large quantities should be disposed through organic waste due to high oxygen demand.'
+            },
+            'cyclohexane': {
+                uses: 'Non-polar cyclic hydrocarbon solvent used in paint thinners, adhesives, and as extraction solvent. Industrial precursor to nylon production. Demonstrates cycloalkane properties and conformational isomerism.',
+                formula: 'C₆H₁₂',
+                disposal: 'Flammable hydrocarbon - never pour down drain. Collect in labeled container for hazardous waste disposal. Can be incinerated at appropriate facility. Do not evaporate in lab - use fume hood.'
+            },
+            'cyclohexanone': {
+                uses: 'Ketone solvent used in adhesives, wood stains, paint and varnish removers. Precursor to nylon and caprolactam production. Demonstrates ketone reactions and nucleophilic addition.',
+                formula: 'C₆H₁₀O',
+                disposal: 'Organic ketone solvent - collect for hazardous waste disposal. Do not pour down drain. Flammable and potentially harmful to aquatic life. Dispose through organic waste program.'
+            },
+            'n-butylamine': {
+                uses: 'Primary aliphatic amine used in organic synthesis, rubber chemicals, and as corrosion inhibitor. Used to prepare pharmaceuticals and agricultural chemicals. Demonstrates amine basicity and nucleophilicity.',
+                formula: 'C₄H₁₁N',
+                disposal: 'TOXIC AND CORROSIVE - never pour down drain. Neutralize with acid to form salt, then dispose through hazardous waste. Caustic to skin and respiratory system. Handle with extreme care.'
+            },
+            'n-pentane': {
+                uses: 'Straight-chain alkane used as blowing agent in foam production, laboratory solvent, and reference standard. Highly volatile and flammable. Used in extraction and chromatography.',
+                formula: 'C₅H₁₂',
+                disposal: 'Extremely flammable hydrocarbon - collect for hazardous waste disposal. Never pour down drain. High vapor pressure - handle in well-ventilated area. Dispose through hydrocarbon waste program.'
+            },
+            'n-heptane': {
+                uses: 'Straight-chain alkane solvent used in paints, coatings, and as octane reference standard (0 octane rating). Non-polar extraction solvent and industrial degreaser.',
+                formula: 'C₇H₁₆',
+                disposal: 'Flammable hydrocarbon - collect for hazardous waste disposal. Do not pour down drain or evaporate in lab. Store in appropriate containers and dispose through licensed contractor.'
+            },
+            'bromoethane': {
+                uses: 'Alkyl halide (ethyl bromide) used in organic synthesis as alkylating agent. Demonstrates SN2 reactions and Grignard reagent preparation. Used in pharmaceutical synthesis. CAUTION: Potential carcinogen.',
+                formula: 'C₂H₅Br',
+                disposal: 'HAZARDOUS HALOGENATED COMPOUND - never pour down drain. Collect for hazardous waste disposal. Potential carcinogen - handle with extreme care in fume hood. Dispose through licensed contractor only.'
+            },
+            '1-iodobutane': {
+                uses: 'Alkyl iodide (butyl iodide) used in organic synthesis for alkylation reactions. Excellent leaving group in nucleophilic substitution. Used to prepare Grignard reagents and in Wurtz reactions.',
+                formula: 'C₄H₉I',
+                disposal: 'Halogenated organic compound - collect for hazardous waste disposal. Never pour down drain. Contains iodine - avoid exposure to light. Dispose through appropriate organic halogen waste program.'
+            },
+            '1-chlorobutane': {
+                uses: 'Alkyl chloride (butyl chloride) used as solvent and in organic synthesis. Demonstrates nucleophilic substitution reactions. Used in preparation of other organic compounds and as alkylating agent.',
+                formula: 'C₄H₉Cl',
+                disposal: 'Halogenated solvent - collect for hazardous waste disposal. Do not pour down drain or incinerate inappropriately. Store in appropriate containers and dispose through licensed waste contractor.'
+            },
+            '2-bromobutane': {
+                uses: 'Secondary alkyl halide used in organic synthesis to study substitution vs elimination reactions. Demonstrates chirality (has stereocenter) and different reactivity than primary halides.',
+                formula: 'C₄H₉Br',
+                disposal: 'Halogenated organic compound - collect for hazardous waste disposal. Never pour down drain. Handle in fume hood due to volatility. Dispose through appropriate halogenated waste program.'
+            },
+            'butanone': {
+                uses: 'Methyl ethyl ketone (MEK) - industrial solvent used in paints, adhesives, and coatings. Lower toxicity than acetone. Used in extraction and demonstrates ketone reactions.',
+                formula: 'C₄H₈O',
+                disposal: 'Flammable ketone solvent - collect for hazardous waste disposal. Do not pour down drain. Can be evaporated in small amounts in fume hood. Dispose through organic solvent waste program.'
+            },
+            'phosphorus pentachloride': {
+                uses: 'Powerful chlorinating agent used to convert alcohols to alkyl chlorides and carboxylic acids to acyl chlorides. Used in organic synthesis and pharmaceutical manufacturing. EXTREMELY REACTIVE with water.',
+                formula: 'PCl₅',
+                disposal: 'EXTREMELY HAZARDOUS - reacts violently with water to produce HCl and phosphoric acid. Add slowly to large excess of ice water in fume hood, neutralize resulting acid with sodium bicarbonate, dispose neutralized solution down drain.'
             }
         };
 
