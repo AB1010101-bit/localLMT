@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration with all oxidizer chemicals
+        // Force a complete data restoration with ALL documented oxidizer chemicals  
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.2') {
-            // Clear and force reload to restore all data with complete oxidizer inventory
+        if (dataVersion !== '6.3') {
+            // Clear and force reload to restore complete documentation-accurate inventory
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.2');
-            console.log('Data version updated to 6.2 - will restore complete inventory with all oxidizer chemicals');
+            localStorage.setItem('dataVersion', '6.3');
+            console.log('Data version updated to 6.3 - restoring COMPLETE documentation-accurate oxidizer inventory');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -99,16 +99,21 @@ class LabManagement {
         console.log('Adding oxidizer chemicals to inventory...');
         let idCounter = this.getNextId();
         
-        // Oxidizers 1 - Upper Section
+        // Oxidizers 1 - Upper Section (8 chemicals per documentation)
         const oxidizers1Upper = [
-            { name: 'Orthophosphoric acid', formula: 'H₃PO₄', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
-            { name: 'Hydrochloric acid', formula: 'HCl', quantity: 7.5, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
-            { name: 'Sulphuric acid', formula: 'H₂SO₄', quantity: 1, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
-            { name: 'Phosphorus pentaoxide', formula: 'P₂O₅', quantity: 2, unit: 'containers', location: 'Oxidizers 1 - Upper', hazard: 'extreme' },
-            { name: 'Phosphorus pentachloride', formula: 'PCl₅', quantity: 4, unit: 'bottles', location: 'Oxidizers 1 - Upper', hazard: 'extreme' },
-            { name: 'Orthophosphoric acid dilute', formula: 'H₃PO₄ (dil)', quantity: 1, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'medium' },
-            { name: 'Hydrochloric acid bench', formula: 'HCl', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Upper', hazard: 'medium' },
-            { name: 'Sulphuric acid bench', formula: 'H₂SO₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Upper', hazard: 'medium' }
+            // Strong Acids
+            { name: 'Ethanoic Acid', formula: 'CH₃COOH', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Upper', hazard: 'medium' },
+            { name: 'Hydrochloric Acid', formula: 'HCl', quantity: 5, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
+            { name: 'Hydrochloric Acid', formula: 'HCl', quantity: 2.5, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
+            { name: 'Sulphuric Acid', formula: 'H₂SO₄', quantity: 1, unit: 'L', location: 'Oxidizers 1 - Upper', hazard: 'high' },
+            
+            // Phosphorus Compounds
+            { name: 'Metaphosphoric Acid Powder', formula: 'HPO₃', quantity: 1, unit: 'container', location: 'Oxidizers 1 - Upper', hazard: 'medium' },
+            { name: 'Phosphorus Pentaoxide', formula: 'P₂O₅', quantity: 2, unit: 'containers', location: 'Oxidizers 1 - Upper', hazard: 'extreme' },
+            { name: 'Phosphorus Pentachloride', formula: 'PCl₅', quantity: 4, unit: 'bottles', location: 'Oxidizers 1 - Upper', hazard: 'extreme' },
+            
+            // Unidentified Materials
+            { name: 'Unidentified Chemical', formula: 'Unknown', quantity: 3, unit: 'bottles', location: 'Oxidizers 1 - Upper', hazard: 'high' }
         ];
 
         // Oxidizers 1 - Lower Section  
@@ -122,21 +127,30 @@ class LabManagement {
             { name: 'Ethanoic acid bench', formula: 'CH₃COOH', quantity: 1, unit: 'bottle', location: 'Oxidizers 1 - Lower', hazard: 'medium' }
         ];
 
-        // Oxidizers 2 - Organic Section 2.1
+        // Oxidizers 2 - Organic Section 2.1 (13 chemicals per documentation)
         const oxidizers2Organic21 = [
-            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 6, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'low' },
-            { name: 'Propan-1-ol', formula: 'C₃H₈O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Propan-2-ol', formula: 'C₃H₈O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Butan-2-ol', formula: 'C₄H₁₀O', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Ethanol absolute', formula: 'C₂H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Ethanol IMS', formula: 'C₂H₆O', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Butanone', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Diethyl ether', formula: 'C₄H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Ethyl ethanoate', formula: 'C₄H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Petrol 40-60', formula: 'C₅-C₆', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Cyclohexane', formula: 'C₆H₁₂', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Benzene', formula: 'C₆H₆', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
-            { name: 'Toluene', formula: 'C₇H₈', quantity: 1, unit: 'L', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' }
+            // Primary Alcohols
+            { name: 'n-Amyl Alcohol (Pentanol)', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Pentan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            
+            // Tertiary Alcohols
+            { name: 'tert-Butanol', formula: 'C₄H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'low' },
+            
+            // Amines
+            { name: 'n-Butylamine', formula: 'C₄H₁₁N', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            
+            // Ketones
+            { name: 'Cyclohexanone', formula: 'C₆H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Cyclohexanone', formula: 'C₆H₁₀O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            
+            // Cyclic Hydrocarbons
+            { name: 'Cyclohexane', formula: 'C₆H₁₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' },
+            { name: 'Cyclohexane', formula: 'C₆H₁₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.1', hazard: 'medium' }
         ];
 
         // Oxidizers 2 - Organic Section 2.2 (COMPLETE LIST - 25 chemicals)
@@ -225,20 +239,29 @@ class LabManagement {
             { name: 'Octanoic acid', formula: 'C₈H₁₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.3', hazard: 'low' }
         ];
 
-        // Oxidizers 2 - Organic Section 2.4
+        // Oxidizers 2 - Organic Section 2.4 (12 chemicals per documentation)
         const oxidizers2Organic24 = [
-            { name: 'Acetic anhydride', formula: '(CH₃CO)₂O', quantity: 5, unit: 'L', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            // High-Hazard Synthetic Reagents
+            { name: 'Acetic Anhydride', formula: 'C₄H₆O₃', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Acetic Anhydride', formula: 'C₄H₆O₃', quantity: 2.5, unit: 'L', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
             { name: 'Dichloromethane', formula: 'CH₂Cl₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
-            { name: 'Ethylene glycol', formula: 'C₂H₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
-            { name: 'Propylene glycol', formula: 'C₃H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
-            { name: 'Dimethyl sulfoxide', formula: 'C₂H₆OS', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
-            { name: 'N-Methylformamide', formula: 'C₂H₅NO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
-            { name: 'Dimethylformamide', formula: 'C₃H₇NO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
-            { name: 'Tetrahydrofuran', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
-            { name: 'Dioxane', formula: 'C₄H₈O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
-            { name: 'Pyridine', formula: 'C₅H₅N', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
-            { name: 'Quinoline', formula: 'C₉H₇N', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
-            { name: 'Morpholine', formula: 'C₄H₉NO', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' }
+            { name: 'Methanoic Acid (Formic Acid)', formula: 'HCOOH', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            { name: 'Ethanediol (Ethylene Glycol)', formula: 'C₂H₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'high' },
+            
+            // Medium-Hazard Alcohols
+            { name: 'Amyl Alcohol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: '3-Methylbutan-1-ol', formula: 'C₅H₁₂O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Propan-1-ol', formula: 'C₃H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            
+            // Ketones & Cyclic Compounds
+            { name: 'Butanone', formula: 'C₄H₈O', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            { name: 'Cyclohexane', formula: 'C₆H₁₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            
+            // Organic Acids
+            { name: 'Propanoic Acid', formula: 'C₃H₆O₂', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' },
+            
+            // Specialized Esters  
+            { name: 'Di-n-butyl Phthalate', formula: 'C₁₆H₂₂O₄', quantity: 1, unit: 'bottle', location: 'Oxidizers 2 - Organic 2.4', hazard: 'medium' }
         ];
 
         // Add all chemicals
