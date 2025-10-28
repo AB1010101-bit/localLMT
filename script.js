@@ -92,6 +92,16 @@ class LabManagement {
             localStorage.setItem('hasOxidizers', 'true');
         }
 
+        // Check if we need to add shelf chemicals (A1, A2, B1)
+        const hasShelfChemicals = this.chemicals.some(chem => 
+            chem.location && (chem.location.includes('Shelf A1') || chem.location.includes('Shelf A2') || chem.location.includes('Shelf B1')));
+        
+        if (!hasShelfChemicals) {
+            console.log('Adding shelf chemical inventory (A1, A2, B1)...');
+            this.addShelfChemicals();
+            localStorage.setItem('hasShelfChemicals', 'true');
+        }
+
         this.saveData();
     }
 
@@ -1049,6 +1059,589 @@ class LabManagement {
         }
 
         return added;
+    }
+
+    addShelfChemicals() {
+        // Add chemicals from Shelf A1, A2, and B1
+        const shelfChemicals = [
+            // Shelf A1 - Aluminium-based compounds
+            {
+                name: 'Aluminium Metal powder',
+                formula: 'Al',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '2002',
+                hazard: 'high',
+                notes: 'Flammable metal powder - keep away from ignition sources'
+            },
+            {
+                name: 'Aluminium Metal powder',
+                formula: 'Al',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '2008',
+                hazard: 'high',
+                notes: 'Flammable metal powder - keep away from ignition sources'
+            },
+            {
+                name: 'Aluminium Metal powder',
+                formula: 'Al',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '2007',
+                hazard: 'high',
+                notes: 'Flammable metal powder - keep away from ignition sources'
+            },
+            {
+                name: 'Aluminium Metal powder',
+                formula: 'Al',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '2009',
+                hazard: 'high',
+                notes: 'Flammable metal powder - keep away from ignition sources'
+            },
+            {
+                name: 'Aluminium Metal powder',
+                formula: 'Al',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Flammable metal powder - keep away from ignition sources'
+            },
+            {
+                name: 'Aluminium chloride-6-water',
+                formula: 'AlCl₃·6H₂O',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Corrosive - causes severe burns'
+            },
+            {
+                name: 'Aluminium Nitrate',
+                formula: 'Al(NO₃)₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - may intensify fire'
+            },
+            {
+                name: 'Aluminium Orthophosphate',
+                formula: 'AlPO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Low hazard compound'
+            },
+            {
+                name: 'Aluminium Sulphate Purified',
+                formula: 'Al₂(SO₄)₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '2026',
+                hazard: 'low',
+                notes: '2 bottles available'
+            },
+            {
+                name: 'Rivets Aluminium',
+                formula: 'Al',
+                quantity: 1,
+                unit: 'pack',
+                location: 'Shelf A1',
+                expiry: '2017',
+                hazard: 'low',
+                notes: 'Metal rivets for construction'
+            },
+            {
+                name: 'Aluminium oxide',
+                formula: 'Al₂O₃',
+                quantity: 10,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Nearly depleted - needs restocking'
+            },
+            {
+                name: 'Aluminium Chloride',
+                formula: 'AlCl₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Anhydrous form - highly corrosive'
+            },
+            {
+                name: 'Aluminium potassium sulphate',
+                formula: 'KAl(SO₄)₂·12H₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf A1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Alum - used for water purification'
+            },
+
+            // Shelf A2 - Ammonium-based compounds
+            {
+                name: 'Ammonium Chloride',
+                formula: 'NH₄Cl',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Common ammonium salt'
+            },
+            {
+                name: 'Ammonium Benzoate',
+                formula: 'NH₄C₇H₅O₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Organic ammonium salt'
+            },
+            {
+                name: 'Ammonium Benzoate',
+                formula: 'NH₄C₇H₅O₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Organic ammonium salt - container 1'
+            },
+            {
+                name: 'Ammonium Benzoate',
+                formula: 'NH₄C₇H₅O₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Organic ammonium salt - container 2'
+            },
+            {
+                name: 'Ammonium Cupric Sulphate',
+                formula: '(NH₄)₂Cu(SO₄)₂·6H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Copper-containing compound'
+            },
+            {
+                name: 'Ammonium Cupric Chloride',
+                formula: '(NH₄)₂CuCl₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Copper-containing compound - corrosive'
+            },
+            {
+                name: 'Ammonium Dichromate',
+                formula: '(NH₄)₂Cr₂O₇',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'CARCINOGEN - Handle with extreme care'
+            },
+            {
+                name: 'Ammonium Dichromate',
+                formula: '(NH₄)₂Cr₂O₇',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '2004',
+                hazard: 'high',
+                notes: 'CARCINOGEN - Handle with extreme care'
+            },
+            {
+                name: 'Ammonium Iron (II) Sulphate',
+                formula: '(NH₄)₂Fe(SO₄)₂·6H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Mohr\'s salt - analytical reagent'
+            },
+            {
+                name: 'Ammonium Iodide',
+                formula: 'NH₄I',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Light sensitive - store in dark'
+            },
+            {
+                name: 'Ammonium Nitrate',
+                formula: 'NH₄NO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'OXIDIZER - Explosive potential'
+            },
+            {
+                name: 'Ammonium Dihydrogen Orthophosphate',
+                formula: 'NH₄H₂PO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: '2 containers available'
+            },
+            {
+                name: 'Ammonium Oxalate',
+                formula: '(NH₄)₂C₂O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Toxic if ingested'
+            },
+            {
+                name: 'Ammonium Thiocyanate',
+                formula: 'NH₄SCN',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2 containers - analytical reagent'
+            },
+            {
+                name: 'Ammonium Thiosulphate',
+                formula: '(NH₄)₂S₂O₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Photography fixer'
+            },
+            {
+                name: 'Ammonium Sulphate',
+                formula: '(NH₄)₂SO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: '3 containers available'
+            },
+            {
+                name: 'Ammonium Sulphate',
+                formula: '(NH₄)₂SO₄',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Large container'
+            },
+            {
+                name: 'Aluminium metal leaf',
+                formula: 'Al',
+                quantity: 10,
+                unit: 'sheets',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Thin metal sheets'
+            },
+            {
+                name: 'Ammonium metavanadate',
+                formula: 'NH₄VO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic vanadium compound'
+            },
+            {
+                name: 'Ammonium ethanedioate-1-water',
+                formula: '(NH₄)₂C₂O₄·H₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Ammonium oxalate monohydrate'
+            },
+            {
+                name: 'Antimony metal',
+                formula: 'Sb',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Heavy metal - toxic'
+            },
+            {
+                name: 'Antimony oxide',
+                formula: 'Sb₂O₃',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf A2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic compound - use fume hood'
+            },
+
+            // Shelf B1 - Barium-based compounds
+            {
+                name: 'Barium Acetate',
+                formula: 'Ba(C₂H₃O₂)₂',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic barium compound'
+            },
+            {
+                name: 'Barium Bromide',
+                formula: 'BaBr₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic - 2 containers available'
+            },
+            {
+                name: 'Barium Carbonate',
+                formula: 'BaCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic barium compound'
+            },
+            {
+                name: 'Barium Carbonate',
+                formula: 'BaCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '2003',
+                hazard: 'high',
+                notes: 'Toxic barium compound - dated batch'
+            },
+            {
+                name: 'Barium Chloride',
+                formula: 'BaCl₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic - cardiac effects'
+            },
+            {
+                name: 'Barium Hydroxide',
+                formula: 'Ba(OH)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Caustic and toxic - 2 containers'
+            },
+            {
+                name: 'Barium Hydroxide 8H2O',
+                formula: 'Ba(OH)₂·8H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Hydrated form - caustic and toxic'
+            },
+            {
+                name: 'Barium Nitrate',
+                formula: 'Ba(NO₃)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Oxidizer and toxic - 6 containers'
+            },
+            {
+                name: 'Barium Nitrate',
+                formula: 'Ba(NO₃)₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Oxidizer and toxic - 3 containers'
+            },
+            {
+                name: 'Barium oxide anhydrous',
+                formula: 'BaO',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Highly caustic and toxic'
+            },
+            {
+                name: 'Barium Peroxide',
+                formula: 'BaO₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Strong oxidizer and toxic - 2 containers'
+            },
+            {
+                name: 'Barium sulphate',
+                formula: 'BaSO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Insoluble - relatively safe barium compound - 2 containers'
+            },
+            {
+                name: 'Brass (rivets)',
+                formula: 'Cu/Zn alloy',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Metal alloy rivets - 2 containers'
+            },
+            {
+                name: 'Bismuth nitrate',
+                formula: 'Bi(NO₃)₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Heavy metal compound'
+            },
+            {
+                name: 'Bismuth Oxide',
+                formula: 'Bi₂O₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Heavy metal oxide'
+            },
+            {
+                name: 'Bismuth',
+                formula: 'Bi',
+                quantity: 25,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Pure bismuth metal'
+            },
+            {
+                name: 'Cadmium Oxide',
+                formula: 'CdO',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'HIGHLY TOXIC CARCINOGEN - 2 containers'
+            },
+            {
+                name: 'Barium chromate',
+                formula: 'BaCrO₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'CARCINOGEN - Toxic chromium compound - 2 containers'
+            },
+            {
+                name: 'Barium iodide',
+                formula: 'BaI₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf B1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic barium compound - 2 bottles'
+            }
+        ];
+
+        let added = 0;
+        let nextId = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+
+        shelfChemicals.forEach(chemical => {
+            // Check if this exact chemical already exists (by name, formula, quantity, and location)
+            const exists = this.chemicals.some(c => 
+                c.name === chemical.name && 
+                c.formula === chemical.formula &&
+                c.quantity === chemical.quantity &&
+                c.location === chemical.location &&
+                c.expiry === chemical.expiry
+            );
+
+            if (!exists) {
+                this.chemicals.push({
+                    id: nextId++,
+                    ...chemical
+                });
+                added++;
+            }
+        });
+
+        if (added > 0) {
+            this.saveData();
+            this.renderItems();
+            console.log(`Added ${added} shelf chemicals to the inventory!`);
+            return added;
+        } else {
+            console.log('All shelf chemicals are already in the inventory.');
+            return 0;
+        }
     }
 
     // Admin functions for form control - only accessible through code
@@ -6401,6 +6994,31 @@ window.addEssentialChemicals = function() {
         setTimeout(() => {
             if (window.labSystem) {
                 window.labSystem.addEssentialChemicals();
+            } else {
+                alert('System is still loading. Please try again in a moment.');
+            }
+        }, 1000);
+    }
+};
+
+// Function to manually add shelf chemicals
+window.addShelfChemicals = function() {
+    if (window.labSystem) {
+        const added = window.labSystem.addShelfChemicals();
+        if (added > 0) {
+            alert(`Added ${added} chemicals from shelves A1, A2, and B1 to the inventory!`);
+        } else {
+            alert('All shelf chemicals are already in the inventory.');
+        }
+    } else {
+        setTimeout(() => {
+            if (window.labSystem) {
+                const added = window.labSystem.addShelfChemicals();
+                if (added > 0) {
+                    alert(`Added ${added} chemicals from shelves A1, A2, and B1 to the inventory!`);
+                } else {
+                    alert('All shelf chemicals are already in the inventory.');
+                }
             } else {
                 alert('System is still loading. Please try again in a moment.');
             }
