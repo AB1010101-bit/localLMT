@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration with ALL documented oxidizer chemicals  
+        // Force a complete data restoration with ALL documented chemicals including new shelves
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.3') {
-            // Clear and force reload to restore complete documentation-accurate inventory
+        if (dataVersion !== '6.4') {
+            // Clear and force reload to restore complete inventory including B2, C1, C2
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.3');
-            console.log('Data version updated to 6.3 - restoring COMPLETE documentation-accurate oxidizer inventory');
+            localStorage.setItem('dataVersion', '6.4');
+            console.log('Data version updated to 6.4 - restoring COMPLETE inventory with all shelves B2, C1, C2');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -92,16 +92,22 @@ class LabManagement {
             localStorage.setItem('hasOxidizers', 'true');
         }
 
-        // Check if we need to add shelf chemicals (A1, A2, B1, B2, C1, C2)
-        const hasShelfChemicals = this.chemicals.some(chem => 
-            chem.location && (chem.location.includes('Shelf A1') || chem.location.includes('Shelf A2') || 
-                             chem.location.includes('Shelf B1') || chem.location.includes('Shelf B2') ||
-                             chem.location.includes('Shelf C1') || chem.location.includes('Shelf C2')));
+        // Check if we need to add shelf chemicals - check each shelf individually
+        const hasShelfA1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf A1'));
+        const hasShelfA2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf A2'));
+        const hasShelfB1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf B1'));
+        const hasShelfB2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf B2'));
+        const hasShelfC1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf C1'));
+        const hasShelfC2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf C2'));
         
-        if (!hasShelfChemicals) {
-            console.log('Adding shelf chemical inventory (A1, A2, B1, B2, C1, C2)...');
+        // Force reload for version 6.4 to include new shelves B2, C1, C2
+        const currentVersion = localStorage.getItem('shelfChemicalsVersion') || '6.3';
+        
+        if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || currentVersion !== '6.4') {
+            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2)...');
             this.addShelfChemicals();
             localStorage.setItem('hasShelfChemicals', 'true');
+            localStorage.setItem('shelfChemicalsVersion', '6.4');
         }
 
         this.saveData();
