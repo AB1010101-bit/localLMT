@@ -92,12 +92,14 @@ class LabManagement {
             localStorage.setItem('hasOxidizers', 'true');
         }
 
-        // Check if we need to add shelf chemicals (A1, A2, B1)
+        // Check if we need to add shelf chemicals (A1, A2, B1, B2, C1, C2)
         const hasShelfChemicals = this.chemicals.some(chem => 
-            chem.location && (chem.location.includes('Shelf A1') || chem.location.includes('Shelf A2') || chem.location.includes('Shelf B1')));
+            chem.location && (chem.location.includes('Shelf A1') || chem.location.includes('Shelf A2') || 
+                             chem.location.includes('Shelf B1') || chem.location.includes('Shelf B2') ||
+                             chem.location.includes('Shelf C1') || chem.location.includes('Shelf C2')));
         
         if (!hasShelfChemicals) {
-            console.log('Adding shelf chemical inventory (A1, A2, B1)...');
+            console.log('Adding shelf chemical inventory (A1, A2, B1, B2, C1, C2)...');
             this.addShelfChemicals();
             localStorage.setItem('hasShelfChemicals', 'true');
         }
@@ -1608,6 +1610,742 @@ class LabManagement {
                 expiry: '',
                 hazard: 'high',
                 notes: 'Toxic barium compound - 2 bottles'
+            },
+
+            // Shelf B2 - Calcium-based compounds
+            {
+                name: 'Calcium metal granules',
+                formula: 'Ca',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Highly reactive with water - 4 containers'
+            },
+            {
+                name: 'Calcium carbonate (unilab)',
+                formula: 'CaCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '1999',
+                hazard: 'low',
+                notes: 'EXPIRED - evaluate for disposal'
+            },
+            {
+                name: 'Calcium acetate (dried)',
+                formula: 'Ca(C₂H₃O₂)₂',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: '2 containers available'
+            },
+            {
+                name: 'Calcium carbonate (unilab)',
+                formula: 'CaCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Standard grade'
+            },
+            {
+                name: 'Calcium carbonate 98%',
+                formula: 'CaCO₃',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'High purity grade'
+            },
+            {
+                name: 'Calcium carbonate (marble chips)',
+                formula: 'CaCO₃',
+                quantity: 3000,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Large pieces for gas generation'
+            },
+            {
+                name: 'Calcium chloride anhydrous',
+                formula: 'CaCl₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Hygroscopic - 7 containers'
+            },
+            {
+                name: 'Calcium chloride',
+                formula: 'CaCl₂',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Small quantity container'
+            },
+            {
+                name: 'Calcium chloride 6-water',
+                formula: 'CaCl₂·6H₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Hexahydrate form'
+            },
+            {
+                name: 'Calcium hydroxide',
+                formula: 'Ca(OH)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Caustic - stored securely'
+            },
+            {
+                name: 'Calcium fluoride precipitated',
+                formula: 'CaF₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Toxic if ingested'
+            },
+            {
+                name: 'Calcium formate',
+                formula: 'Ca(HCOO)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Organic calcium salt'
+            },
+            {
+                name: 'Calcium hydride',
+                formula: 'CaH₂',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Reacts violently with water - flammable gas'
+            },
+            {
+                name: 'Calcium iodide',
+                formula: 'CaI₂',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Light sensitive - 2 bottles'
+            },
+            {
+                name: 'Marble chips (large)',
+                formula: 'CaCO₃',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Large size for demonstrations'
+            },
+            {
+                name: 'Calcium oxalate',
+                formula: 'CaC₂O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2 containers available'
+            },
+            {
+                name: 'Calcium phosphate',
+                formula: 'Ca₃(PO₄)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Bone ash substitute'
+            },
+            {
+                name: 'Calcium Stearate',
+                formula: 'Ca(C₁₈H₃₅O₂)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Fatty acid salt'
+            },
+            {
+                name: 'Calcium nitrate-4-Water',
+                formula: 'Ca(NO₃)₂·4H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - 3 containers'
+            },
+            {
+                name: 'Calcium tetrahydrogen phosphate',
+                formula: 'Ca(H₂PO₄)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Monocalcium phosphate'
+            },
+            {
+                name: 'Calcium sulphate (dihydrogen)',
+                formula: 'CaSO₄·2H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf B2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Gypsum - 2 containers'
+            },
+
+            // Shelf C1 - Transition metal compounds
+            {
+                name: 'Chlorine water',
+                formula: 'Cl₂(aq)',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf C1',
+                expiry: 'expired',
+                hazard: 'high',
+                notes: 'EXPIRED - corrosive oxidizer - dispose safely'
+            },
+            {
+                name: 'Chromic Potassium Sulphate 12H2O',
+                formula: 'KCr(SO₄)₂·12H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Chrome alum - potential carcinogen'
+            },
+            {
+                name: 'Chromic Nitrate',
+                formula: 'Cr(NO₃)₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Chromium compound - handle with care'
+            },
+            {
+                name: 'Chromium (III) Oxide Green',
+                formula: 'Cr₂O₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2 containers - pigment grade'
+            },
+            {
+                name: 'Chromium metal',
+                formula: 'Cr',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Pure chromium metal'
+            },
+            {
+                name: 'Cobalt (II) Sulphate 7H2O',
+                formula: 'CoSO₄·7H₂O',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic - potential allergen'
+            },
+            {
+                name: 'Cobalt (II) Nitrate 6H2O',
+                formula: 'Co(NO₃)₂·6H₂O',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Toxic cobalt compound'
+            },
+            {
+                name: 'Cobalt Chloride',
+                formula: 'CoCl₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Color-changing indicator'
+            },
+            {
+                name: 'Cobalt metal',
+                formula: 'Co',
+                quantity: 25,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Pure cobalt metal'
+            },
+            {
+                name: 'Cobalt chloride',
+                formula: 'CoCl₂',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Smaller container'
+            },
+            {
+                name: 'Cobalt (II) Oxide black',
+                formula: 'CoO',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Black cobalt oxide'
+            },
+            {
+                name: 'Cobalt (II) carbonate basic',
+                formula: 'CoCO₃·Co(OH)₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: '4 containers - basic carbonate'
+            },
+            {
+                name: 'Cobalt Sulphate',
+                formula: 'CoSO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Anhydrous form'
+            },
+            {
+                name: 'Cobalt nitrate',
+                formula: 'Co(NO₃)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Anhydrous cobalt nitrate'
+            },
+            {
+                name: 'Cobalt ammonium sulphate',
+                formula: '(NH₄)₂Co(SO₄)₂',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Double salt'
+            },
+            {
+                name: 'Copper rivets',
+                formula: 'Cu',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Copper metal fasteners'
+            },
+            {
+                name: 'Copper (II) acetate 1-hydrate',
+                formula: 'Cu(C₂H₃O₂)₂·H₂O',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Verdigris color'
+            },
+            {
+                name: 'Copper rivets',
+                formula: 'Cu',
+                quantity: 150,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: '3 containers of rivets'
+            },
+            {
+                name: 'Copper metal',
+                formula: 'Cu',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Pure copper pieces'
+            },
+            {
+                name: 'Copper metal powder precipitated',
+                formula: 'Cu',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Fine powder - 5 containers'
+            },
+            {
+                name: 'Copper (I) chloride',
+                formula: 'CuCl',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Cuprous chloride - 2 containers'
+            },
+            {
+                name: 'Copper powder precipitated',
+                formula: 'Cu',
+                quantity: 200,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Precipitated copper powder'
+            },
+            {
+                name: 'Copper (II) carbonate',
+                formula: 'CuCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Basic copper carbonate'
+            },
+            {
+                name: 'Copper (II) carbonate',
+                formula: 'CuCO₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Smaller container'
+            },
+            {
+                name: 'Copper (II) oxide',
+                formula: 'CuO',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Black copper oxide - 5 containers'
+            },
+            {
+                name: 'Copper metal strips',
+                formula: 'Cu',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Metal strips for electrodes'
+            },
+            {
+                name: 'Copper oxalate',
+                formula: 'CuC₂O₄',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Copper salt of oxalic acid'
+            },
+            {
+                name: 'Copper oxide',
+                formula: 'CuO',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'General purpose copper oxide'
+            },
+            {
+                name: 'Copper 2 oxide wire form',
+                formula: 'CuO',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Wire-shaped oxide'
+            },
+            {
+                name: 'Copper (I) Oxide Red (cuprous)',
+                formula: 'Cu₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Red cuprous oxide'
+            },
+            {
+                name: 'Copper sulphate',
+                formula: 'CuSO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Anhydrous white form'
+            },
+            {
+                name: 'Copper oxide wire form',
+                formula: 'CuO',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Wire form - 2 containers'
+            },
+            {
+                name: 'Copper sulphate anhydrous',
+                formula: 'CuSO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'White anhydrous form'
+            },
+            {
+                name: 'Dirty copper',
+                formula: 'Cu (impure)',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Impure copper metal'
+            },
+            {
+                name: 'Copper (II) sulphate-5-water',
+                formula: 'CuSO₄·5H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Blue pentahydrate'
+            },
+            {
+                name: 'Copper metal powder',
+                formula: 'Cu',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Fine copper powder'
+            },
+            {
+                name: 'Iodine resublimed',
+                formula: 'I₂',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Purified iodine crystals - toxic/corrosive'
+            },
+            {
+                name: 'Ferric chloride',
+                formula: 'FeCl₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: 'expired',
+                hazard: 'medium',
+                notes: 'EXPIRED - 2 containers - corrosive'
+            },
+            {
+                name: 'Iron metal fillings',
+                formula: 'Fe',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Iron metal filings'
+            },
+
+            // Shelf C2 - Iron compounds
+            {
+                name: 'Iron (III) chloride 6-water',
+                formula: 'FeCl₃·6H₂O',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Hexahydrate form - corrosive'
+            },
+            {
+                name: 'Iron (III) chloride 6-water',
+                formula: 'FeCl₃·6H₂O',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: 'expired',
+                hazard: 'medium',
+                notes: 'EXPIRED - hexahydrate - dispose safely'
+            },
+            {
+                name: 'Iron (II) carbonate saccharated',
+                formula: 'FeCO₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Ferrous carbonate with sugar'
+            },
+            {
+                name: 'Iron metal fillings fine',
+                formula: 'Fe',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Fine iron filings - 3 containers'
+            },
+            {
+                name: 'Iron (III) oxide',
+                formula: 'Fe₂O₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Ferric oxide - 2 containers'
+            },
+            {
+                name: 'Iron (III) oxide',
+                formula: 'Fe₂O₃',
+                quantity: 2000,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Large container - 2kg'
+            },
+            {
+                name: 'Iron (III) nitrate 9-water',
+                formula: 'Fe(NO₃)₃·9H₂O',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Nonahydrate form - oxidizer'
+            },
+            {
+                name: 'Ferric oxide red',
+                formula: 'Fe₂O₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Red iron oxide - 2 containers'
+            },
+            {
+                name: 'Ferric oxide calcined',
+                formula: 'Fe₂O₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Heat-treated iron oxide'
+            },
+            {
+                name: 'Iron carbonate',
+                formula: 'FeCO₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Ferrous carbonate - 2 containers'
+            },
+            {
+                name: 'Ferrous oxalate',
+                formula: 'FeC₂O₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Iron(II) oxalate dihydrate'
+            },
+            {
+                name: 'Iron (II) sulphate',
+                formula: 'FeSO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Ferrous sulphate - 4 containers'
+            },
+            {
+                name: 'Ferrous sulphide technical',
+                formula: 'FeS',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf C2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'DANGER: Can release H₂S gas - broken sticks'
             }
         ];
 
