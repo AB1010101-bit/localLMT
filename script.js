@@ -2954,7 +2954,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Vintage chemical stock'
+                notes: 'Simple ionic salt, photographic emulsions, anticonvulsant (historical medical use)'
             },
             {
                 name: 'Potassium bromate (V)',
@@ -2964,7 +2964,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'high',
-                notes: 'CARCINOGEN - Oxidizer with cancer risk'
+                notes: 'CARCINOGEN - Strong oxidizer, flour treatment agent, analytical reagent'
             },
             {
                 name: 'Potassium carbonate 1.5 water',
@@ -2974,7 +2974,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Hydrated form'
+                notes: 'Pearl ash, glass production, soap manufacturing, food additive E501'
             },
             {
                 name: 'Potassium carbonate anhydrous',
@@ -2984,7 +2984,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'low',
-                notes: '3 containers available'
+                notes: 'Anhydrous potash, strong base, drying agent, 3 containers available'
             },
             {
                 name: 'Potassium bicarbonate B.P.C. 1973',
@@ -2994,7 +2994,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '1973',
                 hazard: 'low',
-                notes: 'EXPIRED PHARMACEUTICAL GRADE - 52 years old'
+                notes: 'Pharmaceutical grade baking soda substitute, antacid, EXPIRED 52 years'
             },
             {
                 name: 'Potassium cobaltnitrite',
@@ -3004,7 +3004,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'high',
-                notes: 'Cobalt compound - heavy metal toxicity'
+                notes: 'Cobaltinitrite, qualitative test for sodium ions, yellow crystalline solid'
             },
             {
                 name: 'Potassium chromate',
@@ -3014,7 +3014,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CARCINOGEN - Chromium VI compound'
+                notes: 'CARCINOGEN - Yellow crystals, chromium VI compound, oxidizer, analytical reagent'
             },
             {
                 name: 'Potassium chromate',
@@ -3024,7 +3024,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CARCINOGEN - Large quantity requires special protocols'
+                notes: 'CARCINOGEN - Large quantity, leather tanning, textile dyes, HANDLE WITH EXTREME CARE'
             },
             {
                 name: 'Potassium chlorate',
@@ -3034,7 +3034,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'STRONG OXIDIZER - Fire/explosion risk, 3 containers (1 nearly depleted)'
+                notes: 'EXPLOSIVE OXIDIZER - Matches, fireworks, oxygen source, 3 containers (1 nearly empty)'
             },
             {
                 name: 'Potassium dichromate',
@@ -3044,7 +3044,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CARCINOGEN - Chromium VI compound, large quantity'
+                notes: 'CARCINOGEN - Orange crystals, strong oxidizer, chromium plating, analytical chemistry'
             },
             {
                 name: 'Potassium dichromate (VI)',
@@ -3054,7 +3054,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CARCINOGEN - Oxidation state VI specified'
+                notes: 'CARCINOGEN - Volumetric analysis, organic oxidations, cleaning solutions'
             },
             {
                 name: 'Potassium disulphate',
@@ -3064,7 +3064,7 @@ class LabManagement {
                 location: 'Shelf M7',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Persulphate compound - oxidizer'
+                notes: 'Persulfate, strong oxidizing agent, polymerization initiator, etching agent'
             },
 
             // Shelf M8 - Old potassium chemicals (cyanides & hydroxides)
@@ -3076,7 +3076,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CONTAINS CYANIDE - Can release HCN gas under acidic conditions, 2 containers'
+                notes: 'Yellow prussiate, photographic toner, Prussian blue synthesis, CYANIDE - avoid acids'
             },
             {
                 name: 'Potassium ethanedioate-1-water',
@@ -3086,7 +3086,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxalate compound - toxic if ingested'
+                notes: 'Potassium oxalate monohydrate, analytical chemistry, rust/ink stain removal'
             },
             {
                 name: 'Potassium ferricyanide',
@@ -3096,7 +3096,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CONTAINS CYANIDE - Less stable than ferrocyanide'
+                notes: 'Red prussiate, photographic bleach, cyanotyping, less stable than ferrocyanide'
             },
             {
                 name: 'Potassium ferricyanide',
@@ -3106,7 +3106,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'CONTAINS CYANIDE - 2 containers available'
+                notes: 'Photography applications, electroplating, antioxidant detection, 2 containers'
             },
             {
                 name: 'Potassium formate',
@@ -3116,7 +3116,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Organic salt - relatively safe'
+                notes: 'De-icing agent, drilling fluid additive, leather tanning, food preservative'
             },
             {
                 name: 'Potassium hydrogen carbonate',
@@ -3126,7 +3126,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '2010',
                 hazard: 'low',
-                notes: 'Potassium bicarbonate - 15 years old but stable'
+                notes: 'Potassium bicarbonate, baking soda substitute, wine production, 15 years old'
             },
             {
                 name: 'Potassium hydroxide pellets',
@@ -3136,7 +3136,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'SEVERELY CAUSTIC - Can cause severe burns'
+                notes: 'CAUSTIC POTASH - soap making, biodiesel production, SEVERE BURNS possible'
             },
             {
                 name: 'Potassium hydroxide pellets',
@@ -3146,7 +3146,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'SEVERELY CAUSTIC - Handle with extreme care'
+                notes: 'Strong base, pH adjustment, chemical synthesis, absorbs moisture rapidly'
             },
             {
                 name: 'Potassium hydrogen carbonate',
@@ -3156,7 +3156,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '2025',
                 hazard: 'low',
-                notes: 'Fresh stock - 3 containers from 2025'
+                notes: 'Fresh stock, fire extinguishing agent, food additive E501ii, 3 containers'
             },
             {
                 name: 'Potassium hydrogen phthalate',
@@ -3166,7 +3166,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'low',
-                notes: 'pH standard buffer - 2 containers available'
+                notes: 'pH buffer standard, analytical chemistry, primary standard, 2 containers'
             },
             {
                 name: 'Potassium dihydrogen orthophosphate anhydrous',
@@ -3176,7 +3176,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Phosphate buffer - anhydrous form'
+                notes: 'Monopotassium phosphate, fertilizer, food additive, buffering agent'
             },
             {
                 name: 'Potassium iodate (V)',
@@ -3186,7 +3186,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxidizer - 4 containers available'
+                notes: 'Iodometric analysis, flour treatment, thyroid medication, 4 small containers'
             },
             {
                 name: 'Potassium iodate (V)',
@@ -3196,7 +3196,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxidizer - large container'
+                notes: 'Oxidizing agent, salt iodization, antimicrobial agent, large container'
             },
             {
                 name: 'Potassium nitrate',
@@ -3206,7 +3206,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxidizer - saltpeter'
+                notes: 'Saltpeter, gunpowder component, fertilizer, food preservation, meat curing'
             },
             {
                 name: 'Potassium nitrite',
@@ -3216,7 +3216,7 @@ class LabManagement {
                 location: 'Shelf M8',
                 expiry: '',
                 hazard: 'high',
-                notes: 'TOXIC - Can cause methemoglobinemia'
+                notes: 'TOXIC - meat curing, corrosion inhibitor, can cause methemoglobinemia'
             },
 
             // Shelf M9 - Old potassium chemicals (oxidizers & organics)
@@ -3228,7 +3228,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Stable iodide salt'
+                notes: 'Expectorant medicine, photographic emulsions, iodometry, thyroid protection'
             },
             {
                 name: 'Potassium oxalate',
@@ -3238,7 +3238,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Toxic oxalate - can cause kidney damage'
+                notes: 'Analytical chemistry, rust removal, toxic to kidneys, forms calcium crystals'
             },
             {
                 name: 'Potassium oxalate',
@@ -3248,7 +3248,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Toxic oxalate - larger container'
+                notes: 'Larger container, textile bleaching, metal polishing, anticoagulant'
             },
             {
                 name: 'Potassium permanganate',
@@ -3258,7 +3258,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'STRONG OXIDIZER - Fire/explosion risk with organics'
+                notes: 'CHAMELEON MINERAL - powerful oxidizer, disinfectant, organic synthesis, 1kg'
             },
             {
                 name: 'Potassium perchlorate',
@@ -3268,7 +3268,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'EXPLOSIVE - Extremely dangerous with organics/metals'
+                notes: 'EXPLOSIVE - rocket fuel, fireworks, thyroid medication, NEVER mix with organics'
             },
             {
                 name: 'Potassium dihydrogen phosphate',
@@ -3278,7 +3278,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '1990',
                 hazard: 'low',
-                notes: 'AGED CHEMICAL - 35 years old, check container integrity'
+                notes: 'MKP fertilizer, food additive, optical crystals, 35 YEARS OLD - check integrity'
             },
             {
                 name: 'Potassium persulphate',
@@ -3288,7 +3288,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxidizer - 2 containers'
+                notes: 'Polymerization initiator, PCB etching, bleaching agent, 2 containers'
             },
             {
                 name: 'Potassium persulphate',
@@ -3298,7 +3298,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxidizer - larger container'
+                notes: 'Hair bleaching, photographic developer oxidizer, larger container'
             },
             {
                 name: 'Potassium periodate',
@@ -3308,7 +3308,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Strong oxidizer - iodine compound'
+                notes: 'Strong oxidizer, organic synthesis, cleaving 1,2-diols, analytical chemistry'
             },
             {
                 name: 'Tetra-potassium pyrophosphate',
@@ -3318,7 +3318,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Phosphate compound'
+                notes: 'Food additive E450, detergent builder, water treatment, emulsifier'
             },
             {
                 name: 'Di-potassium peroxodisulphate',
@@ -3328,7 +3328,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Strong oxidizer - peroxide compound'
+                notes: 'Persulfate oxidizer, radical polymerization, surface preparation'
             },
             {
                 name: 'Unidentified potassium compound',
@@ -3338,7 +3338,7 @@ class LabManagement {
                 location: 'Shelf M9',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'REQUIRES IMMEDIATE IDENTIFICATION'
+                notes: 'UNKNOWN CHEMICAL - requires immediate professional identification'
             },
 
             // Shelf M10 - Old potassium chemicals (sulfates & organic salts)
@@ -3350,7 +3350,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'REQUIRES IMMEDIATE IDENTIFICATION - Container 1'
+                notes: 'UNKNOWN CHEMICAL - requires immediate professional analysis, Container 1'
             },
             {
                 name: 'Unidentified potassium compound (2)',
@@ -3360,7 +3360,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'extreme',
-                notes: 'REQUIRES IMMEDIATE IDENTIFICATION - Container 2'
+                notes: 'UNKNOWN CHEMICAL - requires immediate professional analysis, Container 2'
             },
             {
                 name: 'Potassium sodium (+) Tartrate tetrahydrate',
@@ -3370,7 +3370,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Rochelle salt - 2 containers available'
+                notes: 'Rochelle salt, piezoelectric crystals, food additive, laxative, 2 containers'
             },
             {
                 name: 'Potassium trioxalatoferrate (III)',
@@ -3380,7 +3380,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Iron complex - coordination compound'
+                notes: 'Coordination complex, photographic toner, analytical chemistry'
             },
             {
                 name: 'Potassium thiosulphate',
@@ -3390,7 +3390,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Photography fixer'
+                notes: 'Photography fixer alternative to sodium thiosulfate, analytical chemistry'
             },
             {
                 name: 'Potassium sodium (+)-Tartrate',
@@ -3400,7 +3400,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'low',
-                notes: '2 containers available'
+                notes: 'Rochelle salt anhydrous form, electronics, mirrors, 2 containers'
             },
             {
                 name: 'Potassium tetraoxalate',
@@ -3410,7 +3410,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Oxalate compound - moderate toxicity'
+                notes: 'Acidic oxalate, metal cleaning, leather tanning, moderate kidney toxicity'
             },
             {
                 name: 'Potassium thiocyanate',
@@ -3420,7 +3420,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Cyanide derivative - analytical reagent'
+                notes: 'Analytical reagent, iron detection, photography, textile printing'
             },
             {
                 name: 'Potassium thiocyanate',
@@ -3430,7 +3430,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Larger quantity thiocyanate'
+                notes: 'Larger container, colorimetric analysis, cooling solutions'
             },
             {
                 name: 'Potassium tetraoxalate acid',
@@ -3440,7 +3440,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'medium',
-                notes: 'Acidic oxalate form'
+                notes: 'Acidic form of tetraoxalate, rust removal, polishing compound'
             },
             {
                 name: 'Potassium sulphate',
@@ -3450,7 +3450,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'low',
-                notes: '8 containers available (4kg total)'
+                notes: 'Arcanite, fertilizer, food additive E515, alum production, 8 containers (4kg total)'
             },
             {
                 name: 'Potassium sulphite',
@@ -3460,7 +3460,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Reducing agent - food preservative'
+                notes: 'Food preservative E225, wine making, reducing agent, antioxidant'
             },
             {
                 name: 'Potassium bromide',
@@ -3470,7 +3470,7 @@ class LabManagement {
                 location: 'Shelf M10',
                 expiry: '',
                 hazard: 'low',
-                notes: 'Simple bromide salt'
+                notes: 'Photography, anticonvulsant (historical), optical components, infrared windows'
             }
         ];
 
