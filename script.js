@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration with ALL documented chemicals including M1-M5 shelves
+        // Force a complete data restoration with ALL documented chemicals including M1-M10 shelves
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.5') {
-            // Clear and force reload to restore complete inventory including M1-M5
+        if (dataVersion !== '6.6') {
+            // Clear and force reload to restore complete inventory including M1-M10
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.5');
-            console.log('Data version updated to 6.5 - restoring COMPLETE inventory with all shelves including M1-M5');
+            localStorage.setItem('dataVersion', '6.6');
+            console.log('Data version updated to 6.6 - restoring COMPLETE inventory with all shelves including M1-M10');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -104,23 +104,28 @@ class LabManagement {
         const hasShelfM3 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M3'));
         const hasShelfM4 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M4'));
         const hasShelfM5 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M5'));
+        const hasShelfM7 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M7'));
+        const hasShelfM8 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M8'));
+        const hasShelfM9 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M9'));
+        const hasShelfM10 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M10'));
         
-        // Force reload for version 6.5 to include new shelves M1-M5
+        // Force reload for version 6.6 to include new shelves M1-M10
         const currentVersion = localStorage.getItem('shelfChemicalsVersion') || '6.3';
         const mShelfVersion = localStorage.getItem('mShelfChemicalsAdded') || 'false';
         
         // Additional force reload for M-shelf chemicals specifically
         if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || 
             !hasShelfM1 || !hasShelfM2 || !hasShelfM3 || !hasShelfM4 || !hasShelfM5 || 
-            currentVersion !== '6.5' || mShelfVersion !== 'true') {
-            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M5)...');
+            !hasShelfM7 || !hasShelfM8 || !hasShelfM9 || !hasShelfM10 ||
+            currentVersion !== '6.6' || mShelfVersion !== 'true') {
+            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M10)...');
             
             // Force clear M-shelf chemicals if they exist to ensure clean reload
             this.chemicals = this.chemicals.filter(chem => !chem.location || !chem.location.includes('Shelf M'));
             
             this.addShelfChemicals();
             localStorage.setItem('hasShelfChemicals', 'true');
-            localStorage.setItem('shelfChemicalsVersion', '6.5');
+            localStorage.setItem('shelfChemicalsVersion', '6.6');
             localStorage.setItem('mShelfChemicalsAdded', 'true');
             console.log('M-shelf chemicals force-loaded!');
         }
@@ -2918,6 +2923,554 @@ class LabManagement {
                 expiry: '',
                 hazard: 'low',
                 notes: 'Photography fixer - 2 large containers'
+            },
+
+            // Shelf M7 - Old potassium chemicals
+            {
+                name: 'Potassium chunks in mineral oil',
+                formula: 'K',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'FIRE/EXPLOSION HAZARD - Never expose to air/water'
+            },
+            {
+                name: 'Unidentified potassium compound',
+                formula: 'K-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'REQUIRES IMMEDIATE IDENTIFICATION'
+            },
+            {
+                name: 'Potassium bromide (old)',
+                formula: 'KBr',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Vintage chemical stock'
+            },
+            {
+                name: 'Potassium bromate (V)',
+                formula: 'KBrO₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'high',
+                notes: 'CARCINOGEN - Oxidizer with cancer risk'
+            },
+            {
+                name: 'Potassium carbonate 1.5 water',
+                formula: 'K₂CO₃·1.5H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Hydrated form'
+            },
+            {
+                name: 'Potassium carbonate anhydrous',
+                formula: 'K₂CO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'low',
+                notes: '3 containers available'
+            },
+            {
+                name: 'Potassium bicarbonate B.P.C. 1973',
+                formula: 'KHCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '1973',
+                hazard: 'low',
+                notes: 'EXPIRED PHARMACEUTICAL GRADE - 52 years old'
+            },
+            {
+                name: 'Potassium cobaltnitrite',
+                formula: 'K₃Co(NO₂)₆',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Cobalt compound - heavy metal toxicity'
+            },
+            {
+                name: 'Potassium chromate',
+                formula: 'K₂CrO₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - Chromium VI compound'
+            },
+            {
+                name: 'Potassium chromate',
+                formula: 'K₂CrO₄',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - Large quantity requires special protocols'
+            },
+            {
+                name: 'Potassium chlorate',
+                formula: 'KClO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'STRONG OXIDIZER - Fire/explosion risk, 3 containers (1 nearly depleted)'
+            },
+            {
+                name: 'Potassium dichromate',
+                formula: 'K₂Cr₂O₇',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - Chromium VI compound, large quantity'
+            },
+            {
+                name: 'Potassium dichromate (VI)',
+                formula: 'K₂Cr₂O₇',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - Oxidation state VI specified'
+            },
+            {
+                name: 'Potassium disulphate',
+                formula: 'K₂S₂O₈',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M7',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Persulphate compound - oxidizer'
+            },
+
+            // Shelf M8 - Old potassium chemicals (cyanides & hydroxides)
+            {
+                name: 'Potassium ferrocyanide',
+                formula: 'K₄Fe(CN)₆',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CONTAINS CYANIDE - Can release HCN gas under acidic conditions, 2 containers'
+            },
+            {
+                name: 'Potassium ethanedioate-1-water',
+                formula: 'K₂C₂O₄·H₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxalate compound - toxic if ingested'
+            },
+            {
+                name: 'Potassium ferricyanide',
+                formula: 'K₃Fe(CN)₆',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CONTAINS CYANIDE - Less stable than ferrocyanide'
+            },
+            {
+                name: 'Potassium ferricyanide',
+                formula: 'K₃Fe(CN)₆',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CONTAINS CYANIDE - 2 containers available'
+            },
+            {
+                name: 'Potassium formate',
+                formula: 'KCHO₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Organic salt - relatively safe'
+            },
+            {
+                name: 'Potassium hydrogen carbonate',
+                formula: 'KHCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '2010',
+                hazard: 'low',
+                notes: 'Potassium bicarbonate - 15 years old but stable'
+            },
+            {
+                name: 'Potassium hydroxide pellets',
+                formula: 'KOH',
+                quantity: 2000,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'SEVERELY CAUSTIC - Can cause severe burns'
+            },
+            {
+                name: 'Potassium hydroxide pellets',
+                formula: 'KOH',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'SEVERELY CAUSTIC - Handle with extreme care'
+            },
+            {
+                name: 'Potassium hydrogen carbonate',
+                formula: 'KHCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '2025',
+                hazard: 'low',
+                notes: 'Fresh stock - 3 containers from 2025'
+            },
+            {
+                name: 'Potassium hydrogen phthalate',
+                formula: 'KC₈H₅O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'low',
+                notes: 'pH standard buffer - 2 containers available'
+            },
+            {
+                name: 'Potassium dihydrogen orthophosphate anhydrous',
+                formula: 'KH₂PO₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Phosphate buffer - anhydrous form'
+            },
+            {
+                name: 'Potassium iodate (V)',
+                formula: 'KIO₃',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - 4 containers available'
+            },
+            {
+                name: 'Potassium iodate (V)',
+                formula: 'KIO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - large container'
+            },
+            {
+                name: 'Potassium nitrate',
+                formula: 'KNO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - saltpeter'
+            },
+            {
+                name: 'Potassium nitrite',
+                formula: 'KNO₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M8',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - Can cause methemoglobinemia'
+            },
+
+            // Shelf M9 - Old potassium chemicals (oxidizers & organics)
+            {
+                name: 'Potassium iodide',
+                formula: 'KI',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Stable iodide salt'
+            },
+            {
+                name: 'Potassium oxalate',
+                formula: 'K₂C₂O₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Toxic oxalate - can cause kidney damage'
+            },
+            {
+                name: 'Potassium oxalate',
+                formula: 'K₂C₂O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Toxic oxalate - larger container'
+            },
+            {
+                name: 'Potassium permanganate',
+                formula: 'KMnO₄',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'STRONG OXIDIZER - Fire/explosion risk with organics'
+            },
+            {
+                name: 'Potassium perchlorate',
+                formula: 'KClO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'EXPLOSIVE - Extremely dangerous with organics/metals'
+            },
+            {
+                name: 'Potassium dihydrogen phosphate',
+                formula: 'KH₂PO₄',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '1990',
+                hazard: 'low',
+                notes: 'AGED CHEMICAL - 35 years old, check container integrity'
+            },
+            {
+                name: 'Potassium persulphate',
+                formula: 'K₂S₂O₈',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - 2 containers'
+            },
+            {
+                name: 'Potassium persulphate',
+                formula: 'K₂S₂O₈',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - larger container'
+            },
+            {
+                name: 'Potassium periodate',
+                formula: 'KIO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Strong oxidizer - iodine compound'
+            },
+            {
+                name: 'Tetra-potassium pyrophosphate',
+                formula: 'K₄P₂O₇',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Phosphate compound'
+            },
+            {
+                name: 'Di-potassium peroxodisulphate',
+                formula: 'K₂S₂O₈',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Strong oxidizer - peroxide compound'
+            },
+            {
+                name: 'Unidentified potassium compound',
+                formula: 'K-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M9',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'REQUIRES IMMEDIATE IDENTIFICATION'
+            },
+
+            // Shelf M10 - Old potassium chemicals (sulfates & organic salts)
+            {
+                name: 'Unidentified potassium compound (1)',
+                formula: 'K-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'REQUIRES IMMEDIATE IDENTIFICATION - Container 1'
+            },
+            {
+                name: 'Unidentified potassium compound (2)',
+                formula: 'K-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'REQUIRES IMMEDIATE IDENTIFICATION - Container 2'
+            },
+            {
+                name: 'Potassium sodium (+) Tartrate tetrahydrate',
+                formula: 'KNaC₄H₄O₆·4H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Rochelle salt - 2 containers available'
+            },
+            {
+                name: 'Potassium trioxalatoferrate (III)',
+                formula: 'K₃Fe(C₂O₄)₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Iron complex - coordination compound'
+            },
+            {
+                name: 'Potassium thiosulphate',
+                formula: 'K₂S₂O₃',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Photography fixer'
+            },
+            {
+                name: 'Potassium sodium (+)-Tartrate',
+                formula: 'KNaC₄H₄O₆',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'low',
+                notes: '2 containers available'
+            },
+            {
+                name: 'Potassium tetraoxalate',
+                formula: 'K₂H₂(C₂O₄)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxalate compound - moderate toxicity'
+            },
+            {
+                name: 'Potassium thiocyanate',
+                formula: 'KSCN',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Cyanide derivative - analytical reagent'
+            },
+            {
+                name: 'Potassium thiocyanate',
+                formula: 'KSCN',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Larger quantity thiocyanate'
+            },
+            {
+                name: 'Potassium tetraoxalate acid',
+                formula: 'K₂H₂(C₂O₄)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Acidic oxalate form'
+            },
+            {
+                name: 'Potassium sulphate',
+                formula: 'K₂SO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'low',
+                notes: '8 containers available (4kg total)'
+            },
+            {
+                name: 'Potassium sulphite',
+                formula: 'K₂SO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Reducing agent - food preservative'
+            },
+            {
+                name: 'Potassium bromide',
+                formula: 'KBr',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M10',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Simple bromide salt'
             }
         ];
 
