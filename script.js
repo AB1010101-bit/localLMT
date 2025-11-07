@@ -99,15 +99,21 @@ class LabManagement {
         const hasShelfB2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf B2'));
         const hasShelfC1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf C1'));
         const hasShelfC2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf C2'));
+        const hasShelfM1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M1'));
+        const hasShelfM2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M2'));
+        const hasShelfM3 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M3'));
+        const hasShelfM4 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M4'));
+        const hasShelfM5 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M5'));
         
-        // Force reload for version 6.4 to include new shelves B2, C1, C2
+        // Force reload for version 6.5 to include new shelves M1-M5
         const currentVersion = localStorage.getItem('shelfChemicalsVersion') || '6.3';
         
-        if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || currentVersion !== '6.4') {
-            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2)...');
+        if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || 
+            !hasShelfM1 || !hasShelfM2 || !hasShelfM3 || !hasShelfM4 || !hasShelfM5 || currentVersion !== '6.5') {
+            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M5)...');
             this.addShelfChemicals();
             localStorage.setItem('hasShelfChemicals', 'true');
-            localStorage.setItem('shelfChemicalsVersion', '6.4');
+            localStorage.setItem('shelfChemicalsVersion', '6.5');
         }
 
         this.saveData();
@@ -2352,6 +2358,546 @@ class LabManagement {
                 expiry: '',
                 hazard: 'high',
                 notes: 'DANGER: Can release H₂S gas - broken sticks'
+            },
+
+            // Shelf M1 - Old sodium chemicals
+            {
+                name: 'Sodium acetate',
+                formula: 'NaC₂H₃O₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Old chemical - 4 containers'
+            },
+            {
+                name: 'Sodium acetate anhydrous',
+                formula: 'NaC₂H₃O₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Anhydrous form'
+            },
+            {
+                name: 'Sodium ammonium phosphate',
+                formula: 'NaNH₄HPO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Double salt'
+            },
+            {
+                name: 'Sodium bromide',
+                formula: 'NaBr',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: '4 containers available'
+            },
+            {
+                name: 'Sodium bromide',
+                formula: 'NaBr',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Smaller container'
+            },
+            {
+                name: 'Sodium bismuthate',
+                formula: 'NaBiO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - handle with care'
+            },
+            {
+                name: 'Sodium carbonate 10H2O',
+                formula: 'Na₂CO₃·10H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Washing soda decahydrate'
+            },
+            {
+                name: 'Sodium carbonate',
+                formula: 'Na₂CO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Soda ash'
+            },
+            {
+                name: 'Soda lime self indicating',
+                formula: 'NaOH/Ca(OH)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'CO₂ absorbent - caustic'
+            },
+            {
+                name: 'Sodium chloride native',
+                formula: 'NaCl',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Natural rock salt'
+            },
+            {
+                name: 'Sodium chlorate (V)',
+                formula: 'NaClO₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf M1',
+                expiry: '',
+                hazard: 'high',
+                notes: 'STRONG OXIDIZER - fire/explosion risk'
+            },
+
+            // Shelf M2 - Old sodium chemicals with unidentified compounds
+            {
+                name: 'E.D.T.A. Disodium Salt',
+                formula: 'Na₂C₁₀H₁₄N₂O₈',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Chelating agent - 3 packets'
+            },
+            {
+                name: 'Unidentified chemical',
+                formula: 'Unknown',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'REQUIRES IMMEDIATE IDENTIFICATION'
+            },
+            {
+                name: 'Sodium dihydrogenphosphate (V)-2-water',
+                formula: 'NaH₂PO₄·2H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Dibasic sodium phosphate'
+            },
+            {
+                name: 'Sodium dichromate',
+                formula: 'Na₂Cr₂O₇',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'CARCINOGEN - extreme caution required'
+            },
+            {
+                name: 'Sodium glutamate',
+                formula: 'NaC₅H₈NO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'MSG - food additive'
+            },
+            {
+                name: 'Sodium formate',
+                formula: 'NaCHO₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'low',
+                notes: '2 containers available'
+            },
+            {
+                name: 'Sodium oxalate',
+                formula: 'Na₂C₂O₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Toxic if ingested'
+            },
+            {
+                name: 'Sodium hexametaphosphate',
+                formula: '(NaPO₃)₆',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Water softener - 2 containers'
+            },
+            {
+                name: 'Sodium fluoride',
+                formula: 'NaF',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - lethal if ingested'
+            },
+            {
+                name: 'Sodium iodate',
+                formula: 'NaIO₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer'
+            },
+            {
+                name: 'Unidentified chemical 2',
+                formula: 'Unknown',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'REQUIRES IMMEDIATE IDENTIFICATION'
+            },
+            {
+                name: 'Sodium iodide',
+                formula: 'NaI',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf M2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Light sensitive - 5 containers'
+            },
+
+            // Shelf M3 - Old sodium nitrates and nitrites
+            {
+                name: 'Sodium Metabisulphite',
+                formula: 'Na₂S₂O₅',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Releases SO₂ gas - 2 containers'
+            },
+            {
+                name: 'Sodium Nitrite',
+                formula: 'NaNO₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - can cause methemoglobinemia'
+            },
+            {
+                name: 'Sodium nitrate',
+                formula: 'NaNO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Oxidizer - 6 containers'
+            },
+            {
+                name: 'Sodium nitrite',
+                formula: 'NaNO₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - smaller container'
+            },
+            {
+                name: 'Sodium nitrate',
+                formula: 'NaNO₃',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Large containers - 2 available'
+            },
+            {
+                name: 'Sodium nitroprusside',
+                formula: 'Na₂[Fe(CN)₅NO]',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - releases cyanide'
+            },
+            {
+                name: 'Sodium nitroprusside',
+                formula: 'Na₂[Fe(CN)₅NO]',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - releases cyanide'
+            },
+            {
+                name: 'Sodium oxalate',
+                formula: 'Na₂C₂O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Toxic if ingested - 4 containers'
+            },
+            {
+                name: 'Unidentified sodium compound',
+                formula: 'Na-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'REQUIRES IDENTIFICATION'
+            },
+            {
+                name: 'Sodium molybdate dihydrate',
+                formula: 'Na₂MoO₄·2H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Heavy metal compound'
+            },
+
+            // Shelf M4 - Old specialty sodium compounds
+            {
+                name: 'Sodium tungstate',
+                formula: 'Na₂WO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Heavy metal salt'
+            },
+            {
+                name: 'Sodium stannate',
+                formula: 'Na₂SnO₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Tin compound'
+            },
+            {
+                name: 'Sodium salicylate',
+                formula: 'NaC₇H₅O₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Aspirin-like compound'
+            },
+            {
+                name: 'Sodium sulphate',
+                formula: 'Na₂SO₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Common salt'
+            },
+            {
+                name: 'Sodium peroxide',
+                formula: 'Na₂O₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '1990',
+                hazard: 'extreme',
+                notes: 'EXPIRED 35 YEARS - EXTREMELY DANGEROUS - DISPOSE IMMEDIATELY'
+            },
+            {
+                name: 'Sodium pyroborate',
+                formula: 'Na₂B₄O₇',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '1990',
+                hazard: 'medium',
+                notes: 'EXPIRED 35 years - evaluate for disposal'
+            },
+            {
+                name: 'Sodium persulphate',
+                formula: 'Na₂S₂O₈',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Strong oxidizer'
+            },
+            {
+                name: 'Sodium persulphate',
+                formula: 'Na₂S₂O₈',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Strong oxidizer - smaller container'
+            },
+            {
+                name: 'Unidentified sodium compound',
+                formula: 'Na-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'REQUIRES IDENTIFICATION'
+            },
+            {
+                name: 'Sodium bisulphide',
+                formula: 'NaHS',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'DANGER: Releases toxic H₂S gas'
+            },
+
+            // Shelf M5 - Very old sodium compounds
+            {
+                name: 'Tri-sodium hydrogen carbonate',
+                formula: 'Na₃HCO₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '1990',
+                hazard: 'medium',
+                notes: '35 YEARS OLD - evaluate condition'
+            },
+            {
+                name: 'Unidentified sodium compound (1)',
+                formula: 'Na-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '1990',
+                hazard: 'extreme',
+                notes: 'URGENT: 35-year-old unknown - HAZMAT EVALUATION'
+            },
+            {
+                name: 'Unidentified sodium compound (2)',
+                formula: 'Na-compound',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '1990',
+                hazard: 'extreme',
+                notes: 'URGENT: 35-year-old unknown - HAZMAT EVALUATION'
+            },
+            {
+                name: 'Sodium torocholate',
+                formula: 'NaC₂₆H₄₅NO₆S',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '1990',
+                hazard: 'medium',
+                notes: 'Bile salt - 35 years old'
+            },
+            {
+                name: 'Sodium silicate powder',
+                formula: 'Na₂SiO₃',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Water glass powder'
+            },
+            {
+                name: 'Sodium sesquicarbonate',
+                formula: 'Na₃H(CO₃)₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Trona'
+            },
+            {
+                name: 'Sodium sulphite 7-hydrate',
+                formula: 'Na₂SO₃·7H₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Reducing agent'
+            },
+            {
+                name: 'Sodium carbonate anhydrous',
+                formula: 'Na₂CO₃',
+                quantity: 1000,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Anhydrous soda ash'
+            },
+            {
+                name: 'Sodium silicate solution',
+                formula: 'Na₂SiO₃(aq)',
+                quantity: 2500,
+                unit: 'ml',
+                location: 'Shelf M5',
+                expiry: '2006',
+                hazard: 'medium',
+                notes: 'EXPIRED SOLUTION - 19 years old - DISPOSE'
+            },
+            {
+                name: 'Sodium thiosulphate 5H2O',
+                formula: 'Na₂S₂O₃·5H₂O',
+                quantity: 3000,
+                unit: 'g',
+                location: 'Shelf M5',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Photography fixer - 2 large containers'
             }
         ];
 
