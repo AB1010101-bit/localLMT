@@ -107,13 +107,22 @@ class LabManagement {
         
         // Force reload for version 6.5 to include new shelves M1-M5
         const currentVersion = localStorage.getItem('shelfChemicalsVersion') || '6.3';
+        const mShelfVersion = localStorage.getItem('mShelfChemicalsAdded') || 'false';
         
+        // Additional force reload for M-shelf chemicals specifically
         if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || 
-            !hasShelfM1 || !hasShelfM2 || !hasShelfM3 || !hasShelfM4 || !hasShelfM5 || currentVersion !== '6.5') {
+            !hasShelfM1 || !hasShelfM2 || !hasShelfM3 || !hasShelfM4 || !hasShelfM5 || 
+            currentVersion !== '6.5' || mShelfVersion !== 'true') {
             console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M5)...');
+            
+            // Force clear M-shelf chemicals if they exist to ensure clean reload
+            this.chemicals = this.chemicals.filter(chem => !chem.location || !chem.location.includes('Shelf M'));
+            
             this.addShelfChemicals();
             localStorage.setItem('hasShelfChemicals', 'true');
             localStorage.setItem('shelfChemicalsVersion', '6.5');
+            localStorage.setItem('mShelfChemicalsAdded', 'true');
+            console.log('M-shelf chemicals force-loaded!');
         }
 
         this.saveData();
@@ -3091,6 +3100,31 @@ class LabManagement {
         
         console.log(`Added apparatus programmatically: ${apparatus.name}`);
         return apparatus;
+    }
+
+    // Force reload M-shelf chemicals - debug function
+    forceReloadMShelfChemicals() {
+        console.log('Force reloading M-shelf chemicals...');
+        
+        // Remove all existing M-shelf chemicals
+        this.chemicals = this.chemicals.filter(chem => !chem.location || !chem.location.includes('Shelf M'));
+        
+        // Clear M-shelf flags
+        localStorage.removeItem('mShelfChemicalsAdded');
+        localStorage.setItem('shelfChemicalsVersion', '6.4'); // Force version mismatch
+        
+        // Force reload
+        this.addShelfChemicals();
+        localStorage.setItem('shelfChemicalsVersion', '6.5');
+        localStorage.setItem('mShelfChemicalsAdded', 'true');
+        
+        this.saveData();
+        this.renderItems();
+        
+        // Count M-shelf chemicals
+        const mShelfCount = this.chemicals.filter(chem => chem.location && chem.location.includes('Shelf M')).length;
+        alert(`Force reload complete! Added ${mShelfCount} M-shelf chemicals.`);
+        console.log(`Force reload complete! M-shelf chemicals count: ${mShelfCount}`);
     }
 
     loadDefaultSamples() {
