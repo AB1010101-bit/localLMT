@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration with ALL documented chemicals including new shelves
+        // Force a complete data restoration with ALL documented chemicals including M1-M5 shelves
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.4') {
-            // Clear and force reload to restore complete inventory including B2, C1, C2
+        if (dataVersion !== '6.5') {
+            // Clear and force reload to restore complete inventory including M1-M5
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.4');
-            console.log('Data version updated to 6.4 - restoring COMPLETE inventory with all shelves B2, C1, C2');
+            localStorage.setItem('dataVersion', '6.5');
+            console.log('Data version updated to 6.5 - restoring COMPLETE inventory with all shelves including M1-M5');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -117,6 +117,17 @@ class LabManagement {
         }
 
         this.saveData();
+        
+        // Debug: Log total chemical count and shelf breakdown
+        console.log(`Total chemicals loaded: ${this.chemicals.length}`);
+        const shelfCounts = {};
+        this.chemicals.forEach(chem => {
+            if (chem.location) {
+                const shelf = chem.location.split(' ')[1] || chem.location;
+                shelfCounts[shelf] = (shelfCounts[shelf] || 0) + 1;
+            }
+        });
+        console.log('Chemicals per shelf:', shelfCounts);
     }
 
     loadOxidizerChemicals() {
