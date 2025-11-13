@@ -85,10 +85,6 @@ header h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.poison-control:hover { background: rgba(138, 43, 226, 0.3); }
-.fire-dept:hover { background: rgba(255, 87, 34, 0.3); }
-.hazmat:hover { background: rgba(255, 193, 7, 0.3); }
-
 .stat-number {
     font-weight: 700;
     font-size: 18px;

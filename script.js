@@ -4,11 +4,11 @@ class LabManagement {
     constructor() {
         // Force a complete data restoration with ALL documented chemicals + comprehensive safety features
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.8') {
-            // Clear and force reload to restore complete inventory with enhanced safety features
+        if (dataVersion !== '6.9') {
+            // Clear and force reload to restore complete inventory with enhanced safety features and fixed IDs
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.8');
-            console.log('Data version updated to 6.8 - Enhanced safety features activated with comprehensive chemical database');
+            localStorage.setItem('dataVersion', '6.9');
+            console.log('Data version updated to 6.9 - Fixed chemical ID click issues and enhanced safety features');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -26,34 +26,69 @@ class LabManagement {
         this.setupEventListeners();
         await this.loadSampleData();
         this.fixMissingIds();
+        this.fixAllIds(); // Ensure all IDs are integers
         this.renderItems();
     }
 
     // Fix any chemicals that are missing IDs
     fixMissingIds() {
         let fixed = 0;
-        let nextId = Math.max(...this.chemicals.map(c => c.id || 0), 0) + 1;
+        let nextId = Math.max(...this.chemicals.map(c => parseInt(c.id) || 0), 0) + 1;
         
         this.chemicals.forEach(chemical => {
             if (!chemical.id || chemical.id === undefined || chemical.id === null) {
                 chemical.id = nextId++;
                 fixed++;
                 console.log(`Fixed missing ID for chemical: ${chemical.name}`);
+            } else {
+                // Ensure existing IDs are integers
+                chemical.id = parseInt(chemical.id);
             }
         });
         
         // Also fix apparatus if needed
-        let nextApparatusId = Math.max(...this.apparatus.map(a => a.id || 0), 0) + 1;
+        let nextApparatusId = Math.max(...this.apparatus.map(a => parseInt(a.id) || 0), 0) + 1;
         this.apparatus.forEach(apparatus => {
             if (!apparatus.id || apparatus.id === undefined || apparatus.id === null) {
                 apparatus.id = nextApparatusId++;
                 fixed++;
                 console.log(`Fixed missing ID for apparatus: ${apparatus.name}`);
+            } else {
+                // Ensure existing IDs are integers
+                apparatus.id = parseInt(apparatus.id);
             }
         });
         
         if (fixed > 0) {
             console.log(`Fixed ${fixed} missing IDs`);
+            this.saveData();
+        }
+    }
+
+    // Force all IDs to be integers for consistent comparison
+    fixAllIds() {
+        let fixed = 0;
+        
+        this.chemicals.forEach(chemical => {
+            const originalId = chemical.id;
+            chemical.id = parseInt(chemical.id);
+            if (originalId !== chemical.id) {
+                fixed++;
+                console.log(`Fixed ID type for chemical: ${chemical.name} (${originalId} -> ${chemical.id})`);
+            }
+        });
+        
+        this.apparatus.forEach(apparatus => {
+            const originalId = apparatus.id;
+            apparatus.id = parseInt(apparatus.id);
+            if (originalId !== apparatus.id) {
+                fixed++;
+                console.log(`Fixed ID type for apparatus: ${apparatus.name} (${originalId} -> ${apparatus.id})`);
+            }
+        });
+        
+        if (fixed > 0) {
+            console.log(`Fixed ${fixed} ID types`);
             this.saveData();
         }
     }
@@ -369,8 +404,8 @@ class LabManagement {
     }
 
     getNextId() {
-        const maxChemId = this.chemicals.length > 0 ? Math.max(...this.chemicals.map(c => c.id)) : 0;
-        const maxAppId = this.apparatus.length > 0 ? Math.max(...this.apparatus.map(a => a.id)) : 0;
+        const maxChemId = this.chemicals.length > 0 ? Math.max(...this.chemicals.map(c => parseInt(c.id) || 0)) : 0;
+        const maxAppId = this.apparatus.length > 0 ? Math.max(...this.apparatus.map(a => parseInt(a.id) || 0)) : 0;
         return Math.max(maxChemId, maxAppId) + 1;
     }
 
@@ -4061,7 +4096,7 @@ class LabManagement {
 
     // Programmatic chemical addition (always available)
     addChemicalProgrammatically(chemicalData) {
-        const nextId = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+        const nextId = this.getNextId();
         
         const chemical = {
             id: nextId,
@@ -4085,7 +4120,7 @@ class LabManagement {
 
     // Programmatic apparatus addition (always available)
     addApparatusProgrammatically(apparatusData) {
-        const nextId = Math.max(...this.apparatus.map(a => a.id), 0) + 1;
+        const nextId = this.getNextId();
         
         const apparatus = {
             id: nextId,
@@ -7924,7 +7959,7 @@ class LabManagement {
         } else {
             // Add new chemical
             const chemical = {
-                id: Date.now(),
+                id: this.getNextId(),
                 ...chemicalData
             };
             this.chemicals.push(chemical);
@@ -7976,7 +8011,7 @@ class LabManagement {
         } else {
             // Add new apparatus
             const apparatus = {
-                id: Date.now(),
+                id: this.getNextId(),
                 ...apparatusData
             };
             this.apparatus.push(apparatus);
@@ -8211,16 +8246,19 @@ class LabManagement {
         // Debug: Check for missing ID
         if (!chemical.id || chemical.id === undefined || chemical.id === null) {
             console.error(`Chemical missing ID: ${chemical.name}`, chemical);
-            // Assign temporary ID to prevent crashes
-            chemical.id = Date.now() + Math.random();
+            // Assign integer ID to prevent crashes
+            chemical.id = Math.floor(Date.now() + Math.random() * 1000);
         }
+        
+        // Ensure ID is always an integer for consistent comparisons
+        chemical.id = parseInt(chemical.id);
         
         const expiryDate = new Date(chemical.expiry);
         const today = new Date();
         const isExpiringSoon = expiryDate < new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
 
         return `
-            <div class="item-card" onclick="labSystem.showOverlay(${chemical.id}, 'chemical')" data-chemical-id="${chemical.id}" data-chemical-name="${chemical.name}">
+            <div class="item-card" onclick="console.log('Clicked chemical:', '${chemical.name}', 'ID:', ${chemical.id}); labSystem.showOverlay(${chemical.id}, 'chemical')" data-chemical-id="${chemical.id}" data-chemical-name="${chemical.name}">
                 <div class="item-header">
                     ${chemical.hazard ? `<span class="hazard-badge hazard-${chemical.hazard}">${chemical.hazard}</span>` : ''}
                     <h3 class="item-name">${this.highlightSearchTerm(chemical.name, searchTerm)}</h3>
@@ -8249,6 +8287,14 @@ class LabManagement {
     }
 
     renderApparatusCard(apparatus, searchTerm = '') {
+        // Ensure ID is always an integer for consistent comparisons
+        if (!apparatus.id || apparatus.id === undefined || apparatus.id === null) {
+            console.error(`Apparatus missing ID: ${apparatus.name}`, apparatus);
+            // Assign integer ID to prevent crashes
+            apparatus.id = Math.floor(Date.now() + Math.random() * 1000);
+        }
+        apparatus.id = parseInt(apparatus.id);
+        
         return `
             <div class="item-card" onclick="labSystem.showOverlay(${apparatus.id}, 'apparatus')">
                 <div class="item-header">
@@ -8266,24 +8312,32 @@ class LabManagement {
     }
 
     showOverlay(id, type) {
-        console.log(`showOverlay called with ID: ${id}, Type: ${type}`);
+        console.log(`showOverlay called with ID: ${id} (${typeof id}), Type: ${type}`);
         
-        const item = type === 'chemical' ? 
-            this.chemicals.find(c => c.id === id) : 
-            this.apparatus.find(a => a.id === id);
+        // Convert ID to integer for consistent comparison
+        const numericId = parseInt(id);
+        console.log(`Converted to numeric ID: ${numericId}`);
+        
+        const items = type === 'chemical' ? this.chemicals : this.apparatus;
+        console.log(`Total ${type}s available:`, items.length);
+        
+        const item = items.find(item => {
+            const itemId = parseInt(item.id);
+            console.log(`Comparing: ${itemId} === ${numericId} for ${item.name}`);
+            return itemId === numericId;
+        });
 
         if (!item) {
-            console.error(`Item not found - ID: ${id}, Type: ${type}`);
-            console.log('Available chemicals:', this.chemicals.map(c => ({id: c.id, name: c.name})));
+            console.error(`Item not found - ID: ${id} (${typeof id}), Numeric ID: ${numericId}, Type: ${type}`);
+            console.log(`Available ${type}s:`, items.map(c => ({id: c.id, name: c.name, type: typeof c.id, parsedId: parseInt(c.id)})));
             alert(`Error: ${type} with ID ${id} not found. Please refresh the page and try again.`);
             return;
         }
         
         console.log(`Found item: ${item.name} (ID: ${item.id})`);
         
-        // Convert string IDs to numbers for comparison
-        const numericId = parseInt(id);
-        if (item.id !== numericId && item.id !== id) {
+        // Verify ID match for debugging
+        if (parseInt(item.id) !== numericId) {
             console.warn(`ID mismatch: searched for ${id} (${typeof id}), found ${item.id} (${typeof item.id})`);
         }
 

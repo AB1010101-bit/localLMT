@@ -3,39 +3,7 @@
 
 // Emergency contact information
 const emergencyContacts = {
-    poison: {
-        title: "Poison Control Center",
-        phone: "1-800-222-1222",
-        description: "24/7 free and confidential poison emergency hotline",
-        instructions: [
-            "Call immediately for any chemical ingestion or exposure",
-            "Have the chemical name and SDS ready if possible",
-            "Follow their instructions exactly",
-            "Stay on the line until help arrives if directed"
-        ]
-    },
-    fire: {
-        title: "Fire Department / EMS",
-        phone: "911",
-        description: "Emergency services for fires, explosions, and medical emergencies",
-        instructions: [
-            "Call for any fire, explosion, or serious injury",
-            "Evacuate the area immediately",
-            "Provide exact location and chemical information",
-            "Do not re-enter until cleared by fire department"
-        ]
-    },
-    hazmat: {
-        title: "National Response Center (Hazmat)",
-        phone: "1-800-424-9300",
-        description: "24/7 chemical emergency response and reporting",
-        instructions: [
-            "Call for major chemical spills or releases",
-            "Required reporting for certain chemical incidents",
-            "Provides expert guidance for hazmat situations",
-            "Coordinates with local emergency response"
-        ]
-    }
+    // Emergency contact entries removed - only safety protocols remain available
 };
 
 // Chemical incompatibility database
@@ -83,6 +51,12 @@ function showEmergencyContact(type) {
     const modal = document.getElementById('emergencyModal');
     const content = document.getElementById('emergencyContent');
     const contact = emergencyContacts[type];
+    
+    // Emergency contacts have been removed - redirect to safety protocols
+    if (!contact) {
+        showSafetyProtocols();
+        return;
+    }
     
     content.innerHTML = `
         <div class="emergency-contact-card">
@@ -139,9 +113,9 @@ function showSafetyProtocols() {
                 <h4>Emergency Procedures:</h4>
                 <ul>
                     <li><strong>Spill:</strong> Contain, absorb, neutralize if safe</li>
-                    <li><strong>Fire:</strong> Evacuate, call 911, use appropriate extinguisher</li>
+                    <li><strong>Fire:</strong> Evacuate, call emergency services, use appropriate extinguisher</li>
                     <li><strong>Exposure:</strong> Flush with water 15+ minutes, seek medical attention</li>
-                    <li><strong>Ingestion:</strong> Call Poison Control immediately</li>
+                    <li><strong>Ingestion:</strong> Seek immediate medical attention, call emergency services</li>
                 </ul>
             </div>
         </div>
@@ -229,7 +203,7 @@ function showSafetyAlert(chemical) {
                 <li><strong>Skin contact:</strong> Remove contaminated clothing, flush with water 15+ minutes</li>
                 <li><strong>Eye contact:</strong> Flush with water 15+ minutes, seek immediate medical attention</li>
                 <li><strong>Inhalation:</strong> Move to fresh air, seek medical attention if breathing difficulty</li>
-                <li><strong>Ingestion:</strong> Call Poison Control: 1-800-222-1222</li>
+                <li><strong>Ingestion:</strong> Seek immediate medical attention, call emergency services</li>
             </ul>
         </div>
         
