@@ -4,11 +4,11 @@ class LabManagement {
     constructor() {
         // Force a complete data restoration with ALL documented chemicals + comprehensive safety features
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.9') {
+        if (dataVersion !== '6.9.1') {
             // Clear and force reload to restore complete inventory with enhanced safety features and fixed IDs
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.9');
-            console.log('Data version updated to 6.9 - Fixed chemical ID click issues and enhanced safety features');
+            localStorage.setItem('dataVersion', '6.9.1');
+            console.log('Data version updated to 6.9.1 - Fixed Shelf N chemical ID issues and enhanced click functionality');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -27,6 +27,7 @@ class LabManagement {
         await this.loadSampleData();
         this.fixMissingIds();
         this.fixAllIds(); // Ensure all IDs are integers
+        this.repairShelfNChemicals(); // Special fix for Shelf N chemicals
         this.renderItems();
     }
 
@@ -90,6 +91,66 @@ class LabManagement {
         if (fixed > 0) {
             console.log(`Fixed ${fixed} ID types`);
             this.saveData();
+        }
+        
+        // Diagnostic: Check Shelf N chemicals
+        this.diagnoseShelfNChemicals();
+    }
+
+    // Diagnostic function for Shelf N chemicals
+    diagnoseShelfNChemicals() {
+        const shelfNChemicals = this.chemicals.filter(chem => 
+            chem.location && chem.location.includes('Shelf N'));
+        
+        console.log(`Found ${shelfNChemicals.length} Shelf N chemicals:`);
+        shelfNChemicals.forEach(chem => {
+            console.log(`- ${chem.name} (ID: ${chem.id} ${typeof chem.id}) at ${chem.location}`);
+        });
+        
+        if (shelfNChemicals.length === 0) {
+            console.error('No Shelf N chemicals found! This might be the issue.');
+        }
+        
+        // Check if any have missing or invalid IDs
+        const problematicChemicals = shelfNChemicals.filter(chem => 
+            !chem.id || isNaN(parseInt(chem.id)));
+        
+        if (problematicChemicals.length > 0) {
+            console.error(`Found ${problematicChemicals.length} Shelf N chemicals with problematic IDs:`, 
+                problematicChemicals.map(c => ({name: c.name, id: c.id, type: typeof c.id})));
+        }
+    }
+
+    // Special repair function for Shelf N chemicals
+    repairShelfNChemicals() {
+        const shelfNChemicals = this.chemicals.filter(chem => 
+            chem.location && chem.location.includes('Shelf N'));
+        
+        let repairedCount = 0;
+        
+        shelfNChemicals.forEach(chemical => {
+            // Check if ID is missing or invalid
+            if (!chemical.id || chemical.id === undefined || chemical.id === null || isNaN(parseInt(chemical.id))) {
+                const newId = this.getNextId();
+                console.log(`Repaired Shelf N chemical "${chemical.name}" - assigned new ID: ${newId}`);
+                chemical.id = newId;
+                repairedCount++;
+            } else {
+                // Ensure ID is an integer
+                const oldId = chemical.id;
+                chemical.id = parseInt(chemical.id);
+                if (oldId !== chemical.id) {
+                    console.log(`Converted Shelf N chemical "${chemical.name}" ID from ${oldId} to ${chemical.id}`);
+                    repairedCount++;
+                }
+            }
+        });
+        
+        if (repairedCount > 0) {
+            console.log(`Repaired ${repairedCount} Shelf N chemicals`);
+            this.saveData();
+        } else {
+            console.log('All Shelf N chemicals have valid IDs');
         }
     }
 
@@ -1141,7 +1202,7 @@ class LabManagement {
         ];
 
         let added = 0;
-        let nextId = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+        let nextId = this.getNextId();
 
         essentialChemicals.forEach(chemical => {
             // Check if chemical already exists
@@ -3961,7 +4022,7 @@ class LabManagement {
         ];
 
         let added = 0;
-        let nextId = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+        let nextId = this.getNextId();
 
         shelfChemicals.forEach(chemical => {
             // Check if this exact chemical already exists (by name, formula, quantity, and location)
@@ -7730,7 +7791,7 @@ class LabManagement {
         ];
 
         // Add all oxidizer chemicals to the main array
-        let idCounter = Math.max(...this.chemicals.map(c => c.id), 0) + 1;
+        let idCounter = this.getNextId();
         
         // Add organic oxidizer chemicals from sections 2.1-2.4
         const organicOxidizers21 = [
@@ -8258,7 +8319,7 @@ class LabManagement {
         const isExpiringSoon = expiryDate < new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
 
         return `
-            <div class="item-card" onclick="console.log('Clicked chemical:', '${chemical.name}', 'ID:', ${chemical.id}); labSystem.showOverlay(${chemical.id}, 'chemical')" data-chemical-id="${chemical.id}" data-chemical-name="${chemical.name}">
+            <div class="item-card" onclick="labSystem.showOverlay(${chemical.id}, 'chemical')" data-chemical-id="${chemical.id}" data-chemical-name="${chemical.name}">
                 <div class="item-header">
                     ${chemical.hazard ? `<span class="hazard-badge hazard-${chemical.hazard}">${chemical.hazard}</span>` : ''}
                     <h3 class="item-name">${this.highlightSearchTerm(chemical.name, searchTerm)}</h3>
@@ -8312,24 +8373,14 @@ class LabManagement {
     }
 
     showOverlay(id, type) {
-        console.log(`showOverlay called with ID: ${id} (${typeof id}), Type: ${type}`);
-        
         // Convert ID to integer for consistent comparison
         const numericId = parseInt(id);
-        console.log(`Converted to numeric ID: ${numericId}`);
         
         const items = type === 'chemical' ? this.chemicals : this.apparatus;
-        console.log(`Total ${type}s available:`, items.length);
-        
-        const item = items.find(item => {
-            const itemId = parseInt(item.id);
-            console.log(`Comparing: ${itemId} === ${numericId} for ${item.name}`);
-            return itemId === numericId;
-        });
+        const item = items.find(item => parseInt(item.id) === numericId);
 
         if (!item) {
-            console.error(`Item not found - ID: ${id} (${typeof id}), Numeric ID: ${numericId}, Type: ${type}`);
-            console.log(`Available ${type}s:`, items.map(c => ({id: c.id, name: c.name, type: typeof c.id, parsedId: parseInt(c.id)})));
+            console.error(`${type} with ID ${id} not found. Available IDs:`, items.map(c => c.id));
             alert(`Error: ${type} with ID ${id} not found. Please refresh the page and try again.`);
             return;
         }
