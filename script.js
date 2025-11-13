@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration with ALL documented chemicals including M1-M10 shelves
+        // Force a complete data restoration with ALL documented chemicals including N1-N3 shelves
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.6') {
-            // Clear and force reload to restore complete inventory including M1-M10
+        if (dataVersion !== '6.7') {
+            // Clear and force reload to restore complete inventory including N1-N3
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.6');
-            console.log('Data version updated to 6.6 - restoring COMPLETE inventory with all shelves including M1-M10');
+            localStorage.setItem('dataVersion', '6.7');
+            console.log('Data version updated to 6.7 - restoring COMPLETE inventory with all shelves including N1-N3');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -108,26 +108,31 @@ class LabManagement {
         const hasShelfM8 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M8'));
         const hasShelfM9 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M9'));
         const hasShelfM10 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf M10'));
+        const hasShelfN1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N1'));
+        const hasShelfN2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N2'));
+        const hasShelfN3 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N3'));
         
-        // Force reload for version 6.6 to include new shelves M1-M10
+        // Force reload for version 6.7 to include new shelves N1-N3
         const currentVersion = localStorage.getItem('shelfChemicalsVersion') || '6.3';
         const mShelfVersion = localStorage.getItem('mShelfChemicalsAdded') || 'false';
         
-        // Additional force reload for M-shelf chemicals specifically
+        // Additional force reload for M-shelf and N-shelf chemicals
         if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || 
             !hasShelfM1 || !hasShelfM2 || !hasShelfM3 || !hasShelfM4 || !hasShelfM5 || 
             !hasShelfM7 || !hasShelfM8 || !hasShelfM9 || !hasShelfM10 ||
-            currentVersion !== '6.6' || mShelfVersion !== 'true') {
-            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M10)...');
+            !hasShelfN1 || !hasShelfN2 || !hasShelfN3 ||
+            currentVersion !== '6.7' || mShelfVersion !== 'true') {
+            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M10, N1-N3)...');
             
-            // Force clear M-shelf chemicals if they exist to ensure clean reload
-            this.chemicals = this.chemicals.filter(chem => !chem.location || !chem.location.includes('Shelf M'));
+            // Force clear M-shelf and N-shelf chemicals if they exist to ensure clean reload
+            this.chemicals = this.chemicals.filter(chem => !chem.location || 
+                (!chem.location.includes('Shelf M') && !chem.location.includes('Shelf N')));
             
             this.addShelfChemicals();
             localStorage.setItem('hasShelfChemicals', 'true');
-            localStorage.setItem('shelfChemicalsVersion', '6.6');
+            localStorage.setItem('shelfChemicalsVersion', '6.7');
             localStorage.setItem('mShelfChemicalsAdded', 'true');
-            console.log('M-shelf chemicals force-loaded!');
+            console.log('M-shelf and N-shelf chemicals force-loaded!');
         }
 
         this.saveData();
@@ -3471,6 +3476,422 @@ class LabManagement {
                 expiry: '',
                 hazard: 'low',
                 notes: 'Photography, anticonvulsant (historical), optical components, infrared windows'
+            },
+
+            // Shelf N1 - Old organic chemicals (amino acids & organic compounds)
+            {
+                name: 'Aminoacetic acid (Glycine)',
+                formula: 'C₂H₅NO₂',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Simplest amino acid, food additive, buffer component, pH adjustment'
+            },
+            {
+                name: 'L-glutamic acid',
+                formula: 'C₅H₉NO₄',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'MSG precursor, protein building block, neurotransmitter, 7 containers (1.75kg total)'
+            },
+            {
+                name: 'Aminoacetic acid (Glycine)',
+                formula: 'C₂H₅NO₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Larger container, industrial use, sweetener, pH buffering agent'
+            },
+            {
+                name: 'Fumaric acid',
+                formula: 'C₄H₄O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Food acidulant E297, beverage additive, polymer production'
+            },
+            {
+                name: 'Gallic acid',
+                formula: 'C₇H₆O₅',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Antioxidant, ink production, leather tanning, phenolic compound'
+            },
+            {
+                name: 'Hexane-1,6-diamine',
+                formula: 'C₆H₁₆N₂',
+                quantity: 25,
+                unit: 'ml',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CORROSIVE - Nylon production, severe skin/eye burns, 2 bottles'
+            },
+            {
+                name: 'Gelatine powder',
+                formula: 'Protein',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Collagen-derived protein, food industry, photography, capsules'
+            },
+            {
+                name: 'Hexan-1-ol',
+                formula: 'C₆H₁₄O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Primary alcohol, solvent, plasticizer production, 3 bottles (1.5L total)'
+            },
+            {
+                name: 'n-Hexanoic acid',
+                formula: 'C₆H₁₂O₂',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Caproic acid, fatty acid, food flavoring, corrosive, strong odor'
+            },
+            {
+                name: 'Hydrazine hydrate',
+                formula: 'N₂H₄·H₂O',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - rocket fuel, reducing agent, EXTREMELY TOXIC'
+            },
+            {
+                name: '2-Methylpropan-1-ol',
+                formula: 'C₄H₁₀O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N1',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Isobutanol, branched alcohol, solvent, lacquer production'
+            },
+
+            // Shelf N2 - Old organic chemicals (halogenated & ester compounds)
+            {
+                name: '1-Iodobutane',
+                formula: 'C₄H₉I',
+                quantity: 25,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Butyl iodide, alkylating agent, organic synthesis, lachrymator'
+            },
+            {
+                name: 'Iodoethane',
+                formula: 'C₂H₅I',
+                quantity: 25,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Ethyl iodide, alkylating agent, carcinogen suspect, 4 bottles + 1 large (50ml)'
+            },
+            {
+                name: 'Iodoform',
+                formula: 'CHI₃',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'SUSPECTED CARCINOGEN - triiodomethane, antiseptic (historical)'
+            },
+            {
+                name: 'Methyl acetate',
+                formula: 'C₃H₆O₂',
+                quantity: 750,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Flammable solvent, paint remover, nail polish, fruity odor, 3 containers total'
+            },
+            {
+                name: 'Methylamine solution',
+                formula: 'CH₃NH₂(aq)',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CORROSIVE - gas-generating solution, pharmaceutical synthesis, 2 containers'
+            },
+            {
+                name: 'Methyl benzoate',
+                formula: 'C₈H₈O₂',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Artificial wintergreen oil, perfume component, plasticizer'
+            },
+            {
+                name: 'Iodine bromide',
+                formula: 'IBr',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'HIGHLY CORROSIVE - interhalogen compound, organic synthesis'
+            },
+            {
+                name: 'Isoamyl alcohol',
+                formula: 'C₅H₁₂O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '3-Methylbutan-1-ol, fusel oil component, banana oil fragrance'
+            },
+            {
+                name: 'Methyl 4-hydroxy benzoate',
+                formula: 'C₈H₈O₃',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Methylparaben, preservative, antimicrobial, cosmetics, 2 containers'
+            },
+            {
+                name: '2-Methylpropan-2-ol',
+                formula: 'C₄H₁₀O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'tert-Butanol, tertiary alcohol, solvent, denaturant, 3 containers (1.5L)'
+            },
+            {
+                name: 'Malonic acid',
+                formula: 'C₃H₄O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Dicarboxylic acid, organic synthesis, pharmaceutical intermediate'
+            },
+            {
+                name: 'Maleic acid',
+                formula: 'C₄H₄O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Unsaturated dicarboxylic acid, corrosive, polymer production'
+            },
+            {
+                name: 'Isobutyl alcohol',
+                formula: 'C₄H₁₀O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2-Methylpropan-1-ol, flammable solvent, lacquer production, 2 containers'
+            },
+            {
+                name: 'Metaldehyde',
+                formula: 'C₈H₁₆O₄',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N2',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - slug/snail poison, can be fatal if ingested, combustible'
+            },
+
+            // Shelf N3 - Old organic chemicals (aromatics & nitro compounds)
+            {
+                name: 'Naphthol',
+                formula: 'C₁₀H₈O',
+                quantity: 50,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'α or β-Naphthol, toxic phenolic compound, dye intermediate'
+            },
+            {
+                name: 'N-Butylamine',
+                formula: 'C₄H₁₁N',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CORROSIVE - primary amine, severe burns, flammable, toxic vapors'
+            },
+            {
+                name: 'Naphthalene',
+                formula: 'C₁₀H₈',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - mothball compound, sublimes at room temperature'
+            },
+            {
+                name: 'n-Octane',
+                formula: 'C₈H₁₈',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Flammable hydrocarbon, gasoline component, solvent'
+            },
+            {
+                name: 'Ninhydrin',
+                formula: 'C₉H₆O₄',
+                quantity: 5,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Analytical reagent, fingerprint detection, amino acid detection'
+            },
+            {
+                name: 'Nitrobenzene',
+                formula: 'C₆H₅NO₂',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - aniline production, methemoglobinemia risk'
+            },
+            {
+                name: '4-Nitrophenol',
+                formula: 'C₆H₅NO₃',
+                quantity: 100,
+                unit: 'ml',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'EXPLOSIVE when dry - para-nitrophenol, indicator dye'
+            },
+            {
+                name: '2-Nitrophenol',
+                formula: 'C₆H₅NO₃',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'EXPLOSIVE when dry - ortho-nitrophenol, dye intermediate'
+            },
+            {
+                name: '3-Nitrophenol',
+                formula: 'C₆H₅NO₃',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'EXPLOSIVE when dry - meta-nitrophenol, pesticide intermediate'
+            },
+            {
+                name: '4-(4-Nitrophenylazo)resorcinol',
+                formula: 'C₁₂H₉N₃O₄',
+                quantity: 26,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Azo dye compound, analytical indicator, potential carcinogen'
+            },
+            {
+                name: 'N-Octyl alcohol',
+                formula: 'C₈H₁₈O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Octan-1-ol, primary alcohol, surfactant production, 4 bottles total'
+            },
+            {
+                name: 'Octadecanoic acid',
+                formula: 'C₁₈H₃₆O₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Stearic acid, saturated fatty acid, soap production, 3 containers (1 old)'
+            },
+            {
+                name: 'Octan-2-ol',
+                formula: 'C₈H₁₈O',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Secondary octanol, solvent, flammable, perfume industry, 2 bottles'
+            },
+            {
+                name: 'Unidentified organic chemical (1)',
+                formula: 'Unknown',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'UNKNOWN CHEMICAL - requires immediate professional analysis'
+            },
+            {
+                name: 'Unidentified organic chemical (2)',
+                formula: 'Unknown',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'UNKNOWN CHEMICAL - requires immediate professional analysis'
+            },
+            {
+                name: 'Oxalic acid',
+                formula: 'C₂H₂O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N3',
+                expiry: '',
+                hazard: 'high',
+                notes: 'TOXIC - dicarboxylic acid, rust removal, kidney damage risk, 3 containers (1.5kg)'
             }
         ];
 
