@@ -25,7 +25,37 @@ class LabManagement {
     async init() {
         this.setupEventListeners();
         await this.loadSampleData();
+        this.fixMissingIds();
         this.renderItems();
+    }
+
+    // Fix any chemicals that are missing IDs
+    fixMissingIds() {
+        let fixed = 0;
+        let nextId = Math.max(...this.chemicals.map(c => c.id || 0), 0) + 1;
+        
+        this.chemicals.forEach(chemical => {
+            if (!chemical.id || chemical.id === undefined || chemical.id === null) {
+                chemical.id = nextId++;
+                fixed++;
+                console.log(`Fixed missing ID for chemical: ${chemical.name}`);
+            }
+        });
+        
+        // Also fix apparatus if needed
+        let nextApparatusId = Math.max(...this.apparatus.map(a => a.id || 0), 0) + 1;
+        this.apparatus.forEach(apparatus => {
+            if (!apparatus.id || apparatus.id === undefined || apparatus.id === null) {
+                apparatus.id = nextApparatusId++;
+                fixed++;
+                console.log(`Fixed missing ID for apparatus: ${apparatus.name}`);
+            }
+        });
+        
+        if (fixed > 0) {
+            console.log(`Fixed ${fixed} missing IDs`);
+            this.saveData();
+        }
     }
 
     setupEventListeners() {
@@ -4074,6 +4104,39 @@ class LabManagement {
         
         console.log(`Added apparatus programmatically: ${apparatus.name}`);
         return apparatus;
+    }
+
+    // Diagnostic function to check chemical IDs
+    diagnoseChemicalIds() {
+        console.log('=== CHEMICAL ID DIAGNOSIS ===');
+        console.log('Total chemicals:', this.chemicals.length);
+        
+        const missingIds = this.chemicals.filter(c => !c.id || c.id === undefined || c.id === null);
+        const duplicateIds = {};
+        const allIds = this.chemicals.map(c => c.id);
+        
+        allIds.forEach(id => {
+            duplicateIds[id] = (duplicateIds[id] || 0) + 1;
+        });
+        
+        const duplicates = Object.keys(duplicateIds).filter(id => duplicateIds[id] > 1);
+        
+        console.log('Chemicals missing IDs:', missingIds.length);
+        missingIds.forEach(c => console.log(`  - ${c.name} (location: ${c.location})`));
+        
+        console.log('Duplicate IDs:', duplicates.length);
+        duplicates.forEach(id => console.log(`  - ID ${id} appears ${duplicateIds[id]} times`));
+        
+        console.log('ID types:', [...new Set(allIds.map(id => typeof id))]);
+        console.log('Sample IDs:', allIds.slice(0, 10));
+        
+        return {
+            total: this.chemicals.length,
+            missingIds: missingIds.length,
+            duplicates: duplicates.length,
+            missingIdChemicals: missingIds,
+            duplicateIds: duplicates
+        };
     }
 
     // Force reload M-shelf chemicals - debug function
@@ -8145,12 +8208,19 @@ class LabManagement {
     }
 
     renderChemicalCard(chemical, searchTerm = '') {
+        // Debug: Check for missing ID
+        if (!chemical.id || chemical.id === undefined || chemical.id === null) {
+            console.error(`Chemical missing ID: ${chemical.name}`, chemical);
+            // Assign temporary ID to prevent crashes
+            chemical.id = Date.now() + Math.random();
+        }
+        
         const expiryDate = new Date(chemical.expiry);
         const today = new Date();
         const isExpiringSoon = expiryDate < new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000); // 30 days
 
         return `
-            <div class="item-card" onclick="labSystem.showOverlay(${chemical.id}, 'chemical')">
+            <div class="item-card" onclick="labSystem.showOverlay(${chemical.id}, 'chemical')" data-chemical-id="${chemical.id}" data-chemical-name="${chemical.name}">
                 <div class="item-header">
                     ${chemical.hazard ? `<span class="hazard-badge hazard-${chemical.hazard}">${chemical.hazard}</span>` : ''}
                     <h3 class="item-name">${this.highlightSearchTerm(chemical.name, searchTerm)}</h3>
@@ -8196,11 +8266,26 @@ class LabManagement {
     }
 
     showOverlay(id, type) {
+        console.log(`showOverlay called with ID: ${id}, Type: ${type}`);
+        
         const item = type === 'chemical' ? 
             this.chemicals.find(c => c.id === id) : 
             this.apparatus.find(a => a.id === id);
 
-        if (!item) return;
+        if (!item) {
+            console.error(`Item not found - ID: ${id}, Type: ${type}`);
+            console.log('Available chemicals:', this.chemicals.map(c => ({id: c.id, name: c.name})));
+            alert(`Error: ${type} with ID ${id} not found. Please refresh the page and try again.`);
+            return;
+        }
+        
+        console.log(`Found item: ${item.name} (ID: ${item.id})`);
+        
+        // Convert string IDs to numbers for comparison
+        const numericId = parseInt(id);
+        if (item.id !== numericId && item.id !== id) {
+            console.warn(`ID mismatch: searched for ${id} (${typeof id}), found ${item.id} (${typeof item.id})`);
+        }
 
         // Remove existing overlay if any
         const existingOverlay = document.querySelector('.overlay');
