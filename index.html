@@ -11,6 +11,23 @@
         <header>
             <h1>LabTool</h1>
             <div id="statsBar" class="stats-bar"></div>
+            <!-- Emergency Contacts Bar -->
+            <div id="emergencyBar" class="emergency-bar">
+                <div class="emergency-contacts">
+                    <button class="emergency-btn poison-control" onclick="showEmergencyContact('poison')">
+                        ☠️ Poison Control: 1-800-222-1222
+                    </button>
+                    <button class="emergency-btn fire-dept" onclick="showEmergencyContact('fire')">
+                        🚨 Fire/EMS: 911
+                    </button>
+                    <button class="emergency-btn hazmat" onclick="showEmergencyContact('hazmat')">
+                        ⚠️ Hazmat Response: 1-800-424-9300
+                    </button>
+                    <button class="emergency-btn" onclick="showSafetyProtocols()">
+                        🛡️ Safety Protocols
+                    </button>
+                </div>
+            </div>
             <div class="header-controls">
                 <div class="search-container">
                     <input type="text" id="searchInput" placeholder="Search chemicals and apparatus...">
@@ -49,7 +66,14 @@
                         </button>
                         <button onclick="labSystem.forceReloadMShelfChemicals()" class="admin-action-btn btn-reload-mshelves" style="background-color: #e74c3c;">
                             🧪 Force Reload M-Shelves
-                        </button>                    </div>
+                        </button>
+                        <button onclick="showIncidentReports()" class="admin-action-btn btn-incident-reports" style="background-color: #f39c12;">
+                            📋 View Incident Reports
+                        </button>
+                        <button onclick="showSafetyDashboard()" class="admin-action-btn btn-safety-dashboard" style="background-color: #8e44ad;">
+                            🛡️ Safety Dashboard
+                        </button>
+                    </div>
                 </div>
                 <div class="add-item-section" style="display: none;" id="chemicalFormSection">
                     <h3>Add New Chemical</h3>
@@ -111,6 +135,100 @@
         </main>
     </div>
 
+    <!-- Safety Alert Modal -->
+    <div id="safetyModal" class="modal">
+        <div class="modal-content safety-modal">
+            <span class="close" onclick="closeSafetyModal()">&times;</span>
+            <div class="safety-header">
+                <h2>⚠️ CHEMICAL SAFETY ALERT</h2>
+            </div>
+            <div id="safetyContent" class="safety-content">
+                <!-- Dynamic safety content will be inserted here -->
+            </div>
+            <div class="safety-acknowledgment">
+                <label>
+                    <input type="checkbox" id="safetyAcknowledge"> 
+                    I acknowledge that I have read and understand the safety warnings for this chemical
+                </label>
+                <button id="safetyProceed" class="safety-btn" disabled onclick="proceedWithChemical()">
+                    Proceed with Caution
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Emergency Contact Modal -->
+    <div id="emergencyModal" class="modal">
+        <div class="modal-content emergency-modal">
+            <span class="close" onclick="closeEmergencyModal()">&times;</span>
+            <div id="emergencyContent" class="emergency-content">
+                <!-- Dynamic emergency content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Incident Report Modal -->
+    <div id="incidentModal" class="modal">
+        <div class="modal-content incident-modal">
+            <span class="close" onclick="closeIncidentModal()">&times;</span>
+            <h2>🚨 Chemical Incident Report</h2>
+            <form id="incidentForm">
+                <div class="form-group">
+                    <label>Incident Type:</label>
+                    <select id="incidentType" required>
+                        <option value="">Select incident type</option>
+                        <option value="spill">Chemical Spill</option>
+                        <option value="exposure">Chemical Exposure</option>
+                        <option value="fire">Fire/Explosion</option>
+                        <option value="reaction">Unexpected Reaction</option>
+                        <option value="equipment">Equipment Failure</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Chemical(s) Involved:</label>
+                    <input type="text" id="incidentChemicals" placeholder="List chemicals involved" required>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="incidentDescription" placeholder="Describe what happened" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Injuries/Exposure:</label>
+                    <textarea id="incidentInjuries" placeholder="Any injuries or exposures" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Actions Taken:</label>
+                    <textarea id="incidentActions" placeholder="Emergency actions taken" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="incident-submit-btn">Submit Incident Report</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Incident Reports Modal -->
+    <div id="incidentReportsModal" class="modal">
+        <div class="modal-content incident-modal">
+            <span class="close" onclick="closeIncidentReportsModal()">&times;</span>
+            <h2>📋 Chemical Incident Reports</h2>
+            <div id="incidentReportsList" class="incident-reports-list">
+                <!-- Incident reports will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Safety Dashboard Modal -->
+    <div id="safetyDashboardModal" class="modal">
+        <div class="modal-content safety-modal">
+            <span class="close" onclick="closeSafetyDashboardModal()">&times;</span>
+            <h2>🛡️ Laboratory Safety Dashboard</h2>
+            <div id="safetyDashboardContent" class="safety-dashboard-content">
+                <!-- Safety dashboard content will be displayed here -->
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="safety-features.js"></script>
 </body>
 </html>

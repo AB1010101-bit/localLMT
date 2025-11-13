@@ -2,13 +2,13 @@
 
 class LabManagement {
     constructor() {
-        // Force a complete data restoration with ALL documented chemicals including N1-N3 shelves
+        // Force a complete data restoration with ALL documented chemicals + comprehensive safety features
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.7') {
-            // Clear and force reload to restore complete inventory including N1-N3
+        if (dataVersion !== '6.8') {
+            // Clear and force reload to restore complete inventory with enhanced safety features
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.7');
-            console.log('Data version updated to 6.7 - restoring COMPLETE inventory with all shelves including N1-N3');
+            localStorage.setItem('dataVersion', '6.8');
+            console.log('Data version updated to 6.8 - Enhanced safety features activated with comprehensive chemical database');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
