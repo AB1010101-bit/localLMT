@@ -152,6 +152,13 @@ function showSafetyProtocols() {
 
 // Check for chemical safety warnings
 function checkChemicalSafety(chemical) {
+    if (!chemical) {
+        console.log('No chemical provided to safety check');
+        return true;
+    }
+    
+    console.log('Safety check for chemical:', chemical.name, 'Hazard level:', chemical.hazardLevel);
+    
     // Check for extreme hazards that require special warnings
     const extremeHazards = [
         'hydrazine', 'benzene', 'carbon tetrachloride', 'chloroform', 
@@ -162,10 +169,12 @@ function checkChemicalSafety(chemical) {
     const hasExtremeHazard = extremeHazards.some(hazard => chemicalName.includes(hazard));
     
     if (hasExtremeHazard || chemical.hazardLevel === 'extreme') {
+        console.log('Extreme hazard detected for:', chemical.name, 'Showing safety alert');
         showSafetyAlert(chemical);
         return false; // Prevent immediate display
     }
     
+    console.log('Chemical passed safety check:', chemical.name);
     return true; // Safe to display normally
 }
 
@@ -317,9 +326,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function proceedWithChemical() {
     if (currentChemicalForSafety) {
         closeSafetyModal();
-        // Show the chemical details normally
-        if (window.labSystem) {
-            window.labSystem.showOverlay(currentChemicalForSafety, 'chemical');
+        // Show the chemical details normally using the original function
+        if (window.labSystem && window.labSystem.showOverlay) {
+            // Call the original function directly with the chemical ID
+            const originalShowOverlay = window.labSystem.showOverlay.originalFunction || window.labSystem.showOverlay;
+            originalShowOverlay.call(window.labSystem, currentChemicalForSafety.id, 'chemical');
         }
         currentChemicalForSafety = null;
     }
@@ -732,16 +743,59 @@ function getQuickSafetyFacts(chemicalName) {
 
 // Integrate safety checks into the main system
 // Override the showOverlay function to include safety checks
-window.addEventListener('DOMContentLoaded', function() {
-    if (window.labSystem && window.labSystem.showOverlay) {
+function initializeSafetyIntegration() {
+    if (window.labSystem && window.labSystem.showOverlay && !window.labSystem.showOverlay.safetyIntegrated) {
+        console.log('Integrating safety system with lab management...');
         const originalShowOverlay = window.labSystem.showOverlay;
-        window.labSystem.showOverlay = function(item, type) {
+        window.labSystem.showOverlay = function(id, type) {
+            console.log('Safety check for ID:', id, 'Type:', type);
+            
+            // Get the actual item from the ID
+            const item = type === 'chemical' ? 
+                this.chemicals.find(c => c.id === id) : 
+                this.apparatus.find(a => a.id === id);
+            
+            if (!item) {
+                console.log('Item not found for ID:', id);
+                return originalShowOverlay.call(this, id, type);
+            }
+            
+            console.log('Found item:', item.name);
+            
             if (type === 'chemical' && !checkChemicalSafety(item)) {
                 // Safety alert was shown, don't proceed with normal overlay
+                console.log('Safety alert triggered for:', item.name);
                 return;
             }
             // Proceed with normal overlay
-            originalShowOverlay.call(this, item, type);
+            console.log('Proceeding with normal overlay for:', item.name);
+            originalShowOverlay.call(this, id, type);
         };
+        
+        // Mark as integrated and store original function reference
+        window.labSystem.showOverlay.safetyIntegrated = true;
+        window.labSystem.showOverlay.originalFunction = originalShowOverlay;
+        return true;
     }
+    return false;
+}
+
+// Try to initialize safety integration when DOM is ready
+window.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, attempting safety integration...');
+    if (!initializeSafetyIntegration()) {
+        // If not ready, try again after a short delay
+        setTimeout(function() {
+            if (!initializeSafetyIntegration()) {
+                // Try once more after lab system is likely initialized
+                setTimeout(initializeSafetyIntegration, 2000);
+            }
+        }, 1000);
+    }
+});
+
+// Also try to initialize when the window is fully loaded
+window.addEventListener('load', function() {
+    console.log('Window loaded, attempting safety integration...');
+    initializeSafetyIntegration();
 });
