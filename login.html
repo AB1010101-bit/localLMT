@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LabTool Access</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body.login-page {display:flex;align-items:center;justify-content:center;min-height:100vh;background:#0d1117;color:#e6edf3;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Ubuntu,sans-serif;}
+    .login-card {background:#161b22;border:1px solid #30363d;padding:40px 36px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.5);width:100%;max-width:420px;}
+    .login-card h1 {margin:0 0 10px;font-size:1.7rem;font-weight:600;color:#ffffff;}
+    .login-card p {margin:0 0 24px;font-size:0.95rem;line-height:1.4;color:#8b949e;}
+    .login-card label {display:block;margin-bottom:6px;font-weight:500;color:#c9d1d9;}
+    .login-card input[type=password]{width:100%;padding:14px 16px;border:1px solid #30363d;border-radius:10px;background:#0d1117;color:#e6edf3;font-size:16px;outline:none;transition:border .15s,background .15s;}
+    .login-card input[type=password]:focus{border-color:#58a6ff;background:#0d2236;}
+    .login-card button{width:100%;margin-top:18px;padding:14px 20px;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;background:linear-gradient(90deg,#238636,#2ea043);color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:background .25s,transform .15s;}
+    .login-card button:hover{background:linear-gradient(90deg,#2ea043,#3fb950);} .login-card button:active{transform:translateY(1px);}  
+    .error-box{display:none;margin-top:16px;padding:12px 14px;border:1px solid #b62324;background:#331d1d;color:#ff7b72;border-radius:8px;font-size:0.85rem;}
+    .footer-note{margin-top:28px;font-size:0.7rem;color:#6e7681;text-align:center;}
+  </style>
+</head>
+<body class="login-page" data-page="login">
+  <div class="login-card" role="dialog" aria-labelledby="loginTitle" aria-describedby="loginDesc">
+    <h1 id="loginTitle">🔐 LabTool Access</h1>
+    <p id="loginDesc">Enter the authorized access password to continue. This gate is client-side only—replace the password and deploy over protected hosting for real security.</p>
+    <form id="loginForm" autocomplete="off">
+      <label for="passwordInput">Password</label>
+      <input id="passwordInput" name="password" type="password" inputmode="text" aria-required="true" required autofocus />
+      <button type="submit">Enter Laboratory</button>
+      <div id="authError" class="error-box" role="alert"></div>
+    </form>
+    <div class="footer-note">Unauthorized access prohibited. All activity may be monitored.</div>
+  </div>
+  <script src="auth.js"></script>
+</body>
+</html>

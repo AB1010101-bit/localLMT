@@ -40,8 +40,9 @@ A modern, responsive web application for managing laboratory chemicals and appar
 
 ### Installation
 1. Download or clone this repository
-2. Open `index.html` in your web browser
-3. Start managing your lab inventory!
+2. Open `login.html` in your web browser
+3. Enter the access password and you will be redirected to `index.html`
+4. Start managing your lab inventory!
 
 ### Usage
 
@@ -77,6 +78,7 @@ lab-management-system/
 - **CSS3**: Modern styling with flexbox/grid layouts
 - **Vanilla JavaScript**: ES6+ features for functionality
 - **LocalStorage API**: Client-side data persistence
+ - **SessionStorage Auth Gate**: Simple password gate (client-side only)
 
 ### Browser Compatibility
 - Chrome 60+
@@ -107,9 +109,38 @@ lab-management-system/
 - **Notes**: Additional details and specifications
 
 ### Sample Data
-The application comes with sample data to demonstrate features:
-- 3 sample chemicals with various hazard levels
-- 3 sample apparatus items with different types
+The application loads an extensive inventory (chemicals + apparatus) plus shelf + oxidizer collections automatically after authentication.
+
+## Authentication
+
+### Overview
+Access to the main application is gated by a lightweight password-only login (`login.html`). Successful authentication sets a session flag `labAuth` in `sessionStorage` which permits viewing `index.html`.
+
+### Default Password
+- The default password is `admin123` (defined in `auth.js`). CHANGE THIS before deploying.
+
+### How It Works
+1. User opens `login.html` and submits password.
+2. On success, `sessionStorage.labAuth = '1'` is written and the user is redirected to `index.html`.
+3. `index.html` performs a pre-render gate: if flag missing, immediate redirect back to `login.html` (no content flash).
+
+### Security Notes
+- This is purely client-side; compiled code + password are visible to end users.
+- It protects casual access but NOT determined attackers.
+- For stronger security, implement server-side auth (e.g. Vercel Middleware + external identity provider) or host behind VPN.
+- Consider rotating password regularly and avoiding reuse with admin credentials.
+
+### Changing the Password
+Edit the `PASSWORD` constant near the top of `auth.js` and redeploy.
+
+### Lockout Mechanism
+- After 5 failed attempts a lockout of 5 minutes is triggered (stored in `localStorage`).
+- Lockout automatically clears after expiry or manual localStorage reset.
+
+### Removing Authentication (Optional)
+1. Delete `login.html` and `auth.js`.
+2. Remove the auth gate `<script>` block from `index.html`.
+3. Redeploy.
 
 ## Customization
 
