@@ -4207,14 +4207,14 @@ class LabManagement {
                 notes: '2-Hydroxybenzoic acid, aspirin precursor'
             },
             {
-                name: 'stearoyle chloride',
-                formula: 'C₁₈H₃₅ClO',
+                name: 'sebacoyle chloride',
+                formula: 'C₁₀H₁₆Cl₂O₂',
                 quantity: 5,
                 unit: '%',
                 location: 'Shelf N5',
                 expiry: '',
                 hazard: 'extreme',
-                notes: '5% solution, CORROSIVE acyl chloride, 100ml'
+                notes: '5% solution, CORROSIVE diacyl chloride, 100ml'
             },
             {
                 name: 'unidentified chemical',
