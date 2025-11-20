@@ -4,11 +4,11 @@ class LabManagement {
     constructor() {
         // Force a complete data restoration with ALL documented chemicals + comprehensive safety features
         const dataVersion = localStorage.getItem('dataVersion');
-        if (dataVersion !== '6.9.1') {
-            // Clear and force reload to restore complete inventory with enhanced safety features and fixed IDs
+        if (dataVersion !== '6.9.2') {
+            // Clear and force reload to restore complete inventory with new Shelf N4-N6 chemicals
             localStorage.clear();
-            localStorage.setItem('dataVersion', '6.9.1');
-            console.log('Data version updated to 6.9.1 - Fixed Shelf N chemical ID issues and enhanced click functionality');
+            localStorage.setItem('dataVersion', '6.9.2');
+            console.log('Data version updated to 6.9.2 - Added new Shelf N4, N5, and N6 chemicals');
         }
         
         this.chemicals = JSON.parse(localStorage.getItem('chemicals')) || [];
@@ -150,7 +150,7 @@ class LabManagement {
             console.log(`Repaired ${repairedCount} Shelf N chemicals`);
             this.saveData();
         } else {
-            console.log('All Shelf N chemicals have valid IDs');
+            console.log(`All ${shelfNChemicals.length} Shelf N chemicals (N1-N6) have valid IDs`);
         }
     }
 
@@ -237,6 +237,9 @@ class LabManagement {
         const hasShelfN1 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N1'));
         const hasShelfN2 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N2'));
         const hasShelfN3 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N3'));
+        const hasShelfN4 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N4'));
+        const hasShelfN5 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N5'));
+        const hasShelfN6 = this.chemicals.some(chem => chem.location && chem.location.includes('Shelf N6'));
         
         // Force reload for version 6.7 to include new shelves N1-N3
         const currentVersion = localStorage.getItem('shelfChemicalsVersion') || '6.3';
@@ -246,9 +249,9 @@ class LabManagement {
         if (!hasShelfA1 || !hasShelfA2 || !hasShelfB1 || !hasShelfB2 || !hasShelfC1 || !hasShelfC2 || 
             !hasShelfM1 || !hasShelfM2 || !hasShelfM3 || !hasShelfM4 || !hasShelfM5 || 
             !hasShelfM7 || !hasShelfM8 || !hasShelfM9 || !hasShelfM10 ||
-            !hasShelfN1 || !hasShelfN2 || !hasShelfN3 ||
+            !hasShelfN1 || !hasShelfN2 || !hasShelfN3 || !hasShelfN4 || !hasShelfN5 || !hasShelfN6 ||
             currentVersion !== '6.7' || mShelfVersion !== 'true') {
-            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M10, N1-N3)...');
+            console.log('Adding/updating shelf chemical inventory (A1, A2, B1, B2, C1, C2, M1-M10, N1-N6)...');
             
             // Force clear M-shelf and N-shelf chemicals if they exist to ensure clean reload
             this.chemicals = this.chemicals.filter(chem => !chem.location || 
@@ -4018,6 +4021,352 @@ class LabManagement {
                 expiry: '',
                 hazard: 'high',
                 notes: 'TOXIC - dicarboxylic acid, rust removal, kidney damage risk, 3 containers (1.5kg)'
+            },
+
+            // Shelf N4 - Additional organic compounds
+            {
+                name: 'Propionaldehyde (propanal)',
+                formula: 'C₃H₆O',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Flammable aldehyde, lachrymator, 2 bottles'
+            },
+            {
+                name: 'Propanal',
+                formula: 'C₃H₆O',
+                quantity: 250,
+                unit: 'ml',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'high',
+                notes: '2 bottles, flammable, irritant vapors'
+            },
+            {
+                name: 'Perchloric Acid',
+                formula: 'HClO₄',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'EXPLOSIVE ACID - powerful oxidizer, contact hazard'
+            },
+            {
+                name: 'phthalic acid',
+                formula: 'C₈H₆O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Benzene-1,2-dicarboxylic acid, polymer production'
+            },
+            {
+                name: 'Paraldehyde',
+                formula: 'C₆H₁₂O₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Cyclic aldehyde trimer, pharmaceutical use (historical)'
+            },
+            {
+                name: 'phenyl benzoate',
+                formula: 'C₁₃H₁₀O₂',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Phenyl ester, pharmaceutical intermediate'
+            },
+            {
+                name: 'phenoxyacetic acid',
+                formula: 'C₈H₈O₃',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Plant growth regulator, herbicide intermediate'
+            },
+            {
+                name: 'phenol',
+                formula: 'C₆H₆O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'TOXIC CORROSIVE - carbolic acid, severe burns'
+            },
+            {
+                name: 'phenol solution',
+                formula: 'C₆H₆O(aq)',
+                quantity: 100,
+                unit: 'ml',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Aqueous phenol solution, TOXIC CORROSIVE'
+            },
+            {
+                name: 'Phenyl Benzoate',
+                formula: 'C₁₃H₁₀O₂',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Duplicate entry - phenyl ester compound'
+            },
+            {
+                name: 'Phenylethyne',
+                formula: 'C₈H₆',
+                quantity: 25,
+                unit: 'ml',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Phenylacetylene, alkyne, organic synthesis'
+            },
+            {
+                name: 'methylhydrazine',
+                formula: 'CH₃NHNH₂',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - rocket fuel, 2 bottles, HIGHLY TOXIC'
+            },
+            {
+                name: 'methylhydrazinium chloride',
+                formula: 'CH₃NHNH₂·HCl',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Hydrazine derivative, CARCINOGENIC compound'
+            },
+            {
+                name: 'propane',
+                formula: 'C₃H₈',
+                quantity: 1,
+                unit: 'cylinder',
+                location: 'Shelf N4',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Pressurized gas cylinder, 2 bottles'
+            },
+
+            // Shelf N5 - Sulfur and acid compounds
+            {
+                name: 'sulphanilic acid',
+                formula: 'C₆H₇NO₃S',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'medium',
+                notes: '4-Aminobenzenesulfonic acid, dye intermediate'
+            },
+            {
+                name: 'sulphuric acid',
+                formula: 'H₂SO₄',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CORROSIVE ACID - 2 containers, severe burns'
+            },
+            {
+                name: 'm salicylic acid',
+                formula: 'C₇H₆O₃',
+                quantity: 1,
+                unit: 'kg',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'medium',
+                notes: '3-Hydroxybenzoic acid, pharmaceutical intermediate'
+            },
+            {
+                name: 'salicylic acid',
+                formula: 'C₇H₆O₃',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2-Hydroxybenzoic acid, aspirin precursor'
+            },
+            {
+                name: 'stearoyle chloride',
+                formula: 'C₁₈H₃₅ClO',
+                quantity: 5,
+                unit: '%',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'extreme',
+                notes: '5% solution, CORROSIVE acyl chloride, 100ml'
+            },
+            {
+                name: 'unidentified chemical',
+                formula: 'Unknown',
+                quantity: 1,
+                unit: 'container',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Unknown compound - requires identification and assessment'
+            },
+            {
+                name: 'succinic acid',
+                formula: 'C₄H₆O₄',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Butanedioic acid, food additive, 2 containers'
+            },
+            {
+                name: 'sulphamic acid',
+                formula: 'H₃NO₃S',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N5',
+                expiry: '',
+                hazard: 'medium',
+                notes: 'Cleaning agent, scale remover, acidic compound'
+            },
+
+            // Shelf N6 - Mixed organic compounds
+            {
+                name: 'Trioxonitric (III) Acid Powder',
+                formula: 'HNO₂',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'Nitrous acid powder - UNSTABLE, oxidizing agent'
+            },
+            {
+                name: '(-) Tartaric Acid',
+                formula: 'C₄H₆O₆',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'low',
+                notes: 'L-tartaric acid, food additive, optical activity'
+            },
+            {
+                name: 'Salicylaldehyde',
+                formula: 'C₇H₆O₂',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'medium',
+                notes: '2-Hydroxybenzaldehyde, 1 bottle'
+            },
+            {
+                name: 'Uranyl Acetate',
+                formula: 'UO₂(CH₃COO)₂',
+                quantity: 25,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'RADIOACTIVE TOXIC - uranium compound, 100ml solution'
+            },
+            {
+                name: 'Thioacetic Acid',
+                formula: 'C₂H₄OS',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Sulfur analog of acetic acid, strong odor'
+            },
+            {
+                name: 'Thioacetic acid',
+                formula: 'C₂H₄OS',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'high',
+                notes: 'Duplicate entry - organosulfur compound'
+            },
+            {
+                name: 'Trichloroethylene',
+                formula: 'C₂HCl₃',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - industrial solvent, 100ml'
+            },
+            {
+                name: 'thionyl chloride',
+                formula: 'SOCl₂',
+                quantity: 500,
+                unit: 'ml',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CORROSIVE - reacts violently with water, 100ml'
+            },
+            {
+                name: 'thioacetamide',
+                formula: 'C₂H₅NS',
+                quantity: 100,
+                unit: 'ml',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - analytical reagent, gel solution'
+            },
+            {
+                name: 'urea',
+                formula: 'CH₄N₂O',
+                quantity: 500,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Carbamide, nitrogen fertilizer, 250g'
+            },
+            {
+                name: 'urea',
+                formula: 'CH₄N₂O',
+                quantity: 250,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'low',
+                notes: 'Second container, 1 can'
+            },
+            {
+                name: 'Thioacetamide Acid',
+                formula: 'C₂H₅NS',
+                quantity: 100,
+                unit: 'g',
+                location: 'Shelf N6',
+                expiry: '',
+                hazard: 'extreme',
+                notes: 'CARCINOGEN - sulfur analog of acetamide'
             }
         ];
 
